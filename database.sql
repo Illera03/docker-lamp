@@ -35,7 +35,7 @@ CREATE TABLE usuarios (
     fecha_nacimiento DATE,
     email VARCHAR(100),
     password VARCHAR(255)
-); ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `usuarios`
@@ -52,8 +52,8 @@ INSERT INTO `usuarios` (`id`, `nombre`) VALUES
 --
 -- Indices de la tabla `usuarios`
 --
-ALTER TABLE `usuarios`
-  ADD PRIMARY KEY (`id`);
+/*ALTER TABLE `usuarios`*/
+/*  ADD PRIMARY KEY (`id`);*/
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

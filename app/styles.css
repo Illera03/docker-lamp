@@ -1,6 +1,7 @@
 body {
     font-family: Arial, sans-serif;
     margin: 20px;
+    
 }
 
 form {
@@ -24,6 +25,7 @@ button {
     color: white;
     border: none;
     cursor: pointer;
+    
 }
 
 button:hover {
