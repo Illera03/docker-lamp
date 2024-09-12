@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Usuarios</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="validate.js"></script>
+</head>
+<body>
+
+    <h1>Registrar nuevo usuario</h1>
+    <form id="register_form" action="index.php" method="POST">
+        <label for="name">Nombre:</label>
+        <input type="text" id="name" name="name" required pattern="[A-Za-z\s]+"><br>
+
+        <label for="dni">DNI:</label>
+        <input type="text" id="dni" name="dni" required pattern="\d{8}-[A-Z]"><br>
+
+        <label for="phone">Teléfono:</label>
+        <input type="text" id="phone" name="phone" required pattern="\d{9}"><br>
+
+        <label for="birthdate">Fecha de nacimiento:</label>
+        <input type="date" id="birthdate" name="birthdate" required><br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br>
+
+        <label for="password">Contraseña:</label>
+        <input type="password" id="password" name="password" required><br>
+
+        <button type="submit" id="register_submit">Registrar</button>
+    </form>
+
+</body>
+</html>
