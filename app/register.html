@@ -4,21 +4,14 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Registro de usuarios</title>
-        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="register_style.css">
         <script src="validate.js"></script>
-        <style>
-            body {
-                display: flex;
-                flex-direction: column;
-                justify-content: flex-start; /* Alinea el contenido al inicio del eje principal (columna) */
-                align-items: center; /* Centra el contenido en el eje transversal (horizontal) */
-            }
-        </style>
+        
     </head>
     <body>
 
         <h2>Registro de nuevo usuario</h2>
-        <form id="register_form" action="register.html" method="POST">
+        <form id="register_form" action="register.php" method="POST">
             <label for="name">Nombre:</label>
             <input type="text" id="name" name="name" required pattern="[A-Za-z\s]+" placeholder="Juan Ruiz"><br>
 
@@ -39,6 +32,9 @@
 
             <button type="submit" id="register_submit">Registrar</button>
         </form>
+
+        <!-- Botón para ir hacia atrás -->
+        <button class="back-button" onclick="window.history.back();"><</button>
 
     </body>
 </html>

@@ -1,6 +1,6 @@
 <?php
   // Mostrar el título del formulario de registro
-  echo '<h1>-NOMBRE DE PÁGINA WEB-</h1>';
+  echo '<h1>PÁGINA WEB</h1>';
   // phpinfo();
 
   // Información de conexión a la base de datos
@@ -57,4 +57,10 @@ while ($row = mysqli_fetch_array($query)) {
 echo '</table>';
 
 mysqli_close($conn); // Cerrar la conexión a la base de datos
+
+
+
+//MEJORAS: 
+// 1. COMPROBAR QUE EL USUARIO NO EXISTA ANTES DE REGISTRARLO (EMAIL ÚNICO)
 ?>
+
