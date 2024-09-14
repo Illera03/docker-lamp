@@ -1,6 +1,5 @@
 <?php
-  // Mostrar el título del formulario de registro
-  echo '<h1>PÁGINA WEB</h1>';
+  
   // phpinfo();
 
   // Información de conexión a la base de datos
@@ -42,16 +41,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   }
 }
 
-// Mostrar la tabla de usuarios registrados (ID y Nombre)
-$query = mysqli_query($conn, "SELECT * FROM usuarios") or die (mysqli_error($conn)); // Se guarda en query la consulta
+/// Mostrar la tabla de usuarios registrados (ID y Nombre)
+$query = mysqli_query($conn, "SELECT * FROM usuarios") or die (mysqli_error($conn));
 
-echo '<h1>Lista de usuarios registrados:</h1>';
+// Estilo de la tabla
+echo '<style>
+    table {
+        margin: 20px auto;
+        border-collapse: collapse;
+        font-family: Arial;
+        align: center;
+        width: content;
+    }
+    th, td {
+        padding: 8px;
+        text-align: left;
+        border: 1px solid #ddd;
+    }
+    th {
+        background-color: #f4f4f4;
+    }
+    tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+</style>';
+
 echo '<table>';
 echo '<tr><th>ID</th><th>Nombre</th></tr>';
 
-// Se recorre el resultado de la consulta y se va imprimiendo en la tabla
 while ($row = mysqli_fetch_array($query)) {
-  echo "<tr><td>{$row['id']}</td><td>{$row['nombre']}</td></tr>";
+    echo "<tr><td>{$row['id']}</td><td>{$row['nombre']}</td></tr>";
 }
 
 echo '</table>';
