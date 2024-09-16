@@ -1,19 +1,6 @@
 <?php
   
-  // phpinfo();
-
-  // Información de conexión a la base de datos
-  $hostname = "db";
-  $username = "admin";
-  $password = "test";
-  $db = "database";
-
-  // Conexión a la base de datos
-  $conn = mysqli_connect($hostname,$username,$password,$db);
-  if ($conn->connect_error) {
-    // Mostrar mensaje de error en caso de que la conexión falle
-    die("Database connection failed: " . $conn->connect_error);
-  }
+require_once 'db_connection.php'; // Conexión a la base de datos
 
 // Incluir la parte del frontend
 include('register.html');
@@ -35,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   // Verificar si la inserción de datos fue exitosa
   if (mysqli_query($conn, $sql)) {
-      echo "Nuevo usuario registrado exitosamente.";
+      echo "Nuevo usuario registrado exitosamente.";  //TODO cambiar esto, para que aparezca o mas arriba o con una alerta
   } else {
       echo "Error: " . mysqli_error($conn); 
   }

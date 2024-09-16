@@ -1,7 +1,7 @@
 // FICHERO DE VALIDACIONES
 
 
-// Función de comprobar los datos del formulario ( se ejecuta al hacer click en el botón de enviar)
+// Función de comprobar los datos del formulario de registro (se ejecuta al hacer click en el botón de enviar)
 function comprobarDatos() {
     // Obtener el formulario usando el id
     const formulario = document.getElementById('register_form');
@@ -57,6 +57,28 @@ function comprobarDatos() {
 
     // Si todos los datos son correctos, enviar el formulario
     formulario.submit();
+}
+
+// Función de comprobar los datos del formulario de login (se ejecuta al hacer click en el botón de enviar)
+function comprobarDatosLogin() {
+    // Obtener el formulario usando el id
+    const formularioL = document.getElementById('login_form');
+
+    // Para comprobar si se han rellenado todos los campos
+    if (!formularioL.checkValidity()) {
+        alert("Por favor, completa todos los campos requeridos.");
+        return;
+    }
+    const emailL = document.getElementById("email").value;
+
+    // Validar el correo electrónico
+    if (!validarEmail(emailL)) {
+        alert("Introduce un email válido.");
+        return;
+    }
+
+    // Si todo está correcto, enviar el formulario
+    formularioL.submit();
 }
 
 // Función para validar el nombre (solo letras y espacios)
