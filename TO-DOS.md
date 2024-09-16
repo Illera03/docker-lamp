@@ -73,3 +73,24 @@ El proyecto deber seguir una estructura concreta, formada por URLs, IDs de formu
 • localhost:81/item/{x}/delete
 
     ◦ id boton: item_delete_submit
+
+## REQUISITOS DE ENTREGA
+
+El sistema debe estar disponible en un repositorio GitHub público y debe contener:
+
+◦ Un archivo en texto plano (README.md2), que respete la sintaxis Markdown3 que incluya:
+
+    ▪ Los nombres de las personas que forman el grupo.
+
+    ▪ Instrucciones detalladas de como desplegar el proyecto mediante Docker.
+
+◦ Un archivo de texto (.pdf) con instrucciones detalladas de cómo usar el sistema, incluyendo
+capturas de pantalla.
+
+◦ Los archivos Docker necesarios (Dockerfile, docker-compose)
+
+◦ Los archivos HTML, PHP, JavaScript y CSS correspondientes.
+
+◦ El script (.sql) que permita restaurar la base de datos MariaDB.
+
+◦ Los archivos creados deben estar comentados indicando los principales pasos que se realizan.
