@@ -12,6 +12,7 @@ body {
 
 form {
     margin-top: 20px;
+    font-weight: bold;
 }
 
 label {
@@ -27,16 +28,32 @@ input {
     border : 1px solid #ccc;
 }
 
-button {
+.register_button {
     padding: 10px 15px;
     background-color: #4CAF50;
     color: white;
     border: none;
     cursor: pointer;
     border-radius: 10px;
-    align-items: center;    
+    align-items: center;
+    font-weight: bold;    
 }
 
-button:hover { /* El color del botón al pasar el ratón por encima */
+.register_button:hover { /* El color del botón al pasar el ratón por encima */
     background-color: #45a049;
+}
+.back_button {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+.back_button:hover {
+    background-color: #0056b3;
 }
