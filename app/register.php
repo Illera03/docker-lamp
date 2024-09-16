@@ -1,4 +1,5 @@
 <?php
+    // php para el registro
   
   // phpinfo();
 
