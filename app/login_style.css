@@ -1,0 +1,90 @@
+/* Estilos para la página de iniciar sesión */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: #f4f4f4;
+}
+.title {
+    display: flex;
+    align-items: center; 
+    font-family: 'Arial'; 
+    font-size: 2em; 
+}
+
+/*.icon {
+    width: 60px; 
+    height: auto;
+    margin-right: 10px; 
+    margin-left: 10px;
+    border-radius: 15px;
+}*/
+
+h2 {
+    margin-top: 0;
+    color: #333;
+}
+
+form {
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input {
+    margin-bottom: 10px;
+    padding: 5px;
+    width: 200px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+}
+
+.login_button {
+    padding: 10px 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+.login_button:hover {
+    background-color: #45a049;
+}
+
+a {
+    margin-top: 10px;
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+.back_button {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.back_button:hover {
+    background-color: #0056b3;
+}

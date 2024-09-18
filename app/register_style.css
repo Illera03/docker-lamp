@@ -7,8 +7,23 @@ body {
     flex-direction: column;
     justify-content: flex-start; /* Alinea el contenido al inicio del eje principal (columna) */
     align-items: center; /* Centra el contenido */
+    background-color: #f4f4f4;
     
 }
+.title {
+    display: flex;
+    align-items: center; 
+    font-family: 'Arial'; 
+    font-size: 2em; 
+}
+
+/*.icon {
+    width: 60px; 
+    height: auto;
+    margin-right: 10px; 
+    margin-left: 10px;
+    border-radius: 15px;
+}*/
 
 form {
     margin-top: 20px;
