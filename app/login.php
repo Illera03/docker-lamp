@@ -25,9 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         // Verificar la contraseña
         if ($password === $user['password']) {
-            // Contraseña correcta, crear sesión
-            $_SESSION['user_id'] = $user['id'];
-            $_SESSION['username'] = $user['nombre'];
+            // Contraseña correcta, iniciar sesión
             
             $id = $user['id'];
             header("Location: modify.php?id=$id");
