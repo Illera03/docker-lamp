@@ -1,10 +1,10 @@
 // FICHERO DE VALIDACIONES
 
 
-// Función de comprobar los datos del formulario de registro (se ejecuta al hacer click en el botón de enviar)
+// Función de comprobar los datos del formulario de modificacion (se ejecuta al hacer click en el botón de enviar)
 function comprobarDatos() {
     // Obtener el formulario usando el id
-    const formulario = document.getElementById('register_form');
+    const formulario = document.getElementById('modify_form');
 
 
     // Para comprobar si se han rellenado todos los campos
@@ -58,7 +58,6 @@ function comprobarDatos() {
     // Si todos los datos son correctos, enviar el formulario
     formulario.submit();
 }
-
 
 // Función para validar el nombre (solo letras y espacios)
 function validarNombre(nombre) {

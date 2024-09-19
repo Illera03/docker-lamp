@@ -1,0 +1,74 @@
+/* Estilos para la página de registro */
+
+body {
+    font-family: Arial;
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Alinea el contenido al inicio del eje principal (columna) */
+    align-items: center; /* Centra el contenido */
+    background-color: #f4f4f4;
+    
+}
+.title {
+    display: flex;
+    align-items: center; 
+    font-family: 'Arial'; 
+    font-size: 2em; 
+}
+
+/*.icon {
+    width: 60px; 
+    height: auto;
+    margin-right: 10px; 
+    margin-left: 10px;
+    border-radius: 15px;
+}*/
+
+form {
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input {
+    margin-bottom: 10px;
+    padding: 5px;
+    width: 200px;
+    border-radius: 10px;
+    border : 1px solid #ccc;
+}
+
+.user_modify_button {
+    padding: 10px 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+    align-items: center;
+    font-weight: bold;    
+}
+
+.user_modify_button:hover { /* El color del botón al pasar el ratón por encima */
+    background-color: #45a049;
+}
+.back_button {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+.back_button:hover {
+    background-color: #0056b3;
+}

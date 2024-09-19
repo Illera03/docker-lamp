@@ -28,14 +28,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Contraseña correcta, iniciar sesión
             
             $id = $user['id'];
-            header("Location: modify.php?id=$id");            exit();
+            header("Location: modify.php?id=$id");            
+            exit();
         } else {
-            echo "Contraseña incorrecta.";
+            
+            echo "<h3>Contraseña incorrecta.</h3>";
         }
     } else {
         echo "No existe ningún usuario con ese email.";
     }
-} else {
-    include('login.html'); // Incluir el formulario de login si no se ha enviado el formulario
-}
+} 
+include('login.html'); // Incluir el formulario de login si no se ha enviado el formulario
+
 ?>
