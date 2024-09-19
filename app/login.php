@@ -29,7 +29,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['username'] = $user['nombre'];
             
-            header("Location: /user/{$_SESSION['user_id']}/modify.php"); // Redirigir al perfil de usuario autenticado para modificar datos
+            $id = $user['id'];
+            header("Location: modify.php?id=$id");
             exit();
         } else {
             echo "Contraseña incorrecta.";
