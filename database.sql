@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `usuarios`
+-- Estructura de tabla para la tabla `usuarios y juegos`
 --
 
 CREATE TABLE usuarios (
@@ -37,6 +37,24 @@ CREATE TABLE usuarios (
     password VARCHAR(255)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+
+CREATE TABLE  bibliojuegos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+CREATE TABLE juego (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100),
+    precio INT NOT NULL,
+    fecha_lanzamiento DATE,
+    desarrolladora VARCHAR(100),
+    genero VARCHAR(100)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+ALTER TABLE juego
+    ADD FOREIGN KEY (id) REFERENCES bibliojuegos(id); 
 --
 -- Volcado de datos para la tabla `usuarios`
 --
