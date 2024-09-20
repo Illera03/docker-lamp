@@ -13,9 +13,9 @@ formulario debe incluir ejemplos claros):
 
     ◦ Email sólo aceptará formatos de email válidos (ejemplo@servidor.extensión).
 
-• Identificación de usuarios en base a un nombre de usuario y una contraseña.
+• ## (HECHO) ##Identificación de usuarios en base a un nombre de usuario y una contraseña.
 
-• Modificación de datos del usuario identificado (hay que volver a realizar las comprobaciones
+• ## (HECHO) ## Modificación de datos del usuario identificado (hay que volver a realizar las comprobaciones
 correspondientes a los formatos).
 
 • Posibilidad de añadir elementos al sistema. Cada elemento debe tener 5 campos de datos.

@@ -5,12 +5,19 @@ require_once "db_connection.php"; // Conexión a la base de datos
 include("modify.html"); // Incluir el formulario
 
 // Verificar si se recibió el ID del usuario
-if (isset($_GET["id"])) {
+/*if (isset($_GET["id"])) {
     $id = $_GET["id"];
     $_SESSION["id"] = $id;
 }else {
     echo "No se ha recibido el ID del usuario.";
-} 
+} */
+// Verificar si el ID del usuario está en la sesión
+if (isset($_SESSION['user_id'])) {
+    $id = $_SESSION['user_id'];
+} else {
+    die("No se ha encontrado el ID del usuario en la sesión.");
+}
+
     
     // Verificar si el formulario fue enviado
     if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -25,15 +32,13 @@ if (isset($_GET["id"])) {
         // Validar que todos los campos están completos
         if (!empty($name) && !empty($dni) && !empty($phone) && !empty($birthdate) && !empty($email) && !empty($password)) {
             // Preparar la consulta para actualizar los datos del usuario
-            $query = "UPDATE usuarios SET nombre = ?, dni = ?, telefono = ?, fecha_nacimiento = ?, email = ?, contrasena = ? WHERE id = ?";
+            $query = "UPDATE usuarios SET nombre = ?, dni = ?, telefono = ?, fecha_nacimiento = ?, email = ?, password = ? WHERE id = ?";
             $stmt = $conn->prepare($query);
             $id = $_SESSION["id"];
             $stmt->bind_param("ssssssi", $name, $dni, $phone, $birthdate, $email, $password, $id);
-
             // Ejecutar la consulta
             if ($stmt->execute()) {
                 echo "Datos actualizados correctamente.";
-                //header("Location: index.php");
             } else {
                 echo "Error al actualizar los datos: " . $stmt->error;
             }
@@ -86,14 +91,13 @@ if (isset($_GET["id"])) {
                 <td>{$row["telefono"]}</td>
                 <td>{$row["fecha_nacimiento"]}</td>
                 <td>{$row["email"]}</td>
-                <td>{$row["contrasena"]}</td>
+                <td>{$row["password"]}</td>
               </tr>";
     } else {
         echo "<tr><td colspan=7>No se encontraron datos para el usuario con ID: $id</td></tr>";
     }
 
     echo "</table>";
-
 
 mysqli_close($conn); // Cerrar la conexión a la base de datos
 ?>

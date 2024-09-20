@@ -28,6 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Contraseña correcta, iniciar sesión
             
             $id = $user['id'];
+            $_SESSION['user_id'] = $user['id'];
             header("Location: modify.php?id=$id");            
             exit();
         } else {
