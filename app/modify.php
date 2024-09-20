@@ -28,7 +28,7 @@ if (isset($_GET["id"])) {
             // Ejecutar la consulta
             if ($stmt->execute()) {
                 echo "Datos actualizados correctamente.";
-                header("Location: index.php");
+                //header("Location: index.php");
             } else {
                 echo "Error al actualizar los datos: " . $stmt->error;
             }
