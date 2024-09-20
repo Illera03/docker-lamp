@@ -1,12 +1,16 @@
 <?php
 
+session_start(); // Iniciar la sesión
 require_once "db_connection.php"; // Conexión a la base de datos
 include("modify.html"); // Incluir el formulario
 
 // Verificar si se recibió el ID del usuario
 if (isset($_GET["id"])) {
     $id = $_GET["id"];
- 
+    $_SESSION["id"] = $id;
+}else {
+    echo "No se ha recibido el ID del usuario.";
+} 
     
     // Verificar si el formulario fue enviado
     if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -23,6 +27,7 @@ if (isset($_GET["id"])) {
             // Preparar la consulta para actualizar los datos del usuario
             $query = "UPDATE usuarios SET nombre = ?, dni = ?, telefono = ?, fecha_nacimiento = ?, email = ?, contrasena = ? WHERE id = ?";
             $stmt = $conn->prepare($query);
+            $id = $_SESSION["id"];
             $stmt->bind_param("ssssssi", $name, $dni, $phone, $birthdate, $email, $password, $id);
 
             // Ejecutar la consulta
@@ -88,9 +93,7 @@ if (isset($_GET["id"])) {
     }
 
     echo "</table>";
-}else {
-    echo "No se ha recibido el ID del usuario.";
-}
+
 
 mysqli_close($conn); // Cerrar la conexión a la base de datos
 ?>
