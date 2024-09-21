@@ -11,6 +11,8 @@ include("modify.html"); // Incluir el formulario
 }else {
     echo "No se ha recibido el ID del usuario.";
 } */
+
+
 // Verificar si el ID del usuario está en la sesión
 if (isset($_SESSION['user_id'])) {
     $id = $_SESSION['user_id'];
@@ -32,13 +34,18 @@ if (isset($_SESSION['user_id'])) {
         // Validar que todos los campos están completos
         if (!empty($name) && !empty($dni) && !empty($phone) && !empty($birthdate) && !empty($email) && !empty($password)) {
             // Preparar la consulta para actualizar los datos del usuario
+
             $query = "UPDATE usuarios SET nombre = ?, dni = ?, telefono = ?, fecha_nacimiento = ?, email = ?, password = ? WHERE id = ?";
             $stmt = $conn->prepare($query);
             $id = $_SESSION["id"];
             $stmt->bind_param("ssssssi", $name, $dni, $phone, $birthdate, $email, $password, $id);
             // Ejecutar la consulta
             if ($stmt->execute()) {
-                echo "Datos actualizados correctamente.";
+                if ($stmt->affected_rows > 0) {
+                    echo "Datos actualizados correctamente.";
+                } else {
+                    echo "No se realizaron cambios en los datos.";
+                }
             } else {
                 echo "Error al actualizar los datos: " . $stmt->error;
             }
@@ -46,60 +53,8 @@ if (isset($_SESSION['user_id'])) {
             echo "Por favor, completa todos los campos.";
         }
     }
-
-    // Consultar los datos del usuario con el ID específico
-    $query = mysqli_query($conn, "SELECT * FROM usuarios WHERE id = $id") or die (mysqli_error($conn));
-
-    // Estilo de la tabla
-    echo "<style>
-        table {
-            margin: 20px auto;
-            border-collapse: collapse;
-            font-family: Arial;
-            width: 80%;
-        }
-        th, td {
-            padding: 8px;
-            text-align: left;
-            border: 1px solid #ddd;
-        }
-        th {
-            background-color: #f4f4f4;
-        }
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-    </style>";
-
-    // Mostrar la tabla con los datos del usuario específico
-    echo "<table>";
-    echo "<tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>DNI</th>
-            <th>Teléfono</th>
-            <th>Fecha de Nacimiento</th>
-            <th>Email</th>
-            <th>Contraseña</th>
-          </tr>";
-
-    if ($row = mysqli_fetch_array($query)) {
-        echo "<tr>
-                <td>{$row["id"]}</td>
-                <td>{$row["nombre"]}</td>
-                <td>{$row["dni"]}</td>
-                <td>{$row["telefono"]}</td>
-                <td>{$row["fecha_nacimiento"]}</td>
-                <td>{$row["email"]}</td>
-                <td>{$row["password"]}</td>
-              </tr>";
-    } else {
-        echo "<tr><td colspan=7>No se encontraron datos para el usuario con ID: $id</td></tr>";
-    }
-
-    echo "</table>";
-
-mysqli_close($conn); // Cerrar la conexión a la base de datos
+    
+    mysqli_close($conn); // Cerrar la conexión a la base de datos
 ?>
 
 

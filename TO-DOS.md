@@ -49,28 +49,31 @@ El proyecto deber seguir una estructura concreta, formada por URLs, IDs de formu
 
     ◦ id boton: login_submit
 
-• localhost:81/user/{x}/modify
-◦ id formulario: user_modify_form
+• localhost:81/show_user?user={x}
+
+• localhost:81/modify_user?user={x}
+
+    ◦ id formulario: user_modify_form
 
     ◦ id boton: user_modify_submit
 
 • localhost:81/items
 
-• localhost:81/items/add
+• localhost:81/add_item
 
     ◦ id formulario: item_add_form
 
     ◦ id boton: item_add_submit
 
-• localhost:81/item/{x}
+• localhost:81/show_item?item={x}
 
-• localhost:81/item/{x}/modify
+• localhost:81/modify_item?item={x}
 
     ◦ id formulario: item_modify_form
 
     ◦ id boton: item_modify_submit
 
-• localhost:81/item/{x}/delete
+• localhost:81/delete_item?item={x}
 
     ◦ id boton: item_delete_submit
 

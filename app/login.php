@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             
             $id = $user['id'];
             $_SESSION['user_id'] = $user['id'];
-            header("Location: modify.php?id=$id");            
+            header("Location: user.php?id=$id");            
             exit();
         } else {
             

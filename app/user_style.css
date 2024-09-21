@@ -1,14 +1,13 @@
 /* Estilos para la página de registro */
 
 body {
-    font-family: Arial;
+    font-family: Arial, sans-serif;
     margin: 20px;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start; /* Alinea el contenido al inicio del eje principal (columna) */
-    align-items: center; /* Centra el contenido */
+    justify-content: flex-start;
+    align-items: center;
     background-color: #f4f4f4;
-    
 }
 .title {
     display: flex;
@@ -25,6 +24,12 @@ body {
     border-radius: 15px;
 }*/
 
+h2 {
+    margin-top: 0;
+    color: #333;
+    margin-bottom: 120px;
+}
+
 form {
     margin-top: 20px;
     font-weight: bold;
@@ -40,23 +45,26 @@ input {
     padding: 5px;
     width: 200px;
     border-radius: 10px;
-    border : 1px solid #ccc;
+    border: 1px solid #ccc;
 }
 
-.register_button {
+.mod_button {
     padding: 10px 15px;
     background-color: #4CAF50;
     color: white;
     border: none;
     cursor: pointer;
     border-radius: 10px;
-    align-items: center;
-    font-weight: bold;    
+    font-weight: bold;
+    text-decoration: none;
 }
 
-.register_button:hover { /* El color del botón al pasar el ratón por encima */
+
+.mod_button:hover {
     background-color: #45a049;
 }
+
+
 .back_button {
     position: absolute;
     top: 10px;
@@ -69,10 +77,11 @@ input {
     cursor: pointer;
     font-size: 16px;
 }
+
 .back_button:hover {
     background-color: #0056b3;
 }
-.register_table {
+.user_table {
     margin-top: 120px;
     border-collapse: collapse;
     font-family: Arial, sans-serif;

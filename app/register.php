@@ -31,29 +31,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 /// Mostrar la tabla de usuarios registrados (ID y Nombre)
 $query = mysqli_query($conn, "SELECT * FROM usuarios") or die (mysqli_error($conn));
 
-// Estilo de la tabla
-echo '<style>
-    table {
-        margin: 20px auto;
-        border-collapse: collapse;
-        font-family: Arial;
-        align: center;
-        width: content;
-    }
-    th, td {
-        padding: 8px;
-        text-align: left;
-        border: 1px solid #ddd;
-    }
-    th {
-        background-color: #f4f4f4;
-    }
-    tr:nth-child(even) {
-        background-color: #f9f9f9;
-    }
-</style>';
 
-echo '<table>';
+echo '<table class="register_table">';
 echo '<tr><th>ID</th><th>Nombre</th></tr>';
 
 while ($row = mysqli_fetch_array($query)) {
