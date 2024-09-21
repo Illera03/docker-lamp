@@ -37,7 +37,6 @@ if (isset($_SESSION['user_id'])) {
 
             $query = "UPDATE usuarios SET nombre = ?, dni = ?, telefono = ?, fecha_nacimiento = ?, email = ?, password = ? WHERE id = ?";
             $stmt = $conn->prepare($query);
-            $id = $_SESSION["id"];
             $stmt->bind_param("ssssssi", $name, $dni, $phone, $birthdate, $email, $password, $id);
             // Ejecutar la consulta
             if ($stmt->execute()) {
