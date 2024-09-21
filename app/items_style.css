@@ -1,0 +1,74 @@
+/* Estilos para la página inicial */
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Alinea el contenido al inicio del eje principal (columna) */
+    align-items: center; /* Centra el contenido en el eje transversal (horizontal) */
+    height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+.title {
+    display: flex;
+    align-items: center; 
+    font-family: 'Arial'; 
+    font-size: 2em; 
+}
+
+/*.icon {
+    width: 60px; 
+    height: auto;
+    margin-right: 10px; 
+    margin-left: 10px;
+    border-radius: 15px;
+}*/
+h1 {
+    margin-top: 20px; /* Añadir un margen superior para separar del borde superior */
+}
+.container {
+    margin-top: 50px; /* Añadir un margen superior para separar del h1 */
+    text-align: center;
+}
+.button {
+    display: block;
+    margin: 10px 0;
+    padding: 10px 20px;
+    font-size: 16px;
+    text-decoration: none;
+    color: white;
+    background-color: #007BFF;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.button:hover {
+    background-color: #0056b3;
+}.games_table {
+    margin-top: 120px;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+    width: 80%;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+    border-radius: 10px; /* Bordes redondeados */
+    overflow: hidden; /* Asegura que los bordes redondeados funcionen con la tabla */
+}
+
+th, td {
+    padding: 12px 15px; /* Más espacio interno para mejor legibilidad */
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+th {
+    background-color: #0056b3; 
+    color: white; 
+    text-transform: uppercase; 
+    letter-spacing: 0.05em; 
+}
+
+td {
+    color: #333; /* Color de texto más oscuro */
+    font-size: 14px; /* Tamaño de texto moderado */
+}

@@ -97,3 +97,13 @@ capturas de pantalla.
 ◦ El script (.sql) que permita restaurar la base de datos MariaDB.
 
 ◦ Los archivos creados deben estar comentados indicando los principales pasos que se realizan.
+
+◦items
+
+    ◦add item
+
+    ◦mostrar tabla seleccionable (2 columnas)
+
+        ◦ show item (muestra el item seleccionado)
+            ◦ modify (boton)
+            ◦ delete (boton)

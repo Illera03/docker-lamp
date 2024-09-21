@@ -37,21 +37,13 @@ CREATE TABLE usuarios (
     password VARCHAR(255)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-
-CREATE TABLE biblioteca_de_juegos (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(100)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-CREATE TABLE juego (
+CREATE TABLE juegos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100),
     fecha_lanzamiento DATE,
     genero VARCHAR(100),
     nota FLOAT,
-    precio FLOAT,
-    bibliojuego_id INT,
-    FOREIGN KEY (bibliojuego_id) REFERENCES biblioteca_de_juegos(id) ON DELETE CASCADE
+    precio FLOAT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 --
 -- Volcado de datos para la tabla `usuarios`
@@ -62,35 +54,19 @@ INSERT INTO `usuarios` (`id`, `nombre`) VALUES
 (2, 'aitor');
 
 --
--- Volcado de datos para la tabla `bibliojuegos`
---
-
-INSERT INTO `biblioteca_de_juegos` (`nombre`) VALUES
-('The Legend of Zelda: Breath of the Wild'),
-('Super Mario Odyssey'),
-('Red Dead Redemption 2'),
-('God of War'),
-('The Witcher 3: Wild Hunt'),
-('Minecraft'),
-('Fortnite'),
-('Overwatch'),
-('Dark Souls III'),
-('Animal Crossing: New Horizons');
-
---
 -- Volcado de datos para la tabla `juego`
 --
-INSERT INTO `juego` (`nombre`, `fecha_lanzamiento`, `genero`, `nota`, `precio`, `bibliojuego_id`) VALUES
-('The Legend of Zelda: Breath of the Wild', '2017-03-03', 'Aventura', 4.9, 59.99, 1),
-('Super Mario Odyssey', '2017-10-27', 'Plataformas', 4.8, 59.99, 2),
-('Red Dead Redemption 2', '2018-10-26', 'Acción/Aventura', 4.7, 69.99, 3),
-('God of War', '2018-04-20', 'Acción/Aventura', 4.9, 59.99, 4),
-('The Witcher 3: Wild Hunt', '2015-05-19', 'RPG', 4.9, 49.99, 5),
-('Minecraft', '2011-11-18', 'Sandbox', 4.6, 26.95, 6),
-('Fortnite', '2017-07-25', 'Battle Royale', 4.5, 0.00, 7),
-('Overwatch', '2016-05-24', 'Shooter', 4.4, 39.99, 8),
-('Dark Souls III', '2016-03-24', 'RPG', 4.7, 39.99, 9),
-('Animal Crossing: New Horizons', '2020-03-20', 'Simulación', 4.8, 59.99, 10);
+INSERT INTO `juegos` (`nombre`, `fecha_lanzamiento`, `genero`, `nota`, `precio`) VALUES
+('The Legend of Zelda: Breath of the Wild', '2017-03-03', 'Aventura', 4.9, 59.99),
+('Super Mario Odyssey', '2017-10-27', 'Plataformas', 4.8, 59.99),
+('Red Dead Redemption 2', '2018-10-26', 'Acción/Aventura', 4.7, 69.99),
+('God of War', '2018-04-20', 'Acción/Aventura', 4.9, 59.99),
+('The Witcher 3: Wild Hunt', '2015-05-19', 'RPG', 4.9, 49.99),
+('Minecraft', '2011-11-18', 'Sandbox', 4.6, 26.95),
+('Fortnite', '2017-07-25', 'Battle Royale', 4.5, 0.00),
+('Overwatch', '2016-05-24', 'Shooter', 4.4, 39.99),
+('Dark Souls III', '2016-03-24', 'RPG', 4.7, 39.99),
+('Animal Crossing: New Horizons', '2020-03-20', 'Simulación', 4.8, 59.99);
 
 --
 -- Índices para tablas volcadas
