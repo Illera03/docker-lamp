@@ -20,7 +20,7 @@ correspondientes a los formatos).
 
 • Posibilidad de añadir elementos al sistema. Cada elemento debe tener 5 campos de datos.
 
-• Generación de un listado de los elementos que se encuentren en la Base de Datos. En el listado se
+• ## (HECHO) ## Generación de un listado de los elementos que se encuentren en la Base de Datos. En el listado se
 deben mostrar dos de los 5 campos que tiene cada elemento.
 
 • Posibilidad de modificar datos de los elementos. A partir del listado, debe poderse seleccionar uno
@@ -107,3 +107,6 @@ capturas de pantalla.
         ◦ show item (muestra el item seleccionado)
             ◦ modify (boton)
             ◦ delete (boton)
+
+Conseguir hacerlo sin sesion, y solo con url
+Para el modify, intentar meter todo el formulario en php
