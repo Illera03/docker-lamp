@@ -2,8 +2,8 @@
   require_once "db_connection.php"; 
   include('items.html');
   
-  // Consulta para obtener los juegos y sus notas
-  $query = "SELECT nombre, nota FROM juego"; 
+  // Consulta para obtener los juegos, sus notas y el ID
+  $query = "SELECT id, nombre, nota FROM juegos"; 
   $result = $conn->query($query);
   
   // Verifica si hay resultados
@@ -13,7 +13,6 @@
       echo '<tr>';
       echo '<th>Nombre del Juego</th>';
       echo '<th>Nota</th>';
-      echo '<th>Acciones</th>'; // Para modificar y eliminar
       echo '</tr>';
       echo '</thead>';
       echo '<tbody>';
@@ -21,12 +20,9 @@
       // Iterar sobre los resultados y crear las filas de la tabla
       while ($row = $result->fetch_assoc()) {
           echo '<tr>';
-          echo '<td>' . htmlspecialchars($row['nombre']) . '</td>'; // Nombre del juego
-          echo '<td>' . htmlspecialchars($row['nota']) . '</td>';   // Nota
-          echo '<td>';
-          echo '<a href="modify_item?item=' . $row['id'] . '">Modificar</a> | ';
-          echo '<a href="delete_item?item=' . $row['id'] . '">Eliminar</a>'; // Botones para modificar y eliminar
-          echo '</td>';
+          // Hacemos que el nombre del juego sea un enlace hacia show_item.php con el id del juego
+          echo '<td><a href="show_item.php?id=' . $row['id'] . '">' . htmlspecialchars($row['nombre']) . '</a></td>';
+          echo '<td>' . htmlspecialchars($row['nota']) . '</td>';
           echo '</tr>';
       }
   
@@ -37,7 +33,4 @@
   }
   
   $conn->close(); // Cerrar la conexión
-  ?>
-  
-
 ?>

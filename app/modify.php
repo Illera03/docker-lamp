@@ -52,7 +52,6 @@ if (isset($_SESSION['user_id'])) {
             echo "Por favor, completa todos los campos.";
         }
     }
-    
     mysqli_close($conn); // Cerrar la conexión a la base de datos
 ?>
 

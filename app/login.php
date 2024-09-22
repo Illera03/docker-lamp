@@ -1,5 +1,5 @@
 <?php
-session_start(); // Iniciar una sesión para poder almacenar datos de usuario
+session_start(); // Iniciar una sesión para poder almacenar datos de usuario  //Todo quitar??
 require_once 'db_connection.php'; // Conexión a la base de datos
 
 // Verificar si se ha enviado el formulario
@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Contraseña correcta, iniciar sesión
             
             $id = $user['id'];
-            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['user_id'] = $user['id'];  //TODO QUITAR??
             header("Location: user.php?id=$id");            
             exit();
         } else {
@@ -38,6 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         echo "No existe ningún usuario con ese email.";
     }
+    
 } 
 include('login.html'); // Incluir el formulario de login si no se ha enviado el formulario
 
