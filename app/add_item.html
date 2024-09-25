@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Añadir Juego</title>
+    <link rel="stylesheet" href="add_item_style.css"> 
+    <script src="validate_add_item.js"></script> <!-- TODO HACEN FALTA VALIDACIONES?-->
+</head>
+<body>
+    <h1>GAMIDON</h1>
+    <h2>Añade un nuevo juego</h2>
+    
+    <!-- Formulario para añadir un nuevo juego -->
+    <form id="item_add_form" action="add_item.php" method="POST">
+        <label for="name">Nombre:</label>
+        <input type="text" id="title" name="name" required placeholder="Nombre del juego"><br> 
+
+        <label for="date">Fecha de lanzamiento:</label>
+        <input type="date" id="date" name="date" required><br> 
+
+        <label for="genre">Género:</label>
+        <input type="text" id="genre" name="genre" required placeholder="Acción, Aventura, etc."><br> 
+
+
+        <label for="rating">Nota:</label>
+        <input type="number" step="0.01" id="rating" name="rating" required placeholder="4.76"><br>
+
+        
+        <label for="price">Precio:</label>
+        <input type="number" step="0.01" id="price" name="price" required placeholder="49.99"><br>
+
+        <!-- Botón para enviar el formulario -->
+        <button class="add_game_button" type="submit" id="item_add_submit">Añadir Juego</button>
+    </form>
+
+    <!-- Botón para ir hacia atrás -->
+    <button class="back_button" onclick="window.location.href='items.php';"><</button>
+
+</body>
+</html>

@@ -43,7 +43,7 @@ input {
     border : 1px solid #ccc;
 }
 
-.register_button {
+.add_game_button {
     padding: 10px 15px;
     background-color: #4CAF50;
     color: white;
@@ -54,7 +54,7 @@ input {
     font-weight: bold;    
 }
 
-.register_button:hover { /* El color del botón al pasar el ratón por encima */
+.add_game_button:hover { /* El color del botón al pasar el ratón por encima */
     background-color: #45a049;
 }
 .back_button {
