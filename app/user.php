@@ -5,13 +5,7 @@
     // Verificar si el parámetro "id" está en la URL
     if (isset($_GET['id'])) {
         $id = intval($_GET['id']); // Convertir el id a un valor entero para mayor seguridad
-
-        // Verificar si el ID del usuario está en la sesión
-        //if (isset($_SESSION['user_id'])) {
-        //    $id = $_SESSION['user_id'];
-        //} else {
-        //    die("No se ha encontrado el ID del usuario en la sesión.");
-        //}
+        
         echo '<a href="modify.php?id=' . $id . '" id="mod_button" class="mod_button">Modificar perfil</a>';
         // Consultar los datos del usuario con el ID específico
         $query = mysqli_query($conn, "SELECT * FROM usuarios WHERE id = $id") or die (mysqli_error($conn));

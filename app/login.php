@@ -1,5 +1,4 @@
 <?php
-session_start(); // Iniciar una sesión para poder almacenar datos de usuario  //Todo quitar??
 require_once 'db_connection.php'; // Conexión a la base de datos
 
 // Verificar si se ha enviado el formulario
@@ -28,7 +27,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Contraseña correcta, iniciar sesión
             
             $id = $user['id'];
-            $_SESSION['user_id'] = $user['id'];  //TODO QUITAR??
             header("Location: user.php?id=$id");            
             exit();
         } else {

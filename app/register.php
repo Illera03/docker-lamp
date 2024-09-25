@@ -28,24 +28,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   }
 }
 
-/// Mostrar la tabla de usuarios registrados (ID y Nombre)
-$query = mysqli_query($conn, "SELECT * FROM usuarios") or die (mysqli_error($conn));
-
-
-echo '<table class="register_table">';
-echo '<tr><th>ID</th><th>Nombre</th></tr>';
-
-while ($row = mysqli_fetch_array($query)) {
-    echo "<tr><td>{$row['id']}</td><td>{$row['nombre']}</td></tr>";
-}
-
-echo '</table>';
-
 mysqli_close($conn); // Cerrar la conexión a la base de datos
-
-
 
 //MEJORAS: 
 // 1. COMPROBAR QUE EL USUARIO NO EXISTA ANTES DE REGISTRARLO (EMAIL ÚNICO)
 ?>
+
 
