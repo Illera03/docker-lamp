@@ -23,11 +23,11 @@ correspondientes a los formatos).
 • ## (HECHO) ## Generación de un listado de los elementos que se encuentren en la Base de Datos. En el listado se
 deben mostrar dos de los 5 campos que tiene cada elemento.
 
-• Posibilidad de modificar datos de los elementos. A partir del listado, debe poderse seleccionar uno
+• ## (HECHO) ## Posibilidad de modificar datos de los elementos. A partir del listado, debe poderse seleccionar uno
 de los elementos, ver sus 5 campos con los valores correspondientes y modificar el valor de
 cualquiera de los campos.
 
-• Posibilidad de eliminar elementos del sistema. A partir del listado, debe poderse seleccionar uno de
+• ## (HECHO) ## Posibilidad de eliminar elementos del sistema. A partir del listado, debe poderse seleccionar uno de
 los elementos y eliminarlo del sistema. El sistema debe pedir confirmación antes de proceder a
 borrar el elemento.
 
@@ -97,16 +97,3 @@ capturas de pantalla.
 ◦ El script (.sql) que permita restaurar la base de datos MariaDB.
 
 ◦ Los archivos creados deben estar comentados indicando los principales pasos que se realizan.
-
-◦items
-
-    ◦add item
-
-    ◦mostrar tabla seleccionable (2 columnas)
-
-        ◦ show item (muestra el item seleccionado)
-            ◦ modify (boton)
-            ◦ delete (boton)
-
-Conseguir hacerlo sin sesion, y solo con url
-Para el modify, intentar meter todo el formulario en php
