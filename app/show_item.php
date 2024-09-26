@@ -29,8 +29,8 @@
 
             // Mostrar botones para modificar y eliminar
             echo '<div class="action_buttons">';
-            echo '<a href="modify_item.php?id=' . $id . '" class="button">Modificar</a> ';
-            echo '<a href="delete_item.php?id=' . $id . '" class="button" onclick="return confirm(\'¿Estás seguro de que quieres eliminar este juego?\')">Eliminar</a>';
+            echo '<a href="modify_item.php?id=' . $id . '" class="button" id="item_modify_submit">Modificar</a> ';
+            echo '<a href="delete_item.php?id=' . $id . '" class="button" id="item_delete_submit "onclick="return confirm(\'¿Estás seguro de que quieres eliminar este juego?\')">Eliminar</a>';
             echo '</div>';
         } else {
             echo 'No se encontró ningún juego con ese ID.';

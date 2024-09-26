@@ -1,4 +1,4 @@
-/* Estilos para la página de modificar */
+/* Estilos para la página de modificar juego */
 
 body {
     font-family: Arial;
@@ -43,7 +43,7 @@ input {
     border : 1px solid #ccc;
 }
 
-.user_modify_button {
+.modify_game_button {
     padding: 10px 15px;
     background-color: #4CAF50;
     color: white;
@@ -54,7 +54,7 @@ input {
     font-weight: bold;    
 }
 
-.user_modify_button:hover { /* El color del botón al pasar el ratón por encima */
+.modify_game_button:hover { /* El color del botón al pasar el ratón por encima */
     background-color: #45a049;
 }
 .back_button {

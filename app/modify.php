@@ -1,8 +1,7 @@
 <?php
 
-session_start(); // Iniciar la sesión
 require_once "db_connection.php"; // Conexión a la base de datos
-include("modify.html"); // Incluir el formulario
+include("modify.html"); // Incluir el html
 
 
 if (isset($_GET['id'])) {
