@@ -8,6 +8,19 @@ include("modify.html"); // Incluir el formulario
 if (isset($_GET['id'])) {
     $id = intval($_GET['id']); // Convertir el id a un valor entero para mayor seguridad
 
+    // datos actuales del usuario
+    $query = "SELECT * FROM usuarios WHERE id = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $user = $result->fetch_assoc();
+    $oldName = $user['nombre'];
+    $oldDni = $user['dni'];
+    $oldPhone = $user['telefono'];
+    $oldBirthdate = $user['fecha_nacimiento'];
+    $oldEmail = $user['email'];
+    $oldPassword = $user['password'];
     
     // Verificar si el formulario fue enviado
     if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -49,22 +62,22 @@ if (isset($_GET['id'])) {
 <form id="modify_form" action="modify.php?id=<?php echo $id; ?>" method="POST">
 
     <label for="name">Nombre: </label>
-    <input type="text" id="name" name="name" required placeholder="Juan Ruiz"><br> 
+    <input type="text" id="name" name="name" required value="<?php echo $oldName; ?>"><br> 
 
     <label for="dni">DNI:</label>
-    <input type="text" id="dni" name="dni" required placeholder="12345678-A"><br> 
+    <input type="text" id="dni" name="dni" required value="<?php echo $oldDni; ?>"><br> 
 
     <label for="phone">Teléfono:</label>
-    <input type="text" id="phone" name="phone" required placeholder="123456789"><br>
+    <input type="text" id="phone" name="phone" required value="<?php echo $oldPhone; ?>"><br>
 
     <label for="birthdate">Fecha de nacimiento:</label>
-    <input type="date" id="birthdate" name="birthdate" required><br> 
+    <input type="date" id="birthdate" name="birthdate" required value="<?php echo $oldBirthdate; ?>"><br> 
 
     <label for="email">Email:</label>
-    <input type="email" id="email" name="email" required placeholder="ejemplo@dominio.com"><br> 
+    <input type="email" id="email" name="email" required value="<?php echo $oldEmail; ?>"><br> 
 
     <label for="password">Contraseña:</label>
-    <input type="password" id="password" name="password" required placeholder="******"><br> <!-- Sin restricciones -->
+    <input type="password" id="password" name="password" required value="<?php echo $oldPassword; ?>"><br> <!-- Sin restricciones -->
 
     <button class="user_modify_button" type="button" id="user_modify_submit" onclick="comprobarDatos()">Modificar datos</button>
 </form>
