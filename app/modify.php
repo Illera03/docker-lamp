@@ -2,7 +2,7 @@
 
 require_once "db_connection.php"; // Conexión a la base de datos
 include("modify.html"); // Incluir el html
-
+//n 
 
 if (isset($_GET['id'])) {
     $id = intval($_GET['id']); // Convertir el id a un valor entero para mayor seguridad
