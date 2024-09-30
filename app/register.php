@@ -2,7 +2,6 @@
   
 require_once 'db_connection.php'; // Conexión a la base de datos
 
-// Incluir la parte del frontend
 include('register.html');
 
 
