@@ -2,23 +2,51 @@
 
 Linux + Apache + MariaDB (MySQL) + PHP 7.2 on Docker Compose. Mod_rewrite enabled by default.
 
-## COMO DESPLEGAR EL PROYECTO MEDIANTE DOCKER: (POR HACER)
+## COMO DESPLEGAR EL PROYECTO MEDIANTE DOCKER:
 
-Enter the following command to start your containers:
-
-```bash
-$ docker-compose up -d
-```
-
-To stop them, use this:
+Para instalar Docker:
 
 ```bash
-$ docker-compose stop
+$ apt install docker.io
 ```
 
-Feel free to make pull requests and help to improve this.
+Docker necesita privilegios de root. Para evitar el uso de sudo:
 
-If you are looking for phpMyAdmin, take a look at [this](https://github.com/celsocelante/docker-lamp/issues/2).
+Crear grupo docker:
+
+```bash
+$ sudo groupadd docker
+```
+
+Añadir usuario actual al grupo docker:
+
+```bash
+$ sudo usermod -aG docker $USER
+```
+
+Construye la imagen web:
+
+```bash
+$ docker build -t="web" .
+```
+
+Instalar docker compose:
+
+```bash
+$ sudo apt install docker-compose
+```
+
+Despliega los servicios mediante
+
+```bash
+$ docker-compose up
+```
+
+Para parar los servicios, en otra terminal,
+
+```bash
+$ docker-compose down
+```
 
 ## INTEGRANTES DEL GRUPO:
 
