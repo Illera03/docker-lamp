@@ -14,6 +14,7 @@ if (isset($_GET['id'])) {
     $stmt->execute();
     $result = $stmt->get_result();
     $user = $result->fetch_assoc();
+    
     $oldName = $user['nombre'];
     $oldDni = $user['dni'];
     $oldPhone = $user['telefono'];
@@ -34,7 +35,6 @@ if (isset($_GET['id'])) {
         // Validar que todos los campos están completos
         if (!empty($name) && !empty($dni) && !empty($phone) && !empty($birthdate) && !empty($email) && !empty($password)) {
             // Preparar la consulta para actualizar los datos del usuario
-
             $query = "UPDATE usuarios SET nombre = ?, dni = ?, telefono = ?, fecha_nacimiento = ?, email = ?, password = ? WHERE id = ?";
             $stmt = $conn->prepare($query);
             $stmt->bind_param("ssssssi", $name, $dni, $phone, $birthdate, $email, $password, $id);

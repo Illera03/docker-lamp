@@ -32,7 +32,7 @@ if (isset($_GET['id'])) {
         $price = mysqli_real_escape_string($conn, $_POST['price']);
 
         // Validar que todos los campos estén completos
-        if (!empty($name) && !empty($genre) && !empty($releaseDate) && !empty($rating) && !empty($price)) {
+        //if (!empty($name) && !empty($genre) && !empty($releaseDate) && !empty($rating) && !empty($price)) {
             // Preparar la consulta para actualizar los datos del juego
             $query = "UPDATE juegos SET nombre = ?, fecha_lanzamiento = ?, genero = ?, nota = ?, precio = ? WHERE id = ?";
             $stmt = $conn->prepare($query);
@@ -48,9 +48,9 @@ if (isset($_GET['id'])) {
             } else {
                 echo "Error al actualizar los datos del juego: " . $stmt->error;
             }
-        } else {
-            echo "Por favor, completa todos los campos.";
-        }
+        //} else {
+            //echo "Por favor, completa todos los campos.";
+        //}
     }
 } else {
     echo 'No se proporcionó ningún ID.';
