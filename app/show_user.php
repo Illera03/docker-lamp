@@ -1,12 +1,12 @@
 <?php
     //session_start(); // Iniciar la sesión
     require_once "db_connection.php"; // Conexión a la base de datos
-    include('user.html');
+    include('show_user.html');
     // Verificar si el parámetro "id" está en la URL
     if (isset($_GET['id'])) {
         $id = intval($_GET['id']); // Convertir el id a un valor entero para mayor seguridad
         
-        echo '<a href="modify.php?id=' . $id . '" id="mod_button" class="mod_button">Modificar perfil</a>';
+        echo '<a href="modify_user.php?id=' . $id . '" id="mod_button" class="mod_button">Modificar perfil</a>';
         // Consultar los datos del usuario con el ID específico
         $query = mysqli_query($conn, "SELECT * FROM usuarios WHERE id = $id") or die (mysqli_error($conn));
 

@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Contraseña correcta, iniciar sesión
             
             $id = $user['id'];
-            header("Location: user.php?id=$id");            
+            header("Location: show_user.php?id=$id");            
             exit();
         } else {
             

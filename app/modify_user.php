@@ -1,7 +1,7 @@
 <?php
 
 require_once "db_connection.php"; // Conexión a la base de datos
-include("modify.html"); // Incluir el html
+include("modify_user.html"); // Incluir el html
 //n 
 
 if (isset($_GET['id'])) {
@@ -58,7 +58,7 @@ if (isset($_GET['id'])) {
     mysqli_close($conn); // Cerrar la conexión a la base de datos
 ?>
 <!-- Se incluye aquí el formulario para poder mandar los datos a la url con el id de la url actual -->
-<form id="modify_form" action="modify.php?id=<?php echo $id; ?>" method="POST">
+<form id="user_modify_form" action="modify_user.php?id=<?php echo $id; ?>" method="POST">
 
     <label for="name">Nombre: </label>
     <input type="text" id="name" name="name" required value="<?php echo $oldName; ?>"><br> 

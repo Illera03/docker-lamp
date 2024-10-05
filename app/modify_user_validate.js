@@ -4,7 +4,7 @@
 // Función de comprobar los datos del formulario de modificacion (se ejecuta al hacer click en el botón de enviar)
 function comprobarDatos() {
     // Obtener el formulario usando el id
-    const formulario = document.getElementById('modify_form');
+    const formulario = document.getElementById('user_modify_form');
 
 
     // Para comprobar si se han rellenado todos los campos
