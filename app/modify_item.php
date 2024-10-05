@@ -60,6 +60,7 @@ mysqli_close($conn); // Cerrar la conexión a la base de datos
 ?>
 
 <!-- Formulario para modificar los datos del juego -->
+<!-- Se incluyen los datos actuales del juego en los campos del formulario -->
 <form id="item_modify_form" action="modify_item.php?id=<?php echo $id; ?>" method="POST">
 
     <label for="name">Nombre del juego: </label>

@@ -16,7 +16,7 @@ function comprobarDatosLogin() {
         return;
     }
 
-    // Si todo está correcto, enviar el formulario
+    // Si todo está correcto, enviar el formulario donde indica el atributo action del formulario
     formularioL.submit();
 }
 

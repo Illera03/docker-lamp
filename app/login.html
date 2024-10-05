@@ -13,6 +13,7 @@
         <img src="img/controller.png" class="icon">
     </h1>
     <h2>Inicio de sesión</h2>
+    <!-- Formulario de inicio de sesión -->
     <form id="login_form" action="login.php" method="POST">
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" required placeholder="Ingresa tu email"><br>
@@ -22,7 +23,7 @@
 
         <button class="login_button" type="button" id="login_submit" onclick="comprobarDatosLogin()">Iniciar Sesión</button>
     </form>
-
+    <!-- Enlace para ir a la página de registro -->
     <a href="register.php">¿No tienes cuenta? Regístrate</a>
     <!-- Botón para ir hacia atrás -->
     <button class="back_button" onclick="window.location.href='index.php';"><</button>

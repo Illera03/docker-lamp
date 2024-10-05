@@ -1,6 +1,5 @@
 // FICHERO DE VALIDACIONES
 
-
 // Función de comprobar los datos del formulario de registro (se ejecuta al hacer click en el botón de enviar)
 function comprobarDatos() {
     // Obtener el formulario usando el id

@@ -14,7 +14,7 @@ if (isset($_GET['id'])) {
     $stmt->execute();
     $result = $stmt->get_result();
     $user = $result->fetch_assoc();
-    
+    // Guardar los valores actuales del usuario 
     $oldName = $user['nombre'];
     $oldDni = $user['dni'];
     $oldPhone = $user['telefono'];
@@ -57,7 +57,8 @@ if (isset($_GET['id'])) {
 }
     mysqli_close($conn); // Cerrar la conexión a la base de datos
 ?>
-<!-- Se incluye aquí el formulario para poder mandar los datos a la url con el id de la url actual -->
+<!-- Formulario para modificar los datos del usuario -->
+<!-- Se incluye aquí el formulario para poder mandar los datos a la url con el id de la url actual, además de poder mostrar los datos actuales -->
 <form id="user_modify_form" action="modify_user.php?id=<?php echo $id; ?>" method="POST">
 
     <label for="name">Nombre: </label>

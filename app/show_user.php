@@ -1,5 +1,4 @@
 <?php
-    //session_start(); // Iniciar la sesión
     require_once "db_connection.php"; // Conexión a la base de datos
     include('show_user.html');
     // Verificar si el parámetro "id" está en la URL
