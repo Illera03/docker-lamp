@@ -13,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $birthdate = mysqli_real_escape_string($conn, $_POST['birthdate']);
   $email = mysqli_real_escape_string($conn, $_POST['email']);
   $password = mysqli_real_escape_string($conn, $_POST['password']);
-  //$password = password_hash($_POST['password'], PASSWORD_DEFAULT); // Encriptar la contraseña (posible mejora de seguridad)
+  //$password = password_hash($_POST['password'], PASSWORD_DEFAULT); //! Algoritmo hash para guardar la contraseña (posible mejora de seguridad)
 
   // Inserción de datos en la base de datos
   $sql = "INSERT INTO usuarios (nombre, dni, telefono, fecha_nacimiento, email, password) 
@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   // Verificar si la inserción de datos fue exitosa
   if (mysqli_query($conn, $sql)) {
-      echo "Nuevo usuario registrado exitosamente.";  //TODO cambiar esto, para que aparezca o mas arriba o con una alerta
+      echo "Nuevo usuario registrado exitosamente.";  
   } else {
       echo "Error: " . mysqli_error($conn); 
   }
@@ -29,8 +29,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 mysqli_close($conn); // Cerrar la conexión a la base de datos
 
-//MEJORAS: 
-// 1. COMPROBAR QUE EL USUARIO NO EXISTA ANTES DE REGISTRARLO (EMAIL ÚNICO)
 ?>
 
 
