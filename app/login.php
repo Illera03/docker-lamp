@@ -4,8 +4,7 @@ require_once 'db_connection.php'; // Conexión a la base de datos
 // Verificar si se ha enviado el formulario
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
-    $password = $_POST['password'];
-
+    $password= $_POST['password'];
     // Consulta para buscar el usuario por email
     $query = "SELECT * FROM usuarios WHERE email = ?";
     $stmt = $conn->prepare($query);
@@ -23,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $user = $result->fetch_assoc();
         
         // Verificar la contraseña
-        if ($password === $user['password']) {
+        if (password_verify($password, $user['password']) ) {
             // Contraseña correcta, iniciar sesión
             
             $id = $user['id'];

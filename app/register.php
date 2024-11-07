@@ -12,12 +12,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $phone = mysqli_real_escape_string($conn, $_POST['phone']);
   $birthdate = mysqli_real_escape_string($conn, $_POST['birthdate']);
   $email = mysqli_real_escape_string($conn, $_POST['email']);
-  $password = mysqli_real_escape_string($conn, $_POST['password']);
-  //$password = password_hash($_POST['password'], PASSWORD_DEFAULT); //! Algoritmo hash para guardar la contraseña (posible mejora de seguridad)
+  //$password = mysqli_real_escape_string($conn, $_POST['password']);
+  $password_hash = password_hash($_POST['password'], PASSWORD_DEFAULT); //! Algoritmo hash para guardar la contraseña (posible mejora de seguridad)
 
   // Inserción de datos en la base de datos
   $sql = "INSERT INTO usuarios (nombre, dni, telefono, fecha_nacimiento, email, password) 
-          VALUES ('$name', '$dni', '$phone', '$birthdate', '$email', '$password')";
+          VALUES ('$name', '$dni', '$phone', '$birthdate', '$email', '$password_hash')";
 
   // Verificar si la inserción de datos fue exitosa
   if (mysqli_query($conn, $sql)) {
