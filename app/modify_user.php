@@ -30,14 +30,15 @@ if (isset($_GET['id'])) {
         $phone = mysqli_real_escape_string($conn, $_POST['phone']);
         $birthdate = mysqli_real_escape_string($conn, $_POST['birthdate']);
         $email = mysqli_real_escape_string($conn, $_POST['email']);
-        $password = mysqli_real_escape_string($conn, $_POST['password']);
+        //$password = mysqli_real_escape_string($conn, $_POST['password']);
+        $password_hash = password_hash($_POST['password'], PASSWORD_DEFAULT); //! Algoritmo hash para guardar la contraseña (posible mejora de seguridad)
 
         // Validar que todos los campos están completos
         if (!empty($name) && !empty($dni) && !empty($phone) && !empty($birthdate) && !empty($email) && !empty($password)) {
             // Preparar la consulta para actualizar los datos del usuario
             $query = "UPDATE usuarios SET nombre = ?, dni = ?, telefono = ?, fecha_nacimiento = ?, email = ?, password = ? WHERE id = ?";
             $stmt = $conn->prepare($query);
-            $stmt->bind_param("ssssssi", $name, $dni, $phone, $birthdate, $email, $password, $id);
+            $stmt->bind_param("ssssssi", $name, $dni, $phone, $birthdate, $email, $password_hash, $id);
             // Ejecutar la consulta
             if ($stmt->execute()) {
                 if ($stmt->affected_rows > 0) {

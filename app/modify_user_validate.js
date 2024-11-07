@@ -54,6 +54,14 @@ function comprobarDatos() {
         return;
     }
     //--------------------------------------------------------------------------------
+     // Validar la contraseña
+     const passwordInput = document.getElementById("password").value;
+     if (!validar_contraseña(passwordInput)) {
+         alert("La contraseña debe tener como mínimo 8 caracteres,una mayuscula y un número");
+         return;
+     }
+     //--------------------------------------------------------------------------------
+    
 
     // Si todos los datos son correctos, enviar el formulario
     formulario.submit();
@@ -82,4 +90,26 @@ function validarEmail(email) {
     // Expresión regular básica para validar el formato del email
     const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return emailPattern.test(email);
+}
+// Función para validar la contraseña
+function validar_contraseña(contraseña) {
+    let rdo = true;
+
+    // Verifica que tenga al menos 8 caracteres
+    if (contraseña.length < 8) {
+        rdo = false;
+    }
+    
+    // Verifica que contenga al menos una letra mayúscula
+    if (!/[A-Z]/.test(contraseña)) {
+        rdo = false;
+    }
+    
+    // Verifica que contenga al menos un número
+    if (!/[0-9]/.test(contraseña)) {
+        rdo = false;
+    }
+
+    // Devuelve el resultado
+    return rdo;
 }
