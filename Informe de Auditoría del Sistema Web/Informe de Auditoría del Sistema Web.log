@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.3.20)  9 NOV 2024 19:06
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.3.20)  9 NOV 2024 20:46
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -440,61 +440,41 @@ LaTeX Warning: No \author given.
 \openout6 = `"Informe de Auditoría del Sistema Web.lot"'.
 
  [2]
-
-LaTeX Warning: File `figures/injection_error.png' not found on input line 89.
-
-
-! Package pdftex.def Error: File `figures/injection_error.png' not found: using
- draft setting.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.89 ...7\textwidth]{figures/injection_error.png}}
-                                                   % Imagen con borde negro
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 8
+<figures/injection-error.png, id=144, 1340.00626pt x 533.995pt>
+File: figures/injection-error.png Graphic file (type png)
+<use figures/injection-error.png>
+Package pdftex.def Info: figures/injection-error.png  used on input line 89.
+(pdftex.def)             Requested size: 338.58632pt x 134.92433pt.
+LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 9
 9.
+
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
-)
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[3]
-Overfull \hbox (74.36894pt too wide) in paragraph at lines 117--118
-\OT1/cmr/m/n/12 Para cada valor de en-trada recibido a trav^^Ses del for-mu-la-
-rio, se aplic^^So \OT1/pcr/m/n/12 mysqli[]real[]escape[]string()
- []
-
-[4] [5] [6] (./Informe de Auditoría del Sistema Web.aux)
+) [3 <./figures/injection-error.png>] [4] [5] (./Informe de Auditoría del Sist
+ema Web.aux)
 Package rerunfilecheck Info: File `"Informe de Auditoría del Sistema Web".out'
  has not changed.
-(rerunfilecheck)             Checksum: 51DE9DF7704AEB77E2195C48A0F0C74E;4685.
+(rerunfilecheck)             Checksum: C572488E36B915469FBEE21F58F73863;4546.
  ) 
 Here is how much of TeX's memory you used:
- 11492 strings out of 480247
- 177208 string characters out of 5896151
- 478250 words of memory out of 5000000
- 29243 multiletter control sequences out of 15000+600000
- 477434 words of font info for 57 fonts, out of 8000000 for 9000
+ 11187 strings out of 480247
+ 174163 string characters out of 5896151
+ 472250 words of memory out of 5000000
+ 28958 multiletter control sequences out of 15000+600000
+ 476404 words of font info for 53 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 60i,8n,63p,580b,1075s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc} </home/jorge/.tex
-live2021/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1200.600pk></usr/share/texli
+ 60i,8n,63p,580b,448s stack positions out of 5000i,500n,10000p,200000b,80000s
+ </home/jorge/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1200.600
+pk>{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texli
 ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/tex
 mf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist
 /fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/
-type1/urw/courier/ucrb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/cou
-rier/ucrr8a.pfb>
-Output written on "Informe de Auditoría del Sistema Web.pdf" (6 pages, 88128 b
-ytes).
+type1/urw/courier/ucrr8a.pfb>
+Output written on "Informe de Auditoría del Sistema Web.pdf" (5 pages, 105446 
+bytes).
 PDF statistics:
- 211 PDF objects out of 1000 (max. 8388607)
- 190 compressed objects within 2 object streams
- 37 named destinations out of 1000 (max. 500000)
- 209 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 195 PDF objects out of 1000 (max. 8388607)
+ 175 compressed objects within 2 object streams
+ 33 named destinations out of 1000 (max. 500000)
+ 206 words of extra memory for PDF output out of 10000 (max. 10000000)
 
