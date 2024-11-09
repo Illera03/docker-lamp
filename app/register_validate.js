@@ -5,7 +5,6 @@ function comprobarDatos() {
     // Obtener el formulario usando el id
     const formulario = document.getElementById('register_form');
 
-
     // Para comprobar si se han rellenado todos los campos
     if (!formulario.checkValidity()) {
         alert("Por favor, completa todos los campos requeridos.");
@@ -56,22 +55,27 @@ function comprobarDatos() {
     // Validar la contraseña
     const passwordInput = document.getElementById("password").value;
     if (!validar_contraseña(passwordInput)) {
-        alert("La contraseña debe tener como mínimo 8 caracteres,una mayuscula y un número");
+        alert("La contraseña debe tener como mínimo 8 caracteres, una mayúscula y un número");
         return;
     }
     //--------------------------------------------------------------------------------
 
+    // Verificar que el token CSRF está presente
+    const csrfToken = document.getElementById('csrf_token').value;
+    if (!csrfToken) {
+        alert("Error: El token CSRF no está presente.");
+        return; // Detener si no hay token
+    }
+    
     // Si todos los datos son correctos, enviar el formulario
     formulario.submit();
 }
-
 
 // Función para validar el nombre (solo letras y espacios)
 function validarNombre(nombre) {
     const nombrePattern = /^[A-Za-z\s]+$/; // Solo letras (mayúsculas o minúsculas) y espacios
     return nombrePattern.test(nombre);
 }
-
 
 function validarDNI(dni) {
     const letras = "TRWAGMYFPDXBNJZSQVHLCKE";
