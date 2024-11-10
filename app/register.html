@@ -6,7 +6,6 @@
         <title>Registro de usuarios</title>
         <link rel="stylesheet" href="register_style.css">
         <script src="register_validate.js"></script>
-        
     </head>
     <body>
         <h1 class="title">
@@ -17,6 +16,11 @@
         <h2>Registro de nuevo usuario</h2>
         <!-- Formulario de registro -->
         <form id="register_form" action="register.php" method="POST">
+            
+            <!-- ------------------ Inicio del token CSRF ------------------ -->
+            <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>"> <!-- Incluir el token CSRF -->
+            <!-- ------------------ Fin del token CSRF ------------------ -->
+
             <label for="name">Nombre:</label>
             <input type="text" id="name" name="name" required placeholder="Juan Ruiz"><br> 
 

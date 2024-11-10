@@ -15,6 +15,11 @@
     <h2>Inicio de sesión</h2>
     <!-- Formulario de inicio de sesión -->
     <form id="login_form" action="login.php" method="POST">
+        
+        <!-- ------------------ Inicio del token CSRF ------------------ -->
+        <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>"> <!-- Incluir el token CSRF -->
+        <!-- ------------------ Fin del token CSRF ------------------ -->
+
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" required placeholder="Ingresa tu email"><br>
 
