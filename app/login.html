@@ -21,11 +21,7 @@
         <label for="password">Contraseña:</label>
         <input type="password" id="password" name="password" required placeholder="******"><br>
 
-        <!-- Campo oculto para el token CSRF -->
-        <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
-
-        <!-- Botón de envío con validación -->
-        <button class="login_button" type="button" onclick="comprobarDatosLogin()">Iniciar Sesión</button>
+        <button class="login_button" type="button" id="login_submit" onclick="comprobarDatosLogin()">Iniciar Sesión</button>
     </form>
     <!-- Enlace para ir a la página de registro -->
     <a href="register.php">¿No tienes cuenta? Regístrate</a>
