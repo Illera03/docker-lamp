@@ -123,19 +123,13 @@ Sin la sanitización de entrada: OWASP ZAP detectó que ciertos campos permitía
 
 \vspace{1em}
 
-\textbf{Conclusiones}
-
-La vulnerabilidad de XSS reflejada fue una amenaza crítica para la aplicación, ya que podía permitir a los atacantes ejecutar código malicioso en el navegador de los usuarios. Gracias a la implementación de sanitización\footnote{Sanitización se refiere al proceso de limpiar o filtrar los datos de entrada para eliminar cualquier contenido malicioso que pudiera comprometer la seguridad del sistema.\cite{def_sanitization_escaping}} y validación estrictas en los campos de entrada y salida, esta vulnerabilidad se ha mitigado de manera efectiva. La aplicación ahora cumple con un estándar de seguridad más alto, protegiendo los datos y la experiencia de los usuarios frente a posibles ataques de inyección de código.
-
-\vspace{1em}
-
 \subsubsection{Inyección SQL}
 La vulnerabilidad CWE-89 corresponde a la inyección SQL, donde un atacante es capaz de insertar o manipular consultas SQL a través de los datos de entrada, en este caso, el parámetro \texttt{id} en la URL. 
 
 \vspace{1em}
 
 \textbf{Causa de la Vulnerabilidad\\} 
-La vulnerabilidad detectada se originaba en el archivo \code{show\_user.php} y fue causada por la construcción dinámica de consultas SQL sin la adecuada sanitización ni parametrización de los datos proporcionados por el usuario. En este caso, el valor del parámetro \texttt{id} se concatenó directamente a la consulta SQL sin protección, lo que permitió la ejecución de código SQL malicioso.
+La vulnerabilidad detectada se originaba en el archivo \code{show\_user.php} y fue causada por la construcción dinámica de consultas SQL sin la adecuada sanitización\footnote{Sanitización se refiere al proceso de limpiar o filtrar los datos de entrada para eliminar cualquier contenido malicioso que pudiera comprometer la seguridad del sistema.\cite{def_sanitization_escaping}} ni parametrización de los datos proporcionados por el usuario. En este caso, el valor del parámetro \texttt{id} se concatenó directamente a la consulta SQL sin protección, lo que permitió la ejecución de código SQL malicioso.
 
 \vspace{1em}
 
@@ -173,6 +167,12 @@ Todas estas soluciones también se han implementado en otros archivos que, aunqu
 
 \textbf{Resultados de la segunda auditoría\\}
 Después de implementar las soluciones descritas, se realizó un segundo análisis con OWASP ZAP. Los resultados fueron positivos: no se detectaron vulnerabilidades de XSS ni otros problemas de inyección.
+
+\vspace{1em}
+
+\textbf{Conclusiones}
+
+Ambas vulnerabilidades fueron una amenaza crítica para la aplicación, ya que podía permitir a los atacantes ejecutar código malicioso en el navegador de los usuarios o insertar consultas SQL a través de los datos de entrada. Gracias a las soluciones implementadas, las vulnerabilidades se han mitigado de manera efectiva. La aplicación ahora cumple con un estándar de seguridad más alto, protegiendo los datos y la experiencia de los usuarios frente a posibles ataques de inyección de código.
 
 \vspace{1em}
 
