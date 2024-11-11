@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.3.20)  11 NOV 2024 19:31
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.3.20)  11 NOV 2024 19:47
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -467,7 +467,7 @@ File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 ) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.129 
+l.133 
        <./figures/injection-error.png>] [5] [6] [7]
 (./Informe de Auditoría del Sistema Web.aux)
 Package rerunfilecheck Info: File `"Informe de Auditoría del Sistema Web".out'
@@ -481,7 +481,7 @@ Here is how much of TeX's memory you used:
  29029 multiletter control sequences out of 15000+600000
  476631 words of font info for 54 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 60i,8n,63p,803b,448s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 60i,8n,63p,689b,448s stack positions out of 5000i,500n,10000p,200000b,80000s
  </home/jorge/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1200.600
 pk>{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texli
 ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/tex
@@ -491,7 +491,7 @@ type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
 ublic/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/am
 sfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8
 a.pfb>
-Output written on "Informe de Auditoría del Sistema Web.pdf" (7 pages, 165286 
+Output written on "Informe de Auditoría del Sistema Web.pdf" (7 pages, 165115 
 bytes).
 PDF statistics:
  246 PDF objects out of 1000 (max. 8388607)

@@ -7,7 +7,7 @@
 \contentsline {subsubsection}{\numberline {3.2.1}Soluciones implementadas}{3}{subsubsection.3.2.1}%
 \contentsline {subsection}{\numberline {3.3}Inyección}{3}{subsection.3.3}%
 \contentsline {subsubsection}{\numberline {3.3.1}Cross-Site Scripting (XSS)}{4}{subsubsection.3.3.1}%
-\contentsline {subsubsection}{\numberline {3.3.2}Inyección SQL}{5}{subsubsection.3.3.2}%
+\contentsline {subsubsection}{\numberline {3.3.2}Inyección SQL}{4}{subsubsection.3.3.2}%
 \contentsline {subsubsection}{\numberline {3.3.3}Soluciones implementadas}{5}{subsubsection.3.3.3}%
 \contentsline {subsection}{\numberline {3.4}Diseño inseguro}{7}{subsection.3.4}%
 \contentsline {subsubsection}{\numberline {3.4.1}Soluciones implementadas}{7}{subsubsection.3.4.1}%
