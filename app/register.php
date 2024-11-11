@@ -27,14 +27,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $birthdate = mysqli_real_escape_string($conn, $_POST['birthdate']);
         $email = mysqli_real_escape_string($conn, $_POST['email']);
         //$password = mysqli_real_escape_string($conn, $_POST['password']);
-        $password_hash = password_hash($_POST['password'], PASSWORD_DEFAULT); //! Algoritmo hash para guardar la contraseña (posible mejora de seguridad)
+        $password_hash = password_hash($_POST['password'], PASSWORD_DEFAULT); //! Algoritmo hash para guardar la contraseña
 
         // Inserción de datos en la base de datos
         $sql = "INSERT INTO usuarios (nombre, dni, telefono, fecha_nacimiento, email, password) 
-                VALUES ('$name', '$dni', '$phone', '$birthdate', '$email', '$password_hash')";
-
+        VALUES (?, ?, ?, ?, ?, ?)";
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_bind_param($stmt, "ssssss", $name, $dni, $phone, $birthdate, $email, $password_hash);
+        mysqli_stmt_execute($stmt);
+        
         // Verificar si la inserción de datos fue exitosa
-        if (mysqli_query($conn, $sql)) {
+        if (mysqli_stmt_execute($stmt)) {
             echo "Nuevo usuario registrado exitosamente.";  
         } else {
             echo "Error: " . mysqli_error($conn); 

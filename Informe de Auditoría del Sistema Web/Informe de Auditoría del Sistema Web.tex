@@ -1,13 +1,14 @@
 \documentclass[a4paper,12pt]{article}
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
-\usepackage[hidelinks]{hyperref}
+\usepackage[colorlinks=true, linkcolor=blue, urlcolor=blue, citecolor=blue, hidelinks]{hyperref}
 \usepackage{amsmath}
 \usepackage[a4paper, left=2cm, right=2cm, top=3cm, bottom=3cm]{geometry}
 \usepackage{titlesec}
 \usepackage{listings}
 \usepackage{color}
 \usepackage{courier} 
+\usepackage{float}
 
 \title{Informe de Auditoría del Sistema Web}
 \date{}  % Se deja vacío para no mostrar la fecha en la portada
@@ -65,9 +66,11 @@
 
 \section{Introducción}
 Este informe detalla la auditoría de seguridad del sistema web utilizando OWASP ZAP, con el objetivo de identificar y mitigar vulnerabilidades.
+\vspace{1em}
 
 \section{Metodología}
 La auditoría se realizó mediante un análisis de ZAP, ejecutando... 
+\vspace{1em}
 
 \section{Vulnerabilidades}
 
@@ -75,44 +78,64 @@ La auditoría se realizó mediante un análisis de ZAP, ejecutando...
 \subsection{Rotura de control de acceso}
 \subsubsection{Soluciones implementadas}
 
+\vspace{1em}
+
+
 
 
 \subsection{Fallos criptográficos}
 \subsubsection{Soluciones implementadas}
 
+\vspace{1em}
+
+
 
 
 \subsection{Inyección}
-En la sección de inyección se ha identificado una amenaza de alto riesgo. La vulnerabilidad detectada corresponde a un ataque de Cross-Site Scripting (XSS), como se puede observar en la Figura \ref{fig:xss_error}.
-\begin{figure}[h]
+\vspace{1em}
+
+\textbf{¿Qué es la inyección?\\}
+La inyección es una vulnerabilidad de seguridad en la que un atacante introduce datos maliciosos en una aplicación, a menudo mediante campos de entrada o URL, logrando manipular comandos o consultas dentro del sistema. Esto permite ejecutar código no autorizado, acceder a datos sensibles o modificar información sin permisos. Un tipo común de inyección es el SQL Injection, que ocurre cuando consultas SQL maliciosas son ejecutadas por la base de datos, generalmente debido a la falta de validación de entrada en la aplicación.\\
+
+En esta sección se ha identificado una amenaza de alto riesgo. La vulnerabilidad detectada corresponde a un ataque de Cross-Site Scripting (XSS) Reflejado, como se puede observar en la Figura \ref{fig:xss_error}.
+
+\begin{figure}[H]
 	\centering
 	\fbox{\includegraphics[width=0.7\textwidth]{figures/injection-error.png}} % Imagen con borde negro
 	\caption{Errores de inyección detectados por ZAP.}
 	\label{fig:xss_error}
 \end{figure}
+\vspace{1em}
 
 \subsubsection{Cross-Site Scripting (XSS)}
-La vulnerabilidad CWE-79 corresponde a Cross-Site Scripting (XSS) Reflejado, que permite a un atacante inyectar código malicioso en los parámetros de entrada del sistema, como los campos de formularios o las URL. Cuando un usuario accede a una URL o un formulario que contiene este código inyectado, el navegador del usuario ejecuta dicho código, lo que puede llevar a la manipulación de datos, el robo de cookies, la ejecución de scripts no autorizados, y otros ataques de seguridad.
+La vulnerabilidad CWE-79 corresponde a Cross-Site Scripting (XSS) Reflejado, que permite a un atacante inyectar código malicioso en los parámetros de entrada del sistema, como los campos de formularios o las URL. Cuando un usuario accede a una URL o un formulario que contiene este código inyectado, el navegador del usuario ejecuta dicho código, lo que puede llevar a la manipulación de datos, el robo de cookies, la ejecución de scripts no autorizados, y otros ataques de seguridad.\cite{owasp_xss}
+
+\vspace{1em}
 
 \textbf{Causa de la vulnerabilidad}
 
 La vulnerabilidad XSS detectada se originaba en el archivo \code{modify\_item.php}, más concretamente en el campo de la fecha de lanzamiento y en otros campos de entrada en el formulario de modificación de un juego. Esto se debía a que los valores de entrada eran reflejados en la respuesta sin la sanitización o validación adecuada, permitiendo a los atacantes inyectar y ejecutar código JavaScript en el navegador del usuario.
 
+\vspace{1em}
+
 \textbf{Pruebas y comportamiento observado}
 
 Sin la sanitización de entrada: OWASP ZAP detectó que ciertos campos permitían la inyección de código JavaScript en los valores de los formularios.\\ Por ejemplo, en el campo de la fecha, se podía ingresar un valor como \\\code{<script>alert(1);</script>}, lo cual provocaba la ejecución de un alert en el navegador.
 
+\vspace{1em}
 
 \textbf{Conclusiones}
 
-La vulnerabilidad de XSS reflejada fue una amenaza crítica para la aplicación, ya que podía permitir a los atacantes ejecutar código malicioso en el navegador de los usuarios. Gracias a la implementación de sanitización y validación estrictas en los campos de entrada y salida, esta vulnerabilidad se ha mitigado de manera efectiva. La aplicación ahora cumple con un estándar de seguridad más alto, protegiendo los datos y la experiencia de los usuarios frente a posibles ataques de inyección de código.
+La vulnerabilidad de XSS reflejada fue una amenaza crítica para la aplicación, ya que podía permitir a los atacantes ejecutar código malicioso en el navegador de los usuarios. Gracias a la implementación de sanitización\footnote{Sanitización se refiere al proceso de limpiar o filtrar los datos de entrada para eliminar cualquier contenido malicioso que pudiera comprometer la seguridad del sistema.\cite{def_sanitization_escaping}} y validación estrictas en los campos de entrada y salida, esta vulnerabilidad se ha mitigado de manera efectiva. La aplicación ahora cumple con un estándar de seguridad más alto, protegiendo los datos y la experiencia de los usuarios frente a posibles ataques de inyección de código.
+
+\vspace{1em}
 
 \subsubsection{Soluciones implementadas}
 Para mitigar la vulnerabilidad de XSS y otros posibles ataques de inyección, se implementaron las siguientes soluciones:
 
 \begin{itemize}
-	\item \textbf{Sanitización de entrada y escapado de salida:\\}
-	Se utilizó la función \code{htmlspecialchars()} en PHP para escapar caracteres especiales (como <, >, \&, ", ') en todas las salidas. Esto asegura que el contenido reflejado en el navegador sea tratado como texto y no como código ejecutable.
+	\item \textbf{Escapado\footnote{Escapado se refiere al proceso de transformar caracteres especiales en una entrada válida para que no sean interpretados como parte del código ejecutable.\cite{def_sanitization_escaping}} de salida:\\}
+	Se utilizó la función \code{htmlspecialchars()} en PHP\footnote{PHP es un lenguaje de código abierto especialmente adecuado para el desarrollo web y que puede ser incrustado en HTML.\cite{def_php}} (Hypertext Preprocessor) para escapar caracteres especiales (como <, >, \&, ", ') en todas las salidas. Esto asegura que el contenido reflejado en el navegador sea tratado como texto y no como código ejecutable.
 	
 	\item \textbf{Validación y sanitización de fecha de lanzamiento:\\} Se implementó una expresión regular (\code{preg\_match}) para asegurarse de que las fechas ingresadas cumplan con el formato \code{YYYY-MM-DD}.
 	
@@ -121,10 +144,13 @@ Para mitigar la vulnerabilidad de XSS y otros posibles ataques de inyección, se
 	\item \textbf{Validación de Campos Numéricos (rating y price):\\} Los valores de rating y price se convirtieron a tipo float usando \code{floatval()} para asegurarse de que se almacenan y procesan correctamente como valores numéricos.
 \end{itemize}
 
+\vspace{1em}
+
 \textbf{Resultados de la Segunda Auditoría}
 
 Después de implementar las soluciones descritas, se realizó un segundo análisis con OWASP ZAP. Los resultados fueron positivos: no se detectaron vulnerabilidades de XSS ni otros problemas de inyección.
 
+\vspace{1em}
 
 \subsection{Diseño inseguro}
 \subsubsection{Soluciones implementadas}
@@ -163,7 +189,19 @@ Después de implementar las soluciones descritas, se realizó un segundo anális
 
 \section{Bibliografía}
 \begin{thebibliography}{9}
-	\bibitem{owasp-xss} OWASP, "Cross-Site Scripting (XSS)", https://owasp.org/www-community/attacks/xss/, accedido el 3 de noviembre de 2024.
+	\bibitem{owasp_injection} owasp.org\\
+	Injection\\ 
+	\url{https://owasp.org/www-community/Injection} (accedido 11/07/2024).
+	
+	\bibitem{owasp_xss} owasp.org\\
+	 Cross-Site Scripting (XSS)\\ \url{https://owasp.org/www-community/attacks/xss/} (accedido 11/07/2024).
+	 
+	\bibitem{def_sanitization_escaping} cwe.mitre.org\\
+	Sanitización y escapeo\\ \url{https://owasp.org/www-community/attacks/xss/} (accedido 11/07/2024). 
+	\bibitem{def_php} php.net\\
+	¿Qué es PHP?\\ \url{https://www.php.net/manual/es/intro-whatis.php} (accedido 11/07/2024).
+	 
+	 
 \end{thebibliography}
 
 

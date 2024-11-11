@@ -22,40 +22,46 @@ if (isset($_GET['id'])) {
     $oldPrice = htmlspecialchars($game['precio'], ENT_QUOTES, 'UTF-8');
 
     // Verificar si el formulario fue enviado
-    if ($_SERVER["REQUEST_METHOD"] === "POST") {
-        // Obtener y validar datos enviados desde el formulario
-        $name = htmlspecialchars(trim($_POST['name']), ENT_QUOTES, 'UTF-8');
-        $releaseDate = trim($_POST['release_date']);
-        $genre = htmlspecialchars(trim($_POST['genre']), ENT_QUOTES, 'UTF-8');
-        $rating = floatval($_POST['rating']);
-        $price = floatval($_POST['price']);
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    // Obtener y validar datos enviados desde el formulario
+    $name = htmlspecialchars(trim($_POST['name']), ENT_QUOTES, 'UTF-8');
+    $releaseDate = trim($_POST['release_date']);
+    $genre = htmlspecialchars(trim($_POST['genre']), ENT_QUOTES, 'UTF-8');
+    $rating = floatval($_POST['rating']);
+    $price = floatval($_POST['price']);
 
-        // Validar formato de fecha
-        if (!preg_match("/^\d{4}-\d{2}-\d{2}$/", $releaseDate)) {
-            echo "Error: Formato de fecha no válido.";
+    // Validar formato de fecha
+    if (!preg_match("/^\d{4}-\d{2}-\d{2}$/", $releaseDate)) {
+        echo "Error: Formato de fecha no válido.";
+    } else {
+        // Verificar que los campos no estén vacíos
+        if (empty($name) || empty($genre) || empty($releaseDate)) {
+            echo "Por favor, completa todos los campos obligatorios.";
+        } 
+        // Validar que rating y price sean mayores que 0 si no son vacíos
+        elseif ($rating < 0 || $rating > 5) {
+            echo "La nota debe ser positiva y menor o igual a 5.";
+        } elseif ($price < 0) {
+            echo "El precio debe ser positivo.";
         } else {
-            // Validar que todos los campos estén completos y sean correctos
-            if (!empty($name) && !empty($genre) && !empty($releaseDate) && $rating > 0 && $price > 0) {
-                // Preparar la consulta para actualizar los datos del juego
-                $query = "UPDATE juegos SET nombre = ?, fecha_lanzamiento = ?, genero = ?, nota = ?, precio = ? WHERE id = ?";
-                $stmt = $conn->prepare($query);
-                $stmt->bind_param("sssddi", $name, $releaseDate, $genre, $rating, $price, $id);
+            // Preparar la consulta para actualizar los datos del juego
+            $query = "UPDATE juegos SET nombre = ?, fecha_lanzamiento = ?, genero = ?, nota = ?, precio = ? WHERE id = ?";
+            $stmt = $conn->prepare($query);
+            $stmt->bind_param("sssddi", $name, $releaseDate, $genre, $rating, $price, $id);
 
-                // Ejecutar la consulta
-                if ($stmt->execute()) {
-                    if ($stmt->affected_rows > 0) {
-                        echo "Datos del juego actualizados correctamente.";
-                    } else {
-                        echo "No se realizaron cambios en los datos del juego.";
-                    }
+            // Ejecutar la consulta
+            if ($stmt->execute()) {
+                if ($stmt->affected_rows > 0) {
+                    echo "Datos del juego actualizados correctamente.";
                 } else {
-                    echo "Error al actualizar los datos del juego: " . $stmt->error;
+                    echo "No se realizaron cambios en los datos del juego.";
                 }
             } else {
-                echo "Por favor, completa todos los campos.";
+                echo "Error al actualizar los datos del juego: " . $stmt->error;
             }
         }
     }
+}
 } else {
     echo 'No se proporcionó ningún ID.';
 }
