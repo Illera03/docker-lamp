@@ -21,14 +21,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         unset($_SESSION['csrf_token']); // Eliminar el token CSRF después de procesarlo
         // ------------------ Fin de la verificación CSRF ------------------
 
-        $name = mysqli_real_escape_string($conn, $_POST['name']);
-        $dni = mysqli_real_escape_string($conn, $_POST['dni']);
-        $phone = mysqli_real_escape_string($conn, $_POST['phone']);
-        $birthdate = mysqli_real_escape_string($conn, $_POST['birthdate']);
+        $nameNoCifrado = mysqli_real_escape_string($conn, $_POST['name']);
+        $dniNoCifrado = mysqli_real_escape_string($conn, $_POST['dni']);
+        $phoneNoCifrado = mysqli_real_escape_string($conn, $_POST['phone']);
+        $birthdateNoCifrado = mysqli_real_escape_string($conn, $_POST['birthdate']);
         $email = mysqli_real_escape_string($conn, $_POST['email']);
         //$password = mysqli_real_escape_string($conn, $_POST['password']);
         $password_hash = password_hash($_POST['password'], PASSWORD_DEFAULT); //! Algoritmo hash para guardar la contraseña
 
+        //obtener clave
+        $encryptionKey = getenv('ENCRYPTION_KEY');
+        //Cifrar datos
+
+        $name = encryptData($nameNoCifrado, $encryptionKey);
+        $dni = encryptData($dniNoCifrado, $encryptionKey);
+        $phone = encryptData($phoneNoCifrado, $encryptionKey);
+        $birthdate = encryptData($birthdateNoCifrado, $encryptionKey);
+        
         // Inserción de datos en la base de datos
         $sql = "INSERT INTO usuarios (nombre, dni, telefono, fecha_nacimiento, email, password) 
         VALUES (?, ?, ?, ?, ?, ?)";
@@ -48,4 +57,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 mysqli_close($conn); // Cerrar la conexión a la base de datos
+# Cifra datos
+function encryptData($data, $key) {
+    $cipherMethod = 'AES-256-CBC';
+    $ivLength = openssl_cipher_iv_length($cipherMethod);
+    $iv = openssl_random_pseudo_bytes($ivLength);
+
+    $encryptedData = openssl_encrypt($data, $cipherMethod, $key, 0, $iv);
+    if ($encryptedData === false) {
+        return false;
+    }
+
+    // Devuelve los datos encriptados junto con el IV en base64
+    return base64_encode($iv . $encryptedData);
+}
 ?>

@@ -16,9 +16,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['csrf_token']) && $_POST['csrf_token'] === $_SESSION['csrf_token']) {
         unset($_SESSION['csrf_token']); // Eliminar el token CSRF después de procesarlo
         // ------------------ Fin de la verificación CSRF ------------------
-
+    
         $email = $_POST['email'];
-        $password= $_POST['password'];
+        $password = $_POST['password']; 
         // Consulta para buscar el usuario por email
         $query = "SELECT * FROM usuarios WHERE email = ?";
         $stmt = $conn->prepare($query);
@@ -34,9 +34,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($result->num_rows > 0) { // si existe al menos un usuario con ese email
             // Obtener los datos del usuario
             $user = $result->fetch_assoc();
-            
             // Verificar la contraseña
-            if (password_verify($password, $user['password']) ) {
+            if (password_verify($password, $user['password'])) {
                 // Contraseña correcta, iniciar sesión
                 
                 $id = $user['id'];

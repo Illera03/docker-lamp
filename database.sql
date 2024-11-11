@@ -29,11 +29,11 @@ SET time_zone = "+00:00";
 
 CREATE TABLE usuarios (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(100),
-    dni VARCHAR(10),
-    telefono VARCHAR(9),
-    fecha_nacimiento DATE,
-    email VARCHAR(100),
+    nombre VARCHAR(200),
+    dni VARCHAR(255),
+    telefono VARCHAR(255),
+    fecha_nacimiento VARCHAR(255),
+    email VARCHAR(200),
     password VARCHAR(255)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
