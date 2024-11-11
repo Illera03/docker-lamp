@@ -97,7 +97,7 @@ La auditoría se realizó mediante un análisis de ZAP, ejecutando...
 \textbf{¿Qué es la inyección?\\}
 La inyección es una vulnerabilidad de seguridad en la que un atacante introduce datos maliciosos en una aplicación, a menudo mediante campos de entrada o URL, logrando manipular comandos o consultas dentro del sistema. Esto permite ejecutar código no autorizado, acceder a datos sensibles o modificar información sin permisos. Un tipo común de inyección es el SQL Injection, que ocurre cuando consultas SQL maliciosas son ejecutadas por la base de datos, generalmente debido a la falta de validación de entrada en la aplicación.\\
 
-En esta sección se ha identificado una amenaza de alto riesgo. La vulnerabilidad detectada corresponde a un ataque de Cross-Site Scripting (XSS) Reflejado, como se puede observar en la Figura \ref{fig:xss_error}.
+En esta sección se han identificado dos amenaza de alto riesgo. Las vulnerabilidades detectadas corresponden a una Inyección SQL y a un ataque de Cross-Site Scripting (XSS) Reflejado, como se puede observar en la Figura \ref{fig:xss_error}.
 
 \begin{figure}[H]
 	\centering
@@ -112,8 +112,7 @@ La vulnerabilidad CWE-79 corresponde a Cross-Site Scripting (XSS) Reflejado, que
 
 \vspace{1em}
 
-\textbf{Causa de la vulnerabilidad}
-
+\textbf{Causa de la vulnerabilidad\\}
 La vulnerabilidad XSS detectada se originaba en el archivo \code{modify\_item.php}, más concretamente en el campo de la fecha de lanzamiento y en otros campos de entrada en el formulario de modificación de un juego. Esto se debía a que los valores de entrada eran reflejados en la respuesta sin la sanitización o validación adecuada, permitiendo a los atacantes inyectar y ejecutar código JavaScript en el navegador del usuario.
 
 \vspace{1em}
@@ -130,24 +129,49 @@ La vulnerabilidad de XSS reflejada fue una amenaza crítica para la aplicación,
 
 \vspace{1em}
 
+\subsubsection{Inyección SQL}
+La vulnerabilidad CWE-89 corresponde a la inyección SQL, donde un atacante es capaz de insertar o manipular consultas SQL a través de los datos de entrada, en este caso, el parámetro \texttt{id} en la URL. 
+
+\vspace{1em}
+
+\textbf{Causa de la Vulnerabilidad\\} 
+La vulnerabilidad detectada se originaba en el archivo \code{show\_user.php} y fue causada por la construcción dinámica de consultas SQL sin la adecuada sanitización ni parametrización de los datos proporcionados por el usuario. En este caso, el valor del parámetro \texttt{id} se concatenó directamente a la consulta SQL sin protección, lo que permitió la ejecución de código SQL malicioso.
+
+\vspace{1em}
+
+\textbf{Pruebas y comportamiento observado\\}
+En el error encontrado, la inyección fue posible al modificar el parámetro de la siguiente manera: \code{1750' AND '1'='1' --}\\
+Esto permitió a OWASP ZAP modificar la consulta SQL ejecutada en el servidor, manipulando los resultados devueltos y accediendo a información que no debía ser revelada. En particular, se manipuló la consulta para obtener datos utilizando una condición booleana que siempre era verdadera, \texttt{'1'='1'}, y luego se comentó el resto de la consulta utilizando \texttt{--}, lo que invalidaba el resto de la consulta SQL.
+
+\vspace{1em}
+
 \subsubsection{Soluciones implementadas}
-Para mitigar la vulnerabilidad de XSS y otros posibles ataques de inyección, se implementaron las siguientes soluciones:
+Para mitigar la vulnerabilidad de XSS se implementaron las siguientes soluciones:
 
 \begin{itemize}
 	\item \textbf{Escapado\footnote{Escapado se refiere al proceso de transformar caracteres especiales en una entrada válida para que no sean interpretados como parte del código ejecutable.\cite{def_sanitization_escaping}} de salida:\\}
 	Se utilizó la función \code{htmlspecialchars()} en PHP\footnote{PHP es un lenguaje de código abierto especialmente adecuado para el desarrollo web y que puede ser incrustado en HTML.\cite{def_php}} (Hypertext Preprocessor) para escapar caracteres especiales (como <, >, \&, ", ') en todas las salidas. Esto asegura que el contenido reflejado en el navegador sea tratado como texto y no como código ejecutable.
 	
-	\item \textbf{Validación y sanitización de fecha de lanzamiento:\\} Se implementó una expresión regular (\code{preg\_match}) para asegurarse de que las fechas ingresadas cumplan con el formato \code{YYYY-MM-DD}.
+	\item \textbf{Validación y sanitización de fecha de lanzamiento:\\} 
+	Se implementó una expresión regular (\code{preg\_match}) para asegurarse de que las fechas ingresadas cumplan con el formato \code{YYYY-MM-DD}.
 	
-	\item \textbf{Sanitización de datos entrantes:\\} Para cada valor de entrada recibido a través del formulario, se aplicó \\ \code{mysqli\_real\_escape\_string()} para evitar que cualquier código especial o malicioso llegue a la base de datos.
+	\item \textbf{Sanitización de datos entrantes:\\} 
+	Para cada valor de entrada recibido a través del formulario, se aplicó \\ \code{mysqli\_real\_escape\_string()} para evitar que cualquier código especial o malicioso llegue a la base de datos.
 	
-	\item \textbf{Validación de Campos Numéricos (rating y price):\\} Los valores de rating y price se convirtieron a tipo float usando \code{floatval()} para asegurarse de que se almacenan y procesan correctamente como valores numéricos.
+	\item \textbf{Validación de Campos Numéricos (rating y price):\\} 
+	Los valores de rating y price se convirtieron a tipo float usando \code{floatval()} para asegurarse de que se almacenan y procesan correctamente como valores numéricos.
 \end{itemize}
+Para mitigar la vulnerabilidad de Inyección SQL se implementaron las siguientes soluciones:
+\begin{itemize}
+	\item \textbf{Uso de consultas preparadas:\\}
+	Se ha utilizado el enfoque de consultas preparadas con declaraciones \code{bind\_param()}. Esto asegura que los parámetros sean tratados de forma segura, separando los datos del código SQL, y evitando así que cualquier entrada maliciosa pueda modificar la estructura de las consultas.
+	\item \textbf{Validación y sanitización de entradas\\} Además de las consultas preparadas, se valida y filtra las entradas del usuario para asegurarse de que solo se acepten datos válidos. Por ejemplo, el uso de \code{intval()} para el parámetro id convierte cualquier valor no numérico a un valor seguro (como 0), evitando que se inyecten datos inesperados en las consultas.
+\end{itemize}
+Todas estas soluciones también se han implementado en otros archivos que, aunque no presentaban errores en el análisis, tenían vulnerabilidades relacionadas con la inyección que necesitaban ser abordadas.
 
 \vspace{1em}
 
-\textbf{Resultados de la Segunda Auditoría}
-
+\textbf{Resultados de la segunda auditoría\\}
 Después de implementar las soluciones descritas, se realizó un segundo análisis con OWASP ZAP. Los resultados fueron positivos: no se detectaron vulnerabilidades de XSS ni otros problemas de inyección.
 
 \vspace{1em}
