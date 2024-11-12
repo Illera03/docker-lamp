@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $birthdateNoCifrado = mysqli_real_escape_string($conn, $_POST['birthdate']);
         $email = mysqli_real_escape_string($conn, $_POST['email']);
         //$password = mysqli_real_escape_string($conn, $_POST['password']);
-        $password_hash = password_hash($_POST['password'], PASSWORD_DEFAULT); //! Algoritmo hash para guardar la contraseña
+        $password_hash = password_hash(mysqli_real_escape_string($conn, $_POST['password']), PASSWORD_DEFAULT); //! Algoritmo hash para guardar la contraseña
 
         //obtener clave
         $encryptionKey = getenv('ENCRYPTION_KEY');

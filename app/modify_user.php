@@ -68,7 +68,7 @@ if (isset($_GET['id'])) {
         $phone = mysqli_real_escape_string($conn, $_POST['phone']);
         $birthdate = mysqli_real_escape_string($conn, $_POST['birthdate']);
         $email = mysqli_real_escape_string($conn, $_POST['email']);
-        $password_hash = password_hash($_POST['password'], PASSWORD_DEFAULT); // Encriptar la nueva contraseña
+        $password_hash = password_hash(mysqli_real_escape_string($conn, $_POST['password']), PASSWORD_DEFAULT); // Encriptar la nueva contraseña
 
         // Validar que todos los campos están completos
         if (!empty($name) && !empty($dni) && !empty($phone) && !empty($birthdate) && !empty($email) && !empty($_POST['password'])) {
