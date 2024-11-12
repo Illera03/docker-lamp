@@ -39,11 +39,11 @@ CREATE TABLE usuarios (
 
 CREATE TABLE juegos (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(100),
-    fecha_lanzamiento DATE,
-    genero VARCHAR(100),
-    nota FLOAT,
-    precio FLOAT
+    nombre VARCHAR(255),
+    fecha_lanzamiento VARCHAR(255),
+    genero VARCHAR(255),
+    nota VARCHAR(255),
+    precio VARCHAR(255)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 --
 -- Volcado de datos para la tabla `usuarios`

@@ -2,6 +2,41 @@
 require_once "db_connection.php"; // Conexión a la base de datos
 include("modify_item.html"); // Incluir el html
 
+
+// Función para descifrar los datos
+function decryptData($encryptedData, $key) {
+    $cipherMethod = 'AES-256-CBC';
+    $ivLength = openssl_cipher_iv_length($cipherMethod);
+
+    // Decodificar desde base64
+    $encryptedData = base64_decode($encryptedData);
+    if ($encryptedData === false) {
+        return false;
+    }
+
+    // Extraer el IV y los datos cifrados
+    $iv = substr($encryptedData, 0, $ivLength);
+    $cipherText = substr($encryptedData, $ivLength);
+
+    // Descifrar el texto cifrado
+    return openssl_decrypt($cipherText, $cipherMethod, $key, 0, $iv);
+}
+
+// Función para cifrar los datos
+function encryptData($data, $key) {
+    $cipherMethod = 'AES-256-CBC';
+    $ivLength = openssl_cipher_iv_length($cipherMethod);
+    $iv = openssl_random_pseudo_bytes($ivLength);
+
+    $encryptedData = openssl_encrypt($data, $cipherMethod, $key, 0, $iv);
+    if ($encryptedData === false) {
+        return false;
+    }
+
+    // Devuelve los datos encriptados junto con el IV en base64
+    return base64_encode($iv . $encryptedData);
+}
+
 // Verificar si se ha proporcionado un ID en la URL
 if (isset($_GET['id'])) {
     $id = intval($_GET['id']); // Convertir el ID a un valor entero para mayor seguridad
@@ -15,21 +50,21 @@ if (isset($_GET['id'])) {
     $game = $result->fetch_assoc();
 
     // Guardar los valores actuales del juego y escapar para evitar XSS
-    $oldName = htmlspecialchars($game['nombre'], ENT_QUOTES, 'UTF-8');
-    $oldReleaseDate = htmlspecialchars($game['fecha_lanzamiento'], ENT_QUOTES, 'UTF-8');
-    $oldGenre = htmlspecialchars($game['genero'], ENT_QUOTES, 'UTF-8');
-    $oldRating = htmlspecialchars($game['nota'], ENT_QUOTES, 'UTF-8');
-    $oldPrice = htmlspecialchars($game['precio'], ENT_QUOTES, 'UTF-8');
+    $encryptionKey = getenv('ENCRYPTION_KEY'); // clave de cifrado
+    $oldName = decryptData(htmlspecialchars($game['nombre'], ENT_QUOTES, 'UTF-8'),$encryptionKey);
+    $oldReleaseDate = decryptData(htmlspecialchars($game['fecha_lanzamiento'], ENT_QUOTES, 'UTF-8'),$encryptionKey);
+    $oldGenre = decryptData(htmlspecialchars($game['genero'], ENT_QUOTES, 'UTF-8'),$encryptionKey);
+    $oldRating = decryptData(htmlspecialchars($game['nota'], ENT_QUOTES, 'UTF-8'),$encryptionKey);
+    $oldPrice = decryptData(htmlspecialchars($game['precio'], ENT_QUOTES, 'UTF-8'),$encryptionKey);
 
     // Verificar si el formulario fue enviado
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    // Obtener y validar datos enviados desde el formulario
+    // Obtener los datos enviados desde el formulario
     $name = htmlspecialchars(trim($_POST['name']), ENT_QUOTES, 'UTF-8');
     $releaseDate = trim($_POST['release_date']);
     $genre = htmlspecialchars(trim($_POST['genre']), ENT_QUOTES, 'UTF-8');
     $rating = floatval($_POST['rating']);
     $price = floatval($_POST['price']);
-
     // Validar formato de fecha
     if (!preg_match("/^\d{4}-\d{2}-\d{2}$/", $releaseDate)) {
         echo "Error: Formato de fecha no válido.";
@@ -44,10 +79,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         } elseif ($price < 0) {
             echo "El precio debe ser positivo.";
         } else {
+            // cifrar los datos una vez validados
+            $name = encryptData(htmlspecialchars(trim($_POST['name']), ENT_QUOTES, 'UTF-8'),$encryptionKey);
+            $releaseDate = encryptData(trim($_POST['release_date']),$encryptionKey);
+            $genre = encryptData(htmlspecialchars(trim($_POST['genre']), ENT_QUOTES, 'UTF-8'),$encryptionKey);
+            $rating = encryptData(floatval($_POST['rating']),$encryptionKey);
+            $price = encryptData(floatval($_POST['price']),$encryptionKey);
             // Preparar la consulta para actualizar los datos del juego
             $query = "UPDATE juegos SET nombre = ?, fecha_lanzamiento = ?, genero = ?, nota = ?, precio = ? WHERE id = ?";
             $stmt = $conn->prepare($query);
-            $stmt->bind_param("sssddi", $name, $releaseDate, $genre, $rating, $price, $id);
+            $stmt->bind_param("sssssi", $name, $releaseDate, $genre, $rating, $price, $id);
 
             // Ejecutar la consulta
             if ($stmt->execute()) {
