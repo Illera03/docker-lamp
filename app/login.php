@@ -8,67 +8,65 @@ if (empty($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
 
+// Ruta del archivo de log
+$log_file = "../logs/login_attemps.log";
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Verificación CSRF
     if (isset($_POST['csrf_token']) && $_POST['csrf_token'] === $_SESSION['csrf_token']) {
-        unset($_SESSION['csrf_token']); // Eliminar el token CSRF después de procesarlo
-
+        
         $email = $_POST['email'];
-        $password = $_POST['password']; 
-
-        // Obtener la dirección IP del usuario
-        $ip_address = $_SERVER['REMOTE_ADDR'];
+        $password = $_POST['password'];
+        $ip_address = $_SERVER['REMOTE_ADDR']; // Obtener la dirección IP del usuario
+        $timestamp = date("Y-m-d H:i:s"); // Fecha y hora actual
 
         // Consulta para buscar el usuario por email
         $query = "SELECT * FROM usuarios WHERE email = ?";
         $stmt = $conn->prepare($query);
-
+        
         if (!$stmt) {
             die("Error en la preparación de la consulta: " . $conn->error);
         }
-
+        
         $stmt->bind_param("s", $email);
         $stmt->execute();
         $result = $stmt->get_result();
-
-        if ($result->num_rows > 0) {
+        
+        if ($result->num_rows > 0) { // Si existe un usuario con ese email
             $user = $result->fetch_assoc();
+            // Verificar la contraseña
             if (password_verify($password, $user['password'])) {
-                // Registro de intento exitoso
-                $log_query = "INSERT INTO login_attempts (email, ip_address, success) VALUES (?, ?, 1)";
-                $log_stmt = $conn->prepare($log_query);
-                $log_stmt->bind_param("ss", $email, $ip_address);
-                $log_stmt->execute();
-                $log_stmt->close();
+                // Registro de intento exitoso en el archivo de log
+                $log_message = "[$timestamp] SUCCESS: Email: $email, IP: $ip_address\n";
+                file_put_contents($log_file, $log_message, FILE_APPEND);
 
-                // Iniciar sesión y redirigir al usuario
+                // Contraseña correcta, iniciar sesión
+                unset($_SESSION['csrf_token']); // Eliminar el token CSRF solo al iniciar sesión correctamente
                 $id = $user['id'];
-                header("Location: show_user.php?id=$id");
+                header("Location: show_user.php?id=$id");            
                 exit();
             } else {
                 echo "<h3>Contraseña incorrecta.</h3>";
 
-                // Registro de intento fallido
-                $log_query = "INSERT INTO login_attempts (email, ip_address, success) VALUES (?, ?, 0)";
-                $log_stmt = $conn->prepare($log_query);
-                $log_stmt->bind_param("ss", $email, $ip_address);
-                $log_stmt->execute();
-                $log_stmt->close();
+                // Registro de intento fallido por contraseña incorrecta
+                $log_message = "[$timestamp] FAILED: Incorrect password for Email: $email, IP: $ip_address\n";
+                file_put_contents($log_file, $log_message, FILE_APPEND);
             }
         } else {
             echo "No existe ningún usuario con ese email.";
 
-            // Registro de intento fallido con email inexistente
-            $log_query = "INSERT INTO login_attempts (email, ip_address, success) VALUES (?, ?, 0)";
-            $log_stmt = $conn->prepare($log_query);
-            $log_stmt->bind_param("ss", $email, $ip_address);
-            $log_stmt->execute();
-            $log_stmt->close();
+            // Registro de intento fallido por email inexistente
+            $log_message = "[$timestamp] FAILED: Non-existent email: $email, IP: $ip_address\n";
+            file_put_contents($log_file, $log_message, FILE_APPEND);
         }
+        
         $stmt->close();
     } else {
         die("Error de validación CSRF");
     }
 }
 
-include('login.html');
+include('login.html'); // Incluir el formulario de login si no se ha enviado el formulario
 ?>
+
+
