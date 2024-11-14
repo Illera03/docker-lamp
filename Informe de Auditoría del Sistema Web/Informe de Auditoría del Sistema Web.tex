@@ -84,10 +84,15 @@ La auditoría se realizó mediante un análisis de ZAP, ejecutando...
 
 
 \subsection{Fallos criptográficos}
+En esta sección se comentarán los fallos de seguridad web relacionados con la criptografía o su ausencia.\\
+Hemos identificado y solucionado dos fallos criptográficos. El primer fallo fue almacenar los datos de nuestra base de datos sin cifrar, utilizando únicamente el cifrado incorporado por SQL, el cual se descifra directamente al realizar una consulta. El segundo fallo consistió en almacenar las contraseñas en texto plano.
+
 \subsubsection{Soluciones implementadas}
+Para subsanar el primer error decidimos cifrar datos que almacenamos en nuestra base de datos. Para ello se decidió usar el algoritmo de cifrado simétrico \footnote{Método de cifrado que usa la misma clave para cifrar y descifrar} Advanced Encryption Standar (AES) de 256 bits de longitud. Puesto que este algoritmo se considera seguro.\\
 
+Para usar este algoritmo tuvimos que generar una clave segura para cifrar y descifrar los datos. Por eso usamos un código de Python \footnote{ Lenguaje de programación orientado a objetos usado principalmente para el desarrollo web y de aplicaciones informáticas.} para generarla usando la librería secrets, que es un modulo que genera números aleatorios con la suficiente entropía para  que la clave generada pueda ser considerada criptográficamente fuerte. Una vez generada la clave de secreta la guardamos como una variable de entorno en un archivo .env llamado claveCifrado.env para evitar comprometerla. Después implementamos los algoritmos de cifrado y descifrado en nuestro proyecto. Los datos de cifrado/descifrado juegos (nombre, genero, fecha de lanzamiento, valoración y precio) y de usuarios (nombre, teléfono, DNI y fecha de nacimiento) han sido cifrados. Sin embargo, como al cifrar los datos estos aumentan su número de caracteres hemos tenido que cambiar los tipos de dato y la longitud de los campos de la base de datos para poder guardalos.\\
+Para solventar el segundo error decidimos usar un algoritmo resumen para guardar el resumen criptográfico \footnote{Criptograma que consiste en una sucesión de caracteres alfanuméricos que representan la totalidad del contenido original} de la contraseña en vez de guardarla como texto plano. Para ello usamos la función \code{password\_hash} a la que le damos como parametros la contraseña a resumir y un una constante de PHP \footnote{PHP es un lenguaje de código abierto especialmente adecuado para el desarrollo web y que puede ser incrustado en HTML.\cite{def_php}} (Hypertext Preprocessor) \code{PASSWORD\_BCRYPT} que indica que queremos usar al algoritmo Bcryt, que es un algoritmo seguro para contraseñas. Además, este algoritmo usa sales \footnote{caracteres aleatorios que se le añaden a la contraseña para que sea mas difícil precalcular los resúmenes criptográficos} para mayor seguridad ya que dos usuarios con la misma contraseña tendrán resúmenes criptográficos distintos. 
 \vspace{1em}
-
 
 
 
@@ -144,7 +149,7 @@ Para mitigar la vulnerabilidad de XSS se implementaron las siguientes soluciones
 
 \begin{itemize}
 	\item \textbf{Escapado\footnote{Escapado se refiere al proceso de transformar caracteres especiales en una entrada válida para que no sean interpretados como parte del código ejecutable.\cite{def_sanitization_escaping}} de salida:\\}
-	Se utilizó la función \code{htmlspecialchars()} en PHP\footnote{PHP es un lenguaje de código abierto especialmente adecuado para el desarrollo web y que puede ser incrustado en HTML.\cite{def_php}} (Hypertext Preprocessor) para escapar caracteres especiales (como <, >, \&, ", ') en todas las salidas. Esto asegura que el contenido reflejado en el navegador sea tratado como texto y no como código ejecutable.
+	Se utilizó la función \code{htmlspecialchars()} en PHP para escapar caracteres especiales (como <, >, \&, ", ') en todas las salidas. Esto asegura que el contenido reflejado en el navegador sea tratado como texto y no como código ejecutable.
 	
 	\item \textbf{Validación y sanitización de fecha de lanzamiento:\\} 
 	Se implementó una expresión regular (\code{preg\_match}) para asegurarse de que las fechas ingresadas cumplan con el formato \code{YYYY-MM-DD}.

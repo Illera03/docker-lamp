@@ -38,10 +38,10 @@ function encryptData($data, $key) {
 }
 
 // Verificar si se ha proporcionado un ID en la URL
-if (isset($_GET['id'])) {
-    $id = intval($_GET['id']); // Convertir el id a un valor entero para mayor seguridad
+if (isset($_GET['id']) && is_numeric($_GET['id'])) {
+    $id = intval($_GET['id']);
 
-    // Obtener los datos actuales del usuario
+    // Consulta con declaración preparada para obtener datos del usuario
     $query = "SELECT * FROM usuarios WHERE id = ?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("i", $id);

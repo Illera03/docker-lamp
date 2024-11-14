@@ -66,29 +66,12 @@ input {
     border-radius: 10px;
     font-weight: bold;
     text-decoration: none;
+    margin: 10px 15px;
 }
 
 
 .mod_button:hover {
     background-color: #45a049;
-}
-
-.button {
-    display: block;
-    margin: 10px 15px;
-    font-size: 16px;
-    padding: 10px 15px;
-    font-weight: bold;
-    text-decoration: none;
-    color: white;
-    background-color: #4CAF50;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-}
-
-.button:hover {
-    background-color: #4CAF50;
 }
 
 
