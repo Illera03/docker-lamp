@@ -14,9 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // ------------------ Verificación CSRF ------------------
     // Verificar que el token CSRF enviado coincide con el token almacenado en la sesión
     if (isset($_POST['csrf_token']) && $_POST['csrf_token'] === $_SESSION['csrf_token']) {
-        unset($_SESSION['csrf_token']); // Eliminar el token CSRF después de procesarlo
-        // ------------------ Fin de la verificación CSRF ------------------
-    
+        
         $email = $_POST['email'];
         $password = $_POST['password']; 
         // Consulta para buscar el usuario por email
@@ -37,12 +35,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Verificar la contraseña
             if (password_verify($password, $user['password'])) {
                 // Contraseña correcta, iniciar sesión
+                unset($_SESSION['csrf_token']); // Eliminar el token CSRF solo al iniciar sesión correctamente
                 
                 $id = $user['id'];
                 header("Location: show_user.php?id=$id");            
                 exit();
             } else {
-                
                 echo "<h3>Contraseña incorrecta.</h3>";
             }
         } else {
