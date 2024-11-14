@@ -9,7 +9,7 @@ if (empty($_SESSION['csrf_token'])) {
 }
 
 // Ruta del archivo de log
-$log_file = "../logs/login_attemps.log";
+$log_file = "/var/www/html/logs/login_attempts.log";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Verificación CSRF
@@ -50,7 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 // Registro de intento fallido por contraseña incorrecta
                 $log_message = "[$timestamp] FAILED: Incorrect password for Email: $email, IP: $ip_address\n";
-                file_put_contents($log_file, $log_message, FILE_APPEND);
+                file_put_contents($log_file, $log_message, FILE_APPEND); 
             }
         } else {
             echo "No existe ningún usuario con ese email.";
