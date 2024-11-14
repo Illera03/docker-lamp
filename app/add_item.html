@@ -16,6 +16,9 @@
     
     <!-- Formulario para añadir un nuevo juego -->
     <form id="item_add_form" action="add_item.php" method="POST">
+         <!-- Campo oculto para el token CSRF -->
+         <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
+         
         <label for="name">Nombre:</label>
         <input type="text" id="title" name="name" required placeholder="Nombre del juego"><br> 
 

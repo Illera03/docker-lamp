@@ -1,45 +1,62 @@
 <?php
-
 // Conexión a la base de datos
 require_once 'db_connection.php'; 
+
+// ------------------ Inicio de la implementación CSRF ------------------
+session_start(); // Asegúrate de que la sesión esté iniciada
+
+// Generar un token CSRF si no existe
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32)); // Genera un token aleatorio y lo guarda en la sesión
+}
+// ------------------ Fin de la implementación CSRF ------------------
+
+// Incluir el formulario de agregar juego
 include('add_item.html');
 
 // Comprobamos si el formulario ha sido enviado
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $encryptionKey = getenv('ENCRYPTION_KEY'); // clave de cifrado
-    // Recibir los datos del formulario
-    $name = encryptData(mysqli_real_escape_string($conn, $_POST['name']),$encryptionKey);
-    $date = encryptData(mysqli_real_escape_string($conn, $_POST['date']),$encryptionKey);
-    $genre = encryptData(mysqli_real_escape_string($conn, $_POST['genre']),$encryptionKey);
-    $rating = encryptData(mysqli_real_escape_string($conn, $_POST['rating']),$encryptionKey);
-    $price = encryptData(mysqli_real_escape_string($conn, $_POST['price']),$encryptionKey);
-
-    // Validar que todos los campos están completos
-    if (!empty($name) && !empty($date) && !empty($genre) && !empty($rating) && !empty($price)) {
-        // Consulta para insertar los datos en la tabla de juegos
-        $query = "INSERT INTO juegos (nombre, fecha_lanzamiento, genero, nota, precio) VALUES (?, ?, ?, ?, ?)";
-        $stmt = $conn->prepare($query);
+    // ------------------ Verificación CSRF ------------------
+    if (isset($_POST['csrf_token']) && $_POST['csrf_token'] === $_SESSION['csrf_token']) {
+        unset($_SESSION['csrf_token']); // Eliminar el token CSRF después de procesarlo
+        // ------------------ Fin de la verificación CSRF ------------------
         
-        if ($stmt === false) {
-            die("Error al preparar la consulta: " . $conn->error);
-        }
+        $encryptionKey = getenv('ENCRYPTION_KEY'); // clave de cifrado
+        // Recibir los datos del formulario
+        $name = encryptData(mysqli_real_escape_string($conn, $_POST['name']), $encryptionKey);
+        $date = encryptData(mysqli_real_escape_string($conn, $_POST['date']), $encryptionKey);
+        $genre = encryptData(mysqli_real_escape_string($conn, $_POST['genre']), $encryptionKey);
+        $rating = encryptData(mysqli_real_escape_string($conn, $_POST['rating']), $encryptionKey);
+        $price = encryptData(mysqli_real_escape_string($conn, $_POST['price']), $encryptionKey);
 
-        // Vincular los parámetros y ejecutar la consulta
-        $stmt->bind_param("sssss", $name, $date, $genre, $rating, $price);
+        // Validar que todos los campos están completos
+        if (!empty($name) && !empty($date) && !empty($genre) && !empty($rating) && !empty($price)) {
+            // Consulta para insertar los datos en la tabla de juegos
+            $query = "INSERT INTO juegos (nombre, fecha_lanzamiento, genero, nota, precio) VALUES (?, ?, ?, ?, ?)";
+            $stmt = $conn->prepare($query);
+            
+            if ($stmt === false) {
+                die("Error al preparar la consulta: " . $conn->error);
+            }
 
-        if ($stmt->execute()) {
-            echo "Juego añadido correctamente.";
+            // Vincular los parámetros y ejecutar la consulta
+            $stmt->bind_param("sssss", $name, $date, $genre, $rating, $price);
+
+            if ($stmt->execute()) {
+                echo "Juego añadido correctamente.";
+            } else {
+                echo "Error al añadir el juego: ";
+            }
+
+            // Cerrar la declaración
+            $stmt->close();
         } else {
-            echo "Error al añadir el juego: ";
+            echo "Por favor, completa todos los campos.";
         }
-
-        // Cerrar la declaración
-        $stmt->close();
     } else {
-        echo "Por favor, completa todos los campos.";
+        die("Error de validación CSRF");
     }
 }
-
 
 // Cerrar la conexión
 mysqli_close($conn);
@@ -77,5 +94,4 @@ function encryptData($data, $key) {
     // Devuelve los datos encriptados junto con el IV en base64
     return base64_encode($iv . $encryptedData);
 }
-
 ?>
