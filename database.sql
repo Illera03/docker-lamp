@@ -45,6 +45,15 @@ CREATE TABLE juegos (
     nota VARCHAR(255),
     precio VARCHAR(255)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE login_attempts (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(255),
+    ip_address VARCHAR(45),
+    success BOOLEAN,
+    attempt_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 --
 -- Volcado de datos para la tabla `usuarios`
 --
