@@ -24,6 +24,10 @@ body {
     border-radius: 15px;
 }
 
+h1 {
+    margin-top: 20px; /* Añadir un margen superior para separar del borde superior */
+}
+
 h2 {
     margin-top: 0;
     color: #333;
@@ -48,6 +52,11 @@ input {
     border: 1px solid #ccc;
 }
 
+.container {
+    margin-top: 50px; /* Añadir un margen superior para separar del h1 */
+    text-align: center;
+}
+
 .mod_button {
     padding: 10px 15px;
     background-color: #4CAF50;
@@ -57,6 +66,7 @@ input {
     border-radius: 10px;
     font-weight: bold;
     text-decoration: none;
+    margin: 10px 15px;
 }
 
 

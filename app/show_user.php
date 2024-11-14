@@ -42,7 +42,6 @@ if (isset($_GET['id'])) {
                 <th>Teléfono</th>
                 <th>Fecha de Nacimiento</th>
                 <th>Email</th>
-                <th>Contraseña</th>
             </tr>";
 
         if ($row = $result->fetch_assoc()) {
@@ -63,7 +62,6 @@ if (isset($_GET['id'])) {
                     <td>{$telefono}</td>
                     <td>{$fecha_nacimiento}</td>
                     <td>{$row['email']}</td>
-                    <td>{$row['password']}</td>
                 </tr>";
         } else {
             echo "<tr><td colspan=7>No se encontraron datos para el usuario con ID: $id</td></tr>";
