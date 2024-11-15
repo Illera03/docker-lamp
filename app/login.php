@@ -9,7 +9,7 @@ if (empty($_SESSION['csrf_token'])) {
 }
 
 // Ruta del archivo de log
-$log_file = "/var/www/html/logs/login_attempts.log";
+$log_file = "/var/log/app_logs/login_attempts.log";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Verificación CSRF
