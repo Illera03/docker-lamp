@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.11.13)  16 NOV 2024 20:28
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.3.20)  16 NOV 2024 21:14
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -450,48 +450,48 @@ LaTeX Warning: No \author given.
 
  [2]
 LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 9
-1.
+5.
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
-Underfull \hbox (badness 10000) in paragraph at lines 90--94
+Underfull \hbox (badness 10000) in paragraph at lines 92--100
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 90--94
+Underfull \hbox (badness 10000) in paragraph at lines 92--100
 
  []
 
 [3]
-Underfull \hbox (badness 10000) in paragraph at lines 100--102
+Underfull \hbox (badness 10000) in paragraph at lines 106--108
 
  []
 
 <figures/injection-error.png, id=177, 1327.96124pt x 744.7825pt>
 File: figures/injection-error.png Graphic file (type png)
 <use figures/injection-error.png>
-Package pdftex.def Info: figures/injection-error.png  used on input line 107.
+Package pdftex.def Info: figures/injection-error.png  used on input line 113.
 (pdftex.def)             Requested size: 338.58632pt x 189.88861pt.
 [4] [5pdfTeX warning (ext4): destination with the same identifier (name{figure.
 1}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.136 
+l.142 
        <./figures/injection-error.png>] [6] [7]
-Underfull \hbox (badness 10000) in paragraph at lines 230--232
+Underfull \hbox (badness 10000) in paragraph at lines 236--238
 
  []
 
 [8]
-Underfull \hbox (badness 10000) in paragraph at lines 248--249
+Underfull \hbox (badness 10000) in paragraph at lines 256--257
 []$\OT1/pcr/m/n/12 https : / / kinsta . com / es / base-[]de-[]conocimiento / v
 ariables-[]de-[]entorno/$[]
  []
 
 
-Underfull \hbox (badness 3128) in paragraph at lines 253--254
+Underfull \hbox (badness 3128) in paragraph at lines 261--262
 []$\OT1/pcr/m/n/12 https : / / owasp . org / Top10 / es / A02 _ 2021-[]Cryptogr
 aphic _ Failures/$[] \OT1/cmr/m/n/12 (ac-ce-
  []
@@ -502,14 +502,14 @@ Package rerunfilecheck Info: File `"Informe de Auditoría del Sistema Web".out'
 (rerunfilecheck)             Checksum: 51DE9DF7704AEB77E2195C48A0F0C74E;4685.
  ) 
 Here is how much of TeX's memory you used:
- 11565 strings out of 480247
- 177987 string characters out of 5896150
- 516023 words of memory out of 5000000
- 29294 multiletter control sequences out of 15000+600000
+ 11569 strings out of 480247
+ 178030 string characters out of 5896151
+ 519049 words of memory out of 5000000
+ 29295 multiletter control sequences out of 15000+600000
  477446 words of font info for 57 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 60i,8n,63p,1499b,1959s stack positions out of 5000i,500n,10000p,200000b,80000s
- </home/bruno/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1200.600
+ 60i,8n,63p,1117b,1957s stack positions out of 5000i,500n,10000p,200000b,80000s
+ </home/jorge/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1200.600
 pk>{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texli
 ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/tex
 mf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist
@@ -518,11 +518,11 @@ type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
 ublic/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/am
 sfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8
 a.pfb>
-Output written on "Informe de Auditoría del Sistema Web.pdf" (9 pages, 177968 
+Output written on "Informe de Auditoría del Sistema Web.pdf" (9 pages, 178297 
 bytes).
 PDF statistics:
- 299 PDF objects out of 1000 (max. 8388607)
- 268 compressed objects within 3 object streams
- 70 named destinations out of 1000 (max. 500000)
+ 305 PDF objects out of 1000 (max. 8388607)
+ 274 compressed objects within 3 object streams
+ 73 named destinations out of 1000 (max. 500000)
  214 words of extra memory for PDF output out of 10000 (max. 10000000)
 
