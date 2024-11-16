@@ -83,14 +83,13 @@ La auditoría se realizó mediante un análisis de ZAP, ejecutando...
 
 
 \subsection{Fallos criptográficos}
-En esta sección se comentarán los fallos de seguridad web relacionados con la criptografía o su ausencia.\\
+En esta sección se comentarán los fallos de seguridad web relacionados con la criptografía\footnote{Práctica que consiste en proteger información mediante el uso de algoritmos codificados, Hashes y firmas.} (o la falta de ésta) causando la exposición de datos sensibles\cite{Fallos Criptograficos}.\\
 Hemos identificado y solucionado dos fallos criptográficos. El primer fallo fue almacenar los datos de nuestra base de datos sin cifrar, utilizando únicamente el cifrado incorporado por SQL, el cual se descifra directamente al realizar una consulta. El segundo fallo consistió en almacenar las contraseñas en texto plano.
 
 \subsubsection{Soluciones implementadas}
-Para subsanar el primer error decidimos cifrar datos que almacenamos en nuestra base de datos. Para ello se decidió usar el algoritmo de cifrado simétrico \footnote{Método de cifrado que usa la misma clave para cifrar y descifrar} Advanced Encryption Standar (AES) de 256 bits de longitud. Puesto que este algoritmo se considera seguro.\\
-
-Para usar este algoritmo tuvimos que generar una clave segura para cifrar y descifrar los datos. Por eso usamos un código de Python\footnote{ Lenguaje de programación orientado a objetos usado principalmente para el desarrollo web y de aplicaciones informáticas.}\cite{generador_claves_python}  para generarla usando la librería secrets, que es un modulo que genera números aleatorios con la suficiente entropía para  que la clave generada pueda ser considerada criptográficamente fuerte. Una vez generada la clave de secreta la guardamos como una variable de entorno\footnote{Las variables de entorno son variables disponibles para tu programa/aplicación de forma dinámica durante el tiempo de ejecución. El valor de estas variables puede proceder de diversas fuentes: archivos de texto, gestores secretos de terceros, scripts de llamada, etc.\cite{Variable de entorno}} en un archivo .env llamado claveCifrado.env para evitar comprometerla. Después implementamos los algoritmos de cifrado y descifrado en nuestro proyecto. Los datos de cifrado/descifrado juegos (nombre, genero, fecha de lanzamiento, valoración y precio) y de usuarios (nombre, teléfono, DNI y fecha de nacimiento) han sido cifrados. Sin embargo, como al cifrar los datos estos aumentan su número de caracteres hemos tenido que cambiar los tipos de dato y la longitud de los campos de la base de datos para poder guardalos.\\ \\
-Para solventar el segundo error decidimos usar un algoritmo resumen para guardar el resumen criptográfico \footnote{Criptograma que consiste en una sucesión de caracteres alfanuméricos que representan la totalidad del contenido original} de la contraseña en vez de guardarla como texto plano. Para ello usamos la función \code{password\_hash} a la que le damos como parámetros la contraseña a resumir y un una constante de PHP \footnote{PHP es un lenguaje de código abierto especialmente adecuado para el desarrollo web y que puede ser incrustado en HTML.\cite{def_php}} (Hypertext Preprocessor) \code{PASSWORD\_BCRYPT} que indica que queremos usar el algoritmo Bcryt\cite{Bcrypt}. Además Bcrypt, usa sales \footnote{caracteres aleatorios que se le añaden a la contraseña para que sea mas difícil precalcular los resúmenes criptográficos} para mayor seguridad ya que dos usuarios con la misma contraseña tendrán resúmenes criptográficos distintos. 
+Para subsanar el primer error decidimos cifrar datos que almacenamos en nuestra base de datos. Para ello se decidió usar el algoritmo de cifrado simétrico \footnote{Método de cifrado que usa la misma clave para cifrar y descifrar} Advanced Encryption Standar (AES) de 256 bits de longitud. Puesto que este algoritmo se considera seguro.\\ \\
+Para usar este algoritmo tuvimos que generar una clave segura para cifrar y descifrar los datos. Por eso usamos un código de Python\footnote{ Lenguaje de programación orientado a objetos usado principalmente para el desarrollo web y de aplicaciones informáticas.}\cite{generador_claves_python}  para generarla usando la librería secrets, que es un módulo que genera números aleatorios con la suficiente entropía para  que la clave generada pueda ser considerada criptográficamente fuerte. Una vez generada la clave de secreta la guardamos como una variable de entorno\footnote{Las variables de entorno son variables disponibles para tu programa/aplicación de forma dinámica durante el tiempo de ejecución. El valor de estas variables puede proceder de diversas fuentes: archivos de texto, gestores secretos de terceros, scripts de llamada, etc.\cite{Variable de entorno}} en un archivo .env llamado \code{claveCifrado.env} para evitar comprometerla. Los datos de cifrados de los juegos son el nombre, genero, fecha de lanzamiento, valoración y precio. Mientras que los datos cifrados de los usuarios son el nombre, teléfono, DNI y fecha de nacimiento han sido cifrados. Sin embargo, como al cifrar los datos estos aumentan su número de caracteres hemos tenido que cambiar los tipos de dato y la longitud de los campos de la base de datos para poder guardalos.\\ \\
+Para solventar el segundo error decidimos usar un algoritmo resumen para guardar el resumen criptográfico o Hash\footnote{Criptograma que consiste en una sucesión de caracteres alfanuméricos que representan la totalidad del contenido original} de la contraseña en vez de guardarla como texto plano. Para ello usamos la función \code{password\_hash} a la que le damos como parámetros la contraseña a resumir y un una constante de PHP\footnote{PHP es un lenguaje de código abierto especialmente adecuado para el desarrollo web y que puede ser incrustado en HTML.\cite{def_php}} (Hypertext Preprocessor) \code{PASSWORD\_BCRYPT} que indica que queremos usar el algoritmo Bcryt\cite{Bcrypt}. Bcrypt usa sales \footnote{caracteres aleatorios que se le añaden a la contraseña para que sea mas difícil precalcular los resúmenes criptográficos} para mayor seguridad ya que dos usuarios con la misma contraseña tendrán resúmenes criptográficos distintos, por lo que se hace mucho mas difícil precalcularlos. 
 \vspace{1em}
 
 
@@ -229,7 +228,7 @@ Ambas vulnerabilidades fueron una amenaza crítica para la aplicación, ya que p
 	\bibitem{def_php} php.net\\
 	¿Qué es PHP?\\ \url{https://www.php.net/manual/es/intro-whatis.php} (accedido 11/07/2024).
 	\bibitem{generador_claves_python} Python Code: Generación de Claves de Cifrado\\
-	Este código en Python se utiliza para generar claves criptográficamente seguras usando la librería \code{secrets} basado en codigo generado por ChatGPT.\\
+	Este código en Python se utiliza para generar claves criptográficamente seguras usando la librería \code{secrets} basado en código generado por ChatGPT.\\
 	\begin{lstlisting}
 	import secrets
 	
@@ -246,10 +245,14 @@ Ambas vulnerabilidades fueron una amenaza crítica para la aplicación, ya que p
 	
 	print(f"Clave de encriptacion generada: {clave_encriptacion}")
 \end{lstlisting}
-	\bibitem{Variable de entorno} ¿Que es una variable de entorno?\\	\url{https://kinsta.com/es/base-de-conocimiento/variables-de-entorno/}
+	\bibitem{Variable de entorno} kinsta.com\\ ¿Que es una variable de entorno?\\	\url{https://kinsta.com/es/base-de-conocimiento/variables-de-entorno/} (accedido 15/11/2024).
 	
-	\bibitem{Bcrypt} ¿Que es Bcrypt?\\
-	\url{https://www.skysnag.com/es/blog/what-is-bcrypt/}
+	\bibitem{Bcrypt} skysnag.com\\ ¿Que es Bcrypt?\\
+	\url{https://www.skysnag.com/es/blog/what-is-bcrypt/}  (accedido 15/11/2024).
+	
+	\bibitem{Fallos Criptograficos} owasp.org\\ ¿Que son los fallos criptográficos?\\	\url{https://owasp.org/Top10/es/A02_2021-Cryptographic_Failures/} (accedido 16/11/2024).
+	
+	\bibitem{Criptografia} amazon.com\\ ¿Que es la criptografía?\\	\url{https://aws.amazon.com/es/what-is/cryptography/} (accedido 16/11/2024).
 	 
 	 
 \end{thebibliography}
