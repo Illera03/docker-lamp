@@ -83,20 +83,20 @@ La auditoría se realizó mediante un análisis de ZAP, ejecutando...
 
 
 \subsection{Fallos criptográficos}
-En esta sección se comentarán los fallos de seguridad web relacionados con la criptografía\footnote{Práctica que consiste en proteger información mediante el uso de algoritmos codificados, Hashes y firmas.} (o la falta de esta) causando la exposición de datos sensibles\cite{Fallos Criptograficos}.\\
-%TODO Se pone la bibliografía de los fallos criptograficos, pero realmente no se explica lo que son, faltaría la explicación de lo que son en el texto.
+En esta sección se comentarán los fallos de seguridad web relacionados con la criptografía\footnote{Práctica que consiste en proteger información mediante el uso de algoritmos codificados, Hashes y firmas.\cite{Criptografia}} (o la falta de esta) causando la exposición de datos sensibles\cite{Fallos Criptograficos}.\\
+
 Se han identificado y solucionado dos fallos criptográficos. El primer fallo consiste en almacenar la información de la base de datos sin cifrar, utilizando únicamente el cifrado incorporado por SQL, el cual se descifra directamente al realizar una consulta. El segundo fallo detectado es almacenar las contraseñas en texto plano.
 %TODO Falta bibliografía de lo dicho de SQL, que descifra automaticamente.
 
 \subsubsection{Soluciones implementadas}
 Para subsanar el primer error se ha decidido cifrar la información que se almacena en la base de datos. El algoritmo de cifrado simétrico\footnote{Método de cifrado que usa la misma clave para cifrar y descifrar.} que se ha usado es el AES (Advanced Encryption Standar) de 256 bits de longitud, puesto que este algoritmo es considerado seguro a día de hoy\cite{AES}.\\ \\
 El uso de este algoritmo requiere una clave segura para cifrar y descifrar los datos. Para ello se ha usado una función\cite{generador_claves_python} de 
-%TODO esto no sería una cita, sería un apéndice
-Python\footnote{Lenguaje de programación orientado a objetos usado principalmente para el desarrollo web y de aplicaciones informáticas.} que genera la clave usando la librería \code{secrets}, que es un módulo que genera números aleatorios con la suficiente entropía para  que la clave generada pueda ser considerada criptográficamente fuerte. 
-%TODO Falta bibliografía de esto de la librería.
+
+Python\footnote{Lenguaje de programación orientado a objetos usado principalmente para el desarrollo web y de aplicaciones informáticas.\cite{def_Python}} que genera la clave usando la librería \code{secrets}, que es un módulo que genera números aleatorios con la suficiente entropía para  que la clave generada pueda ser considerada criptográficamente fuerte \cite{Libreria secrets}. 
+
 Una vez generada la clave de secreta se guarda como una variable de entorno\footnote{Las variables de entorno son variables disponibles para tu programa/aplicación de forma dinámica durante el tiempo de ejecución. El valor de estas variables puede proceder de diversas fuentes: archivos de texto, gestores secretos de terceros, scripts de llamada, etc.\cite{Variable de entorno}} en un archivo .env llamado \code{claveCifrado.env} para evitar comprometerla. Los datos cifrados de la tabla Juegos son el nombre, género, fecha de lanzamiento, valoración y precio. Mientras que los datos cifrados de la tabla Usuarios son el nombre, teléfono, DNI y fecha de nacimiento. Sin embargo, como al cifrar los datos su número de caracteres aumenta, se han tenido que cambiar los tipos de dato y la longitud de los campos de la base de datos para poder almacenarlos.\\ \\
-Para solventar el segundo error se ha decidido usar un algoritmo resumen para generar el resumen criptográfico o Hash\footnote{Criptograma que consiste en una sucesión de caracteres alfanuméricos que representan la totalidad del contenido original.} de la contraseña en vez de guardarla como texto plano. Para ello se ha usado la función \code{password\_hash} a la que se le pasa como parámetros la contraseña a resumir y una constante de PHP\footnote{PHP es un lenguaje de código abierto especialmente adecuado para el desarrollo web y que puede ser incrustado en HTML.\cite{def_php}} (Hypertext Preprocessor) \code{PASSWORD\_BCRYPT} que indica que queremos usar el algoritmo Bcryt\cite{Bcrypt}. Bcrypt usa sales \footnote{Caracteres aleatorios que se le añaden a la contraseña para que sea mas difícil precalcular los resúmenes criptográficos.} para mayor seguridad ya que hace que dos contraseñas iguales de usarios diferentes generen resúmenes criptográficos distintos, por lo que se hace mucho mas difícil precalcularlos. 
-%TODO En general, faltan bibliografías de las definiciones de las notas al pie.
+Para solventar el segundo error se ha decidido usar un algoritmo resumen para generar el resumen criptográfico o Hash\footnote{Criptograma que consiste en una sucesión de caracteres alfanuméricos que representan la totalidad del contenido original.} de la contraseña en vez de guardarla como texto plano. Para ello se ha usado la función \code{password\_hash} a la que se le pasa como parámetros la contraseña a resumir y una constante de PHP\footnote{PHP es un lenguaje de código abierto especialmente adecuado para el desarrollo web y que puede ser incrustado en HTML.\cite{def_php}} (Hypertext Preprocessor) \code{PASSWORD\_BCRYPT} que indica que queremos usar el algoritmo Bcryt\cite{Bcrypt}. Bcrypt usa sales \footnote{Caracteres aleatorios que se le añaden a la información a resumir.} para mayor seguridad ya que hace que dos contraseñas iguales de usarios diferentes generen resúmenes criptográficos distintos, por lo que se hace mucho mas difícil precalcularlos. 
+
 \vspace{1em}
 
 
@@ -264,7 +264,10 @@ Ambas vulnerabilidades fueron una amenaza crítica para la aplicación, ya que p
 	\bibitem{Criptografia} aws.amazon.com\\ ¿Que es la criptografía?\\	\url{https://aws.amazon.com/es/what-is/cryptography/} (accedido 16/11/2024).
 	
 	\bibitem{AES} msmk.university\\ ¿Qué es AES? ¿Es seguro?\\	\url{https://msmk.university/advanced-encryption-standard-aes/} (accedido 16/11/2024).
+	
+	\bibitem{Libreria secrets} python.org\\ ¿Para que sirve? ¿La clave generada se considera criptográficamente fuerte?\\	\url{https://docs.python.org/es/3/library/secrets.html} (accedido 17/11/2024).
 	 
+	 \bibitem{def_Python} cursosaula21.com\\ ¿Que es Python?\\	\url{https://www.cursosaula21.com/que-es-python/} (accedido 17/11/2024).
 	 
 \end{thebibliography}
 
