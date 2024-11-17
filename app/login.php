@@ -11,6 +11,39 @@ if (empty($_SESSION['csrf_token'])) {
 // Ruta del archivo de log
 $log_file = "/var/log/app_logs/login_attempts.log";
 
+// ----- BLOQUEO DE LOGS SEGUIDOS -----
+// Función para verificar los intentos fallidos
+function checkFailedAttempts($email, $log_file, $max_attempts = 5, $lock_time = 600) {
+    // Leer el archivo de log
+    $log_lines = file($log_file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+    $failed_attempts = [];
+    $current_time = time();
+
+    foreach ($log_lines as $line) {
+        if (strpos($line, $email) !== false && strpos($line, 'FAILED') !== false) {
+            // Obtener la fecha y hora del intento fallido
+            preg_match('/\[(.*?)\]/', $line, $matches); // Extrae la fecha y hora
+            $timestamp = strtotime($matches[1]);
+            
+            // Agregar al array si está dentro del rango de bloqueo
+            if ($current_time - $timestamp <= $lock_time) {
+                $failed_attempts[] = $timestamp;
+            }
+        }
+    }
+
+    // Si superó el máximo de intentos fallidos, bloquear al usuario
+    if (count($failed_attempts) >= $max_attempts) {
+        return [
+            'blocked' => true,
+            'lock_time_left' => $lock_time - ($current_time - max($failed_attempts))
+        ];
+    }
+
+    return ['blocked' => false];
+}
+// ------------------
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Verificación CSRF
     if (isset($_POST['csrf_token']) && $_POST['csrf_token'] === $_SESSION['csrf_token']) {
@@ -19,6 +52,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $password = $_POST['password'];
         $ip_address = $_SERVER['REMOTE_ADDR']; // Obtener la dirección IP del usuario
         $timestamp = date("Y-m-d H:i:s"); // Fecha y hora actual
+
+        // ----- BLOQUEO DE LOGS SEGUIDOS -----
+        // Verificar si el usuario está bloqueado
+        $lock_status = checkFailedAttempts($email, $log_file);
+        if ($lock_status['blocked']) {
+            $minutes_left = round($lock_status['lock_time_left'] / 60);
+            die("Tu cuenta está bloqueada. Inténtalo nuevamente en $minutes_left minutos.");
+        }
+        // ------------------
 
         // Consulta para buscar el usuario por email
         $query = "SELECT * FROM usuarios WHERE email = ?";
@@ -68,5 +110,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 include('login.html'); // Incluir el formulario de login si no se ha enviado el formulario
 ?>
-
-
