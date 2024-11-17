@@ -4,7 +4,7 @@
 \usepackage[colorlinks=true, linkcolor=blue, urlcolor=blue, citecolor=blue, hidelinks]{hyperref}
 \usepackage{amsmath}
 \usepackage[a4paper, left=2cm, right=2cm, top=3cm, bottom=3cm]{geometry}
-\usepackage{titlesec}
+%\usepackage{titlesec}
 \usepackage{listings}
 \usepackage{color}
 \usepackage{courier} 
@@ -75,25 +75,46 @@ La auditoría se realizó mediante un análisis de ZAP, ejecutando...
 
 
 \subsection{Rotura de control de acceso}
+Una rotura del control de acceso ocurre cuando un sistema permite a usuarios acceder a datos, funciones o recursos para los que no tienen autorización, debido a fallos en la implementación de los permisos. Esto puede resultar en accesos no autorizados, modificaciones indebidas de datos o acciones privilegiadas que deberían estar restringidas.
+
 \subsubsection{Soluciones implementadas}
+Para minimizar la utilización de \textbf{CORS}\footnote{Mecanismo que permite que los recursos de un servidor sean accesibles desde diferentes dominios de manera controlada.}, se ha integrado el uso de tokens \textbf{CSRF}\footnote{Códigos únicos generados para verificar que una solicitud proviene de una fuente legítima y no de un atacante.} con el fin de implementar mecanismos de acceso únicos.
+
+\begin{itemize}
+    \item \textbf{Integración de tokens CSRF:} 
+    Se ha implementado la creación de tokens anti CSRF en archivos donde se manejan formularios o se ingresan los identificadores y contraseñas de los usuarios. Esto incluye archivos como \texttt{login.php}, \texttt{register.php}, \texttt{add_item.php} y \texttt{modify_user.php}.
+% -Generación del token CSRF:
+% Si no existe ya un token CSRF en la sesión ($_SESSION['csrf_token']), se genera uno nuevo usando bin2hex(random_bytes(32)).
+% Esto asegura que cada sesión tiene un token único y difícil de adivinar.
+
+% -Uso del token en el formulario:
+% En el formulario HTML (login.html), este token se debe enviar como un campo oculto. Esto permite que el servidor valide que el formulario fue enviado desde la misma aplicación.
+
+% -Validación del token en el servidor:
+% Cuando el formulario se envía, el código verifica si el token recibido ($_POST['csrf_token']) coincide con el que está almacenado en la sesión.
+% Si no coinciden o el token no existe, la solicitud se considera no válida y se bloquea (die("Error de validación CSRF");).
+
+% -Eliminación del token:
+% Una vez que el usuario inicia sesión correctamente, el token se elimina usando unset($_SESSION['csrf_token']). Esto asegura que no pueda ser reutilizado.
+\end{itemize}
 
 \vspace{1em}
 
-
-
-
 \subsection{Fallos criptográficos}
-En esta sección se comentarán los fallos de seguridad web relacionados con la criptografía\footnote{Práctica que consiste en proteger información mediante el uso de algoritmos codificados, Hashes y firmas.\cite{Criptografia}} (o la falta de esta) causando la exposición de datos sensibles\cite{Fallos Criptograficos}.\\ \\
+En esta sección se comentarán los fallos de seguridad web relacionados con la criptografía\footnote{Práctica que consiste en proteger información mediante el uso de algoritmos codificados, Hashes y firmas.} (o la falta de esta) causando la exposición de datos sensibles\cite{Fallos Criptograficos}.\\
+%TODO Se pone la bibliografía de los fallos criptograficos, pero realmente no se explica lo que son, faltaría la explicación de lo que son en el texto.
 Se han identificado y solucionado dos fallos criptográficos. El primer fallo consiste en almacenar la información de la base de datos sin cifrar, utilizando únicamente el cifrado incorporado por SQL, el cual se descifra directamente al realizar una consulta. El segundo fallo detectado es almacenar las contraseñas en texto plano.
 %TODO Falta bibliografía de lo dicho de SQL, que descifra automaticamente.
 
 \subsubsection{Soluciones implementadas}
 Para subsanar el primer error se ha decidido cifrar la información que se almacena en la base de datos. El algoritmo de cifrado simétrico\footnote{Método de cifrado que usa la misma clave para cifrar y descifrar.} que se ha usado es el AES (Advanced Encryption Standar) de 256 bits de longitud, puesto que este algoritmo es considerado seguro a día de hoy\cite{AES}.\\ \\
 El uso de este algoritmo requiere una clave segura para cifrar y descifrar los datos. Para ello se ha usado una función\cite{generador_claves_python} de 
-Python\footnote{Lenguaje de programación orientado a objetos usado principalmente para el desarrollo web y de aplicaciones informáticas.\cite{def_Python}} que genera la clave usando la librería \code{secrets}, que es un módulo que genera números aleatorios con la suficiente entropía para  que la clave generada pueda ser considerada criptográficamente fuerte \cite{Libreria secrets}. 
+%TODO esto no sería una cita, sería un apéndice
+Python\footnote{Lenguaje de programación orientado a objetos usado principalmente para el desarrollo web y de aplicaciones informáticas.} que genera la clave usando la librería \code{secrets}, que es un módulo que genera números aleatorios con la suficiente entropía para  que la clave generada pueda ser considerada criptográficamente fuerte. 
+%TODO Falta bibliografía de esto de la librería.
 Una vez generada la clave de secreta se guarda como una variable de entorno\footnote{Las variables de entorno son variables disponibles para tu programa/aplicación de forma dinámica durante el tiempo de ejecución. El valor de estas variables puede proceder de diversas fuentes: archivos de texto, gestores secretos de terceros, scripts de llamada, etc.\cite{Variable de entorno}} en un archivo .env llamado \code{claveCifrado.env} para evitar comprometerla. Los datos cifrados de la tabla Juegos son el nombre, género, fecha de lanzamiento, valoración y precio. Mientras que los datos cifrados de la tabla Usuarios son el nombre, teléfono, DNI y fecha de nacimiento. Sin embargo, como al cifrar los datos su número de caracteres aumenta, se han tenido que cambiar los tipos de dato y la longitud de los campos de la base de datos para poder almacenarlos.\\ \\
-Para solventar el segundo error se ha decidido usar un algoritmo resumen para generar el resumen criptográfico o Hash\footnote{Criptograma que consiste en una sucesión de caracteres alfanuméricos que representan la totalidad del contenido original.} de la contraseña en vez de guardarla como texto plano. Para ello se ha usado la función \code{password\_hash} a la que se le pasa como parámetros la contraseña a resumir y una constante de PHP\footnote{PHP es un lenguaje de código abierto especialmente adecuado para el desarrollo web y que puede ser incrustado en HTML.\cite{def_php}} (Hypertext Preprocessor) \code{PASSWORD\_BCRYPT} que indica que queremos usar el algoritmo Bcryt\cite{Bcrypt}. Bcrypt usa sales \footnote{Caracteres aleatorios que se le añaden a la información a resumir.} para mayor seguridad ya que hace que dos contraseñas iguales de usarios diferentes generen resúmenes criptográficos distintos, por lo que se hace mucho mas difícil precalcularlos. 
-
+Para solventar el segundo error se ha decidido usar un algoritmo resumen para generar el resumen criptográfico o Hash\footnote{Criptograma que consiste en una sucesión de caracteres alfanuméricos que representan la totalidad del contenido original.} de la contraseña en vez de guardarla como texto plano. Para ello se ha usado la función \code{password\_hash} a la que se le pasa como parámetros la contraseña a resumir y una constante de PHP\footnote{PHP es un lenguaje de código abierto especialmente adecuado para el desarrollo web y que puede ser incrustado en HTML.\cite{def_php}} (Hypertext Preprocessor) \code{PASSWORD\_BCRYPT} que indica que queremos usar el algoritmo Bcryt\cite{Bcrypt}. Bcrypt usa sales \footnote{Caracteres aleatorios que se le añaden a la contraseña para que sea mas difícil precalcular los resúmenes criptográficos.} para mayor seguridad ya que hace que dos contraseñas iguales de usarios diferentes generen resúmenes criptográficos distintos, por lo que se hace mucho mas difícil precalcularlos. 
+%TODO En general, faltan bibliografías de las definiciones de las notas al pie.
 \vspace{1em}
 
 
@@ -184,9 +205,61 @@ Ambas vulnerabilidades fueron una amenaza crítica para la aplicación, ya que p
 \vspace{1em}
 
 \subsection{Diseño inseguro}
+\textbf{¿Que significa diseño inseguro?\\}
+
+Una página web tiene un diseño inseguro cuando su estructura, funcionalidades\footnote{Características y herramientas que permiten a los usuarios interactuar con el sitio para cumplir objetivos.}, o configuración comprometen la seguridad de los usuarios o de sus datos. Esto puede deberse a malas prácticas en el desarrollo, falta de medidas de seguridad adecuadas o errores en la implementación. 
+
+En esta sección se ha identificado una vulnerabilidad principal. La no validación de los datos introduciodos por los usuarios al registrarse. Además, se ha desplazado la posibilidad de ver, modificar y añadir videojuegos a la plataforma, exclusivamente para usuarios registrados.
+
+
 \subsubsection{Soluciones implementadas}
 
+Para mitigar las vulnerabilidades de la no validación de datos, se han implementado las siguientes soluciones:
+\begin{itemize}
+ \item \textbf{Validación de campos: \\}
+ En esta sección se comprueba que el usuario haya rellenado todos los campos obligatorios del formulario\footnote{Una interfaz interactiva que permite a los usuarios ingresar y enviar información estructurada, la cual se procesa y almacena en la base de datos correspondiente.}. Para ello se ha  utilizado una función: \code{!formulario.checkValidity()}. Para comprobar que todos los campos han sido rellenados correctamente.
+ \item \textbf{Validación de nombre: \\}
+ En esta sección se comprueba que el usuario haya introducido un nombre: Para ello se ha utilizado una función: \code{validarNombre(nombre)}. Con esta función se comprueba que el nombre introducido es un nombre real formado únicamente por letras y espacios.
+ \item \textbf{Validación de DNI: \\}
+ En esta sección se comprobará que el usuario introduzca un DNI válido, formado por:
+ \begin{enumerate}
+     \item 8 numeros.
+     \item Un guión.
+     \item Una letra.
+ \end{enumerate}
+	Para ello se ha utilizado una función:  \code{validarDNI(dni)}. 
+  \item \textbf{Validación de email: \\}
+ En esta sección se verifica que el email que ha introducido el usuario sea válido. Para ello se ha utilizado una función:  \code{validarEmail(email)}. Con esta función se consigue verificar que el email introducido está formado por las siguientes partes:
+  \begin{enumerate}
+     \item Cadena de caracteres, representando el nombre de usuario.
+     \item Una arroba\footnote{La arroba (@) es un símbolo utilizado principalmente para separar el nombre del usuario y el dominio en una dirección de correo electrónico.}.
+     \item Cadena de caracteres reflejando el dominio.
+     \item Un '\textbf{.}' .
+     \item Un TLD\footnote{Es la parte final de un nombre de dominio en Internet, que identifica la categoría, propósito o ubicación geográfica del dominio}(Top-Level Domain) de al menos dos letras.
+ \end{enumerate}    
+    \item \textbf{Validación de teléfono: \\}
+    En esta sección se comprobará que el usuario introduzca un teléfono válido de exactamente 9 digitos.
+    \item \textbf{Validación de fecha de nacimiento: \\}
+    En esta sección se verificará que la fecha de nacimiento del usuario es válida, es decir, no puede ser posterior a la fecha actual.
+    \item \textbf{Validación de contraseña: \\}
+En esta sección se verificará que la contraseña introducida por el usuario cumple unos requisitos mínimos de seguridad, utilizando la siguiente función: \\ \code{validarContraseña(contraseña)}. Los requisitos mínimos impuestos son los siguientes: 
+    \begin{enumerate}
+    \item Mínimo de 8 caracteres.
+    \item Al menos una letra mayúscula.
+    \item Al menos un número.
+ \end{enumerate}
+\end{itemize}
 
+\textbf{Desplazamiento del botón para ver/añadir/modificar juegos:\\}
+Se ha desplazado el botón de la pantalla principal que aparece nada más acceder a la web a una pantalla posterior después de haber iniciado sesión, esto se puede apreciar en la Figura \ref{fig:xss_error}. Con esto se consigue evitar que usuarios sin registrar puedan llegar a saturar la \textbf{BBDD}\footnote{Sistema estructurado para almacenar y gestionar datos, permitiendo su acceso y modificación de manera eficiente y segura.}(Base de datos) y que esta deje de responder.
+
+\begin{figure}[H]
+	\centering
+	\fbox{\includegraphics[width=0.7\textwidth]{figures/DesplazamientoBoton.png}} % Imagen con borde negro
+	\caption{Desplazamiento del botón \textbf{Juegos}.}
+	\label{fig:xss_error}
+\end{figure}
+\vspace{1em}
 
 \subsection{Configuración de seguridad insuficiente}
 \subsubsection{Soluciones implementadas}
@@ -199,7 +272,38 @@ Ambas vulnerabilidades fueron una amenaza crítica para la aplicación, ya que p
 
 
 \subsection{Fallos de identificación y autenticación}
+
+\textbf{¿Qué es un fallo de identificación y autenticación?\\}
+
+Un fallo de identificación ocurre cuando el sistema no reconoce quién dices ser. Esto puede deberse a varias razones, como ingresar datos incorrectos o inexistentes, que el sistema no busque correctamente el usuario en la base de datos, o incluso por el uso de mensajes de error ambiguos o confusos que no ayudan al usuario a identificar el problema. Además, la ausencia de mensajes claros también puede contribuir a que el sistema no reconozca correctamente al usuario.
+
+Un fallo de autenticación ocurre cuando el sistema no puede verificar que eres quién dices ser. Esto puede suceder porque el usuario ha registrado una contraseña insegura o fácil de adivinar, utiliza mecanismos simples para recuperar contraseñas, o bien porque no se ha implementado un sistema de autenticación más robusto como la autenticación multifactor\footnote{Método de autenticación que requiere que el usuario proporcione dos o más factores de verificación diferentes para acceder a un sistema}.
+\\
+
+\textbf{¿Cómo ocurre un ataque por fallos de identificación o autenticación?\\}
+
+Esta vulnerabilidad se da cuando un atacante obtiene una lista de usuarios y contraseñas que pueden ser válidas en el sistema, y luego intenta acceder a las cuentas mediante un proceso automatizado. Un ejemplo común es el ataque de \textit{credential stuffing}\footnote{Ataque cibernético en el que los atacantes usan combinaciones de nombres de usuario y contraseñas robadas de otras plataformas para intentar acceder a cuentas en diferentes sitios web o servicios.} En este ataque, el atacante utiliza credenciales filtradas de otros servicios donde los usuarios han utilizado las mismas contraseñas, y las prueba en el sistema objetivo para obtener acceso a sus cuentas. Si el sistema no implementa medidas adicionales de seguridad, como la autenticación multifactor o límites de intentos de acceso fallidos, el atacante puede obtener acceso a las cuentas de usuario con relativa facilidad.
+
 \subsubsection{Soluciones implementadas}
+
+Para reducir los riesgos de los errores en la identificación y autenticación se ha implementado la siguientes soluciones:
+
+\begin{itemize}
+	\item \textbf{Registro de todos los intentos de sesiones:\\}
+	Se ha utilizado un archivo .log\footnote{archivo de texto que se utiliza para registrar eventos, actividades o mensajes de un sistema, programa o aplicación} para poder gestionar y observar el por qué de los errores de dichos intentos de sesiones. En el archivo .log se resgitra lo siguiente:
+    \begin{enumerate}
+    \item Fecha y hora en formato yyyy-mm-dd hh:mm:ss.
+    \item SUCCESS o FAILED.
+    \item Email registrado o no en la base de datos.
+    \item Ip\footnote{Identificador único que se asigna a cada dispositivo conectado a una red}.
+    
+ \end{enumerate}
+\item \textbf{Bloqueo temporal de usuarios por logins\footnote{Proceso mediante el cual un usuario se identifica y autentica en un sistema, servicio o aplicación.} fallidos: \\}
+Con ayuda del archivo .log se consigue registrar aquellos usuarios que han fallado 5 veces en los últimos 10 minutos. Dicha cuenta se bloquea por 10 minutos y si el usuario intenta hacer nuevamente un login, se le mostrará el tiempo que le falta para que pueda volver a realizar otros 5 intentos de login. Esto se logra gestionar en eel archivo.log con la función: \code{function checkFailedAttempts(email, log_file, max_attempts = 5, lock_time = 600)}  
+
+\end{itemize}
+
+
 
 
 
@@ -261,10 +365,7 @@ Ambas vulnerabilidades fueron una amenaza crítica para la aplicación, ya que p
 	\bibitem{Criptografia} aws.amazon.com\\ ¿Que es la criptografía?\\	\url{https://aws.amazon.com/es/what-is/cryptography/} (accedido 16/11/2024).
 	
 	\bibitem{AES} msmk.university\\ ¿Qué es AES? ¿Es seguro?\\	\url{https://msmk.university/advanced-encryption-standard-aes/} (accedido 16/11/2024).
-	
-	\bibitem{Libreria secrets} python.org\\ ¿Para que sirve? ¿La clave generada se considera criptográficamente fuerte?\\	\url{https://docs.python.org/es/3/library/secrets.html} (accedido 17/11/2024).
 	 
-	 \bibitem{def_Python} cursosaula21.com\\ ¿Que es Python?\\	\url{https://www.cursosaula21.com/que-es-python/} (accedido 17/11/2024).
 	 
 \end{thebibliography}
 
