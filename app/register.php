@@ -43,7 +43,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         VALUES (?, ?, ?, ?, ?, ?)";
         $stmt = mysqli_prepare($conn, $sql);
         mysqli_stmt_bind_param($stmt, "ssssss", $name, $dni, $phone, $birthdate, $email, $password_hash);
-        mysqli_stmt_execute($stmt);
         
         // Verificar si la inserción de datos fue exitosa
         if (mysqli_stmt_execute($stmt)) {
