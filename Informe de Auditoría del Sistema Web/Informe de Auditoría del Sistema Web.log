@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.11.11)  19 NOV 2024 12:35
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.11.11)  19 NOV 2024 13:02
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -439,154 +439,121 @@ LaTeX Warning: No \author given.
 
 
 [2]
+Underfull \hbox (badness 10000) in paragraph at lines 80--81
+
+ []
+
 LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 8
-6.
- (D:\MikText\tex/latex/psnfss\ot1pcr.fd
+2.
+(D:\MikText\tex/latex/psnfss\ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
 LaTeX Font Info:    Trying to load font information for TS1+pcr on input line 8
-8.
-
-(D:\MikText\tex/latex/psnfss\ts1pcr.fd
+4.
+ (D:\MikText\tex/latex/psnfss\ts1pcr.fd
 File: ts1pcr.fd 2001/06/04 font definitions for TS1/pcr.
 )
 
 [3{D:/MikText/fonts/enc/dvips/base/8r.enc}]
-Underfull \hbox (badness 10000) in paragraph at lines 106--115
+Underfull \hbox (badness 10000) in paragraph at lines 99--108
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 106--115
+Underfull \hbox (badness 10000) in paragraph at lines 99--108
 
  []
 
 
 
 [4]
-Underfull \hbox (badness 10000) in paragraph at lines 121--123
+Underfull \hbox (badness 10000) in paragraph at lines 112--114
 
  []
 
-<figures/injection-error.png, id=204, 1327.96124pt x 744.7825pt>
+<figures/injection-error.png, id=198, 1327.96124pt x 744.7825pt>
 File: figures/injection-error.png Graphic file (type png)
 <use figures/injection-error.png>
-Package pdftex.def Info: figures/injection-error.png  used on input line 128.
+Package pdftex.def Info: figures/injection-error.png  used on input line 119.
 (pdftex.def)             Requested size: 338.58632pt x 189.88861pt.
 
 
-[5]
-
-[6
+[5
 pdfTeX warning (ext4): destination with the same identifier (name{figure.1}) ha
 s been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.157 
+l.127 
        <./figures/injection-error.png>]
 
+[6]
+
 [7]
-Underfull \hbox (badness 10000) in paragraph at lines 204--205
-
- []
-
-
-Overfull \hbox (19.11627pt too wide) in paragraph at lines 215--217
-\OT1/cmr/m/n/12 del for-mu-la-rio[][][]. Para ello se ha uti-lizado una funci^^
-Son: \OT1/pcr/m/n/12 !formulario.checkValidity()\OT1/cmr/m/n/12 .
- []
-
-
-
-[8]
-
-[9]
-<figures/DesplazamientoBoton.png, id=264, 1218.5525pt x 509.905pt>
+<figures/DesplazamientoBoton.png, id=230, 1218.5525pt x 509.905pt>
 File: figures/DesplazamientoBoton.png Graphic file (type png)
 <use figures/DesplazamientoBoton.png>
-Package pdftex.def Info: figures/DesplazamientoBoton.png  used on input line 25
-4.
+Package pdftex.def Info: figures/DesplazamientoBoton.png  used on input line 24
+2.
 (pdftex.def)             Requested size: 338.58632pt x 141.68315pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 272--273
 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 276--278
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 279--280
-
- []
-
-
-
-[10
+[8
 pdfTeX warning (ext4): destination with the same identifier (name{figure.2}) ha
 s been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.280 
-       <./figures/DesplazamientoBoton.png>]
-Overfull \hbox (62.63763pt too wide) in paragraph at lines 297--299
-\OT1/pcr/m/n/12 function checkFailedAttempts(email, log[]file, max[]attempts = 
-5, lock[]time
- []
+l.267 \subsubsection
+                    {Soluciones implementadas} <./figures/DesplazamientoBoton.p
+ng>]
 
-
-
-[11]
-Underfull \hbox (badness 10000) in paragraph at lines 333--335
+[9]
+Underfull \hbox (badness 10000) in paragraph at lines 315--317
 
  []
 
 
 
-[12]
-Underfull \hbox (badness 10000) in paragraph at lines 353--354
+[10]
+Underfull \hbox (badness 10000) in paragraph at lines 335--336
 []$\OT1/pcr/m/n/12 https : / / kinsta . com / es / base-[]de-[]conocimiento / v
 ariables-[]de-[]entorno/$[]
  []
 
 
-Underfull \hbox (badness 3128) in paragraph at lines 358--359
+Underfull \hbox (badness 3128) in paragraph at lines 340--341
 []$\OT1/pcr/m/n/12 https : / / owasp . org / Top10 / es / A02 _ 2021-[]Cryptogr
 aphic _ Failures/$[] \OT1/cmr/m/n/12 (ac-ce-
  []
 
 
 
-[13] (Informe de Auditoría del Sistema Web.aux)
+[11] (Informe de Auditoría del Sistema Web.aux)
  ***********
 LaTeX2e <2024-11-01>
 L3 programming layer <2024-11-02>
  ***********
 Package rerunfilecheck Info: File `"Informe de Auditoría del Sistema Web".out'
  has not changed.
-(rerunfilecheck)             Checksum: 51DE9DF7704AEB77E2195C48A0F0C74E;4685.
+(rerunfilecheck)             Checksum: F166831D931C0F3DF3E001B65D36365A;4728.
  ) 
 Here is how much of TeX's memory you used:
- 11717 strings out of 473681
- 176179 string characters out of 5735276
- 621350 words of memory out of 5000000
- 34542 multiletter control sequences out of 15000+600000
- 566896 words of font info for 67 fonts, out of 8000000 for 9000
+ 11693 strings out of 473681
+ 175955 string characters out of 5735276
+ 627349 words of memory out of 5000000
+ 34540 multiletter control sequences out of 15000+600000
+ 566249 words of font info for 65 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,8n,79p,1119b,2072s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,8n,79p,1119b,1190s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\jille\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm
 1200.pk><D:/MikText/fonts/type1/public/amsfonts/cm/cmbx12.pfb><D:/MikText/fonts
 /type1/public/amsfonts/cm/cmr10.pfb><D:/MikText/fonts/type1/public/amsfonts/cm/
 cmr12.pfb><D:/MikText/fonts/type1/public/amsfonts/cm/cmr17.pfb><D:/MikText/font
 s/type1/public/amsfonts/cm/cmr7.pfb><D:/MikText/fonts/type1/public/amsfonts/cm/
-cmr8.pfb><D:/MikText/fonts/type1/public/amsfonts/cm/cmti12.pfb><D:/MikText/font
-s/type1/urw/courier/ucrr8a.pfb>
-Output written on "Informe de Auditoría del Sistema Web.pdf" (13 pages, 264351
+cmr8.pfb><D:/MikText/fonts/type1/urw/courier/ucrr8a.pfb>
+Output written on "Informe de Auditoría del Sistema Web.pdf" (11 pages, 244594
  bytes).
 PDF statistics:
- 393 PDF objects out of 1000 (max. 8388607)
- 117 named destinations out of 1000 (max. 500000)
+ 347 PDF objects out of 1000 (max. 8388607)
+ 96 named destinations out of 1000 (max. 500000)
  219 words of extra memory for PDF output out of 10000 (max. 10000000)
 

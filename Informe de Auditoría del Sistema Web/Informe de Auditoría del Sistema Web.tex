@@ -72,36 +72,29 @@ La auditoría se realizó mediante un análisis de ZAP, ejecutando...
 \vspace{1em}
 
 \section{Vulnerabilidades}
-
-
+\vspace{1em}
 \subsection{Rotura de control de acceso}
 Una rotura del control de acceso ocurre cuando un sistema permite a usuarios acceder a datos, funciones o recursos para los que no tienen autorización, debido a fallos en la implementación de los permisos. Esto puede resultar en accesos no autorizados, modificaciones indebidas de datos o acciones privilegiadas que deberían estar restringidas.
-
+\vspace{1em}
 \subsubsection{Soluciones implementadas}
-Para minimizar la utilización de \textbf{CORS}\footnote{Mecanismo que permite que los recursos de un servidor sean accesibles desde diferentes dominios de manera controlada.}, se ha integrado el uso de tokens \textbf{CSRF}\footnote{Códigos únicos generados para verificar que una solicitud proviene de una fuente legítima y no de un atacante.} con el fin de implementar mecanismos de acceso únicos.\\
-Una rotura del control de acceso ocurre cuando un sistema permite a usuarios acceder a datos, funciones o recursos para los que no tienen autorización, debido a fallos en la implementación de los permisos. Esto puede resultar en accesos no autorizados, modificaciones indebidas de datos o acciones privilegiadas que deberían estar restringidas.\\
-Para minimizar la utilización de \textbf{CORS}\footnote{Mecanismo que permite que los recursos de un servidor sean accesibles desde diferentes dominios de manera controlada.}, se ha integrado el uso de tokens\footnote{Valor único y aleatorio generado por un servidor y asociado a la sesión de un usuario, que se envía junto con los formularios o solicitudes sensibles.} anti \textbf{CSRF}\footnote{Códigos únicos generados para verificar que una solicitud proviene de una fuente legítima y no de un atacante.} con el fin de implementar mecanismos de acceso únicos.
-
+Para minimizar la utilización de CORS\footnote{CORS: Mecanismo que permite que los recursos de un servidor sean accesibles desde diferentes dominios de manera controlada.}, se ha integrado el uso de tokens CSRF\footnote{CSRF: Códigos únicos generados para verificar que una solicitud proviene de una fuente legítima y no de un atacante.} con el fin de implementar mecanismos de acceso únicos.\\
 \begin{itemize}
-\item \textbf{Integración de tokens CSRF:\\} Se ha implementado la creación de los tokens en archivos donde se manejan formularios o se ingresan los identificadores y contraseñas de los usuarios. Esto incluye archivos como \code{login.php}, \code{register.php}, \code{add\_item.php} y \code{modify\_user.php}.
+\item \textbf{Integración de tokens CSRF\\} Se ha implementado la creación de los tokens en archivos donde se manejan formularios o se ingresan los identificadores y contraseñas de los usuarios. Esto incluye archivos como \code{login.php}, \code{register.php}, \code{add\_item.php} y \code{modify\_user.php}.
 \begin{enumerate}
-\item \textbf{Generación del token CSRF:\\} Si no existe ya un token CSRF en la sesión \code{\$\_SESSION['csrf\_token']}, se genera uno nuevo usando \code{bin2hex(random\_bytes(32))}. Con esto se asegura que cada sesión tiene un token único y difícil de adivinar.
-\item \textbf{Uso del token en el formulario:\\} En el formulario HTML\footnote{Lenguaje de marcado utilizado para estructurar y organizar el contenido en las páginas web.} (HyperText Markup Language)(\code{login.html}), este token se debe enviar como un campo oculto. Esto permite que el servidor valide que el formulario fue enviado desde la misma aplicación.
-\item \textbf{Validación del token en el servidor:\\} Cuando el formulario se envía, el código verifica si el token recibido \\ (\code{\$\_POST['csrf\_token']}) coincide con el que está almacenado en la sesión. Si no coinciden o el token no existe, la solicitud se considera no válida y se bloquea (\code{die("Error de validación CSRF");}).
-\item \textbf{Eliminación del token:\\}Una vez que el usuario inicia sesión correctamente, el token se elimina usando el comando \code{unset}(\code{\$\_SESSION['csrf\_token']}). Esto asegura que no pueda ser reutilizado.
-		
-		
+\item \textbf{Generación del token CSRF\\} Si no existe ya un token CSRF en la sesión \code{\$\_SESSION['csrf\_token']}, se genera uno nuevo usando \code{bin2hex(random\_bytes(32))}. Con esto se asegura que cada sesión tiene un token único y difícil de adivinar.
+\item \textbf{Uso del token en el formulario\\} En el formulario HTML\footnote{Lenguaje de marcado utilizado para estructurar y organizar el contenido en las páginas web.} (HyperText Markup Language)(\code{login.html}), este token se debe enviar como un campo oculto. Esto permite que el servidor valide que el formulario fue enviado desde la misma aplicación.
+\item \textbf{Validación del token en el servidor\\} Cuando el formulario se envía, el código verifica si el token recibido \\ (\code{\$\_POST['csrf\_token']}) coincide con el que está almacenado en la sesión. Si no coinciden o el token no existe, la solicitud se considera no válida y se bloquea (\code{die("Error de validación CSRF");}).
+\item \textbf{Eliminación del token\\}Una vez que el usuario inicia sesión correctamente, el token se elimina usando el comando \code{unset}(\code{\$\_SESSION['csrf\_token']}). Esto asegura que no pueda ser reutilizado.
 \end{enumerate}
 \end{itemize}
-
 \vspace{1em}
-
 \subsection{Fallos criptográficos}
 En esta sección se comentarán los fallos de seguridad web relacionados con la criptografía\footnote{Práctica que consiste en proteger información mediante el uso de algoritmos codificados, Hashes y firmas.} (o la falta de esta) causando la exposición de datos sensibles\cite{Fallos Criptograficos}.\\
 %TODO Se pone la bibliografía de los fallos criptograficos, pero realmente no se explica lo que son, faltaría la explicación de lo que son en el texto.
 Se han identificado y solucionado dos fallos criptográficos. El primer fallo consiste en almacenar la información de la base de datos sin cifrar, utilizando únicamente el cifrado incorporado por SQL, el cual se descifra directamente al realizar una consulta. El segundo fallo detectado es almacenar las contraseñas en texto plano.
 %TODO Falta bibliografía de lo dicho de SQL, que descifra automaticamente.
 
+\vspace{1em}
 \subsubsection{Soluciones implementadas}
 Para subsanar el primer error se ha decidido cifrar la información que se almacena en la base de datos. El algoritmo de cifrado simétrico\footnote{Método de cifrado que usa la misma clave para cifrar y descifrar.} que se ha usado es el AES (Advanced Encryption Standar) de 256 bits de longitud, puesto que este algoritmo es considerado seguro a día de hoy\cite{AES}.\\ \\
 El uso de este algoritmo requiere una clave segura para cifrar y descifrar los datos. Para ello se ha usado una función\cite{generador_claves_python} de 
@@ -112,8 +105,6 @@ Una vez generada la clave de secreta se guarda como una variable de entorno\foot
 Para solventar el segundo error se ha decidido usar un algoritmo resumen para generar el resumen criptográfico o Hash\footnote{Criptograma que consiste en una sucesión de caracteres alfanuméricos que representan la totalidad del contenido original.} de la contraseña en vez de guardarla como texto plano. Para ello se ha usado la función \code{password\_hash} a la que se le pasa como parámetros la contraseña a resumir y una constante de PHP\footnote{PHP es un lenguaje de código abierto especialmente adecuado para el desarrollo web y que puede ser incrustado en HTML.\cite{def_php}} (Hypertext Preprocessor) \code{PASSWORD\_BCRYPT} que indica que queremos usar el algoritmo Bcryt\cite{Bcrypt}. Bcrypt usa sales \footnote{Caracteres aleatorios que se le añaden a la contraseña para que sea mas difícil precalcular los resúmenes criptográficos.} para mayor seguridad ya que hace que dos contraseñas iguales de usarios diferentes generen resúmenes criptográficos distintos, por lo que se hace mucho mas difícil precalcularlos. 
 %TODO En general, faltan bibliografías de las definiciones de las notas al pie.
 \vspace{1em}
-
-
 
 \subsection{Inyección}
 \vspace{1em}
@@ -196,58 +187,55 @@ Después de implementar las soluciones descritas, se realizó un segundo anális
 
 \textbf{Conclusiones}
 
-Ambas vulnerabilidades fueron una amenaza crítica para la aplicación, ya que podía permitir a los atacantes ejecutar código malicioso en el navegador de los usuarios o insertar consultas SQL a través de los datos de entrada. Gracias a las soluciones implementadas, las vulnerabilidades se han mitigado de manera efectiva. La aplicación ahora cumple con un estándar de seguridad más alto, protegiendo los datos y la experiencia de los usuarios frente a posibles ataques de inyección de código.
+Ambas vulnerabilidades fueron una amenaza crítica para la aplicación, ya que podía permitir a los atacantes ejecutar código malicioso en el navegador de los usuarios o insertar consultas SQL a través de los datos de entrada. Gracias a las soluciones implementadas, las vulnerabilidades se han mitigado de manera efectiva. La aplicación ahora cumple con un estándar de seguridad más alto, protegiendo los datos frente a posibles ataques de inyección de código.
 
 \vspace{1em}
 
 \subsection{Diseño inseguro}
+\vspace{1em}
 \textbf{¿Que significa diseño inseguro?\\}
-
-Una página web tiene un diseño inseguro cuando su estructura, funcionalidades\footnote{Características y herramientas que permiten a los usuarios interactuar con el sitio para cumplir objetivos.}, o configuración comprometen la seguridad de los usuarios o de sus datos. Esto puede deberse a malas prácticas en el desarrollo, falta de medidas de seguridad adecuadas o errores en la implementación. 
-
-En esta sección se ha identificado una vulnerabilidad principal. La no validación de los datos introduciodos por los usuarios al registrarse. Además, se ha desplazado la posibilidad de ver, modificar y añadir videojuegos a la plataforma, exclusivamente para usuarios registrados.
-
-
+Una página web tiene un diseño inseguro cuando su estructura, funcionalidades, o configuración comprometen la seguridad de los usuarios o de sus datos. Esto puede deberse a malas prácticas en el desarrollo, falta de medidas de seguridad adecuadas o errores en la implementación. 
+% ??? En esta sección se ha identificado una vulnerabilidad principal. La no validación de los datos introduciodos por los usuarios al registrarse. 
+Además, se ha desplazado la posibilidad de ver, modificar y añadir videojuegos a la plataforma, exclusivamente para usuarios registrados.
+\vspace{1em}
 \subsubsection{Soluciones implementadas}
-
-Para mitigar las vulnerabilidades de la no validación de datos, se han implementado las siguientes soluciones:
-\begin{itemize}
- \item \textbf{Validación de campos: \\}
- En esta sección se comprueba que el usuario haya rellenado todos los campos obligatorios del formulario\footnote{Una interfaz interactiva que permite a los usuarios ingresar y enviar información estructurada, la cual se procesa y almacena en la base de datos correspondiente.}. Para ello se ha  utilizado una función: \code{!formulario.checkValidity()}. Para comprobar que todos los campos han sido rellenados correctamente.
- \item \textbf{Validación de nombre: \\}
- En esta sección se comprueba que el usuario haya introducido un nombre: Para ello se ha utilizado una función: \code{validarNombre(nombre)}. Con esta función se comprueba que el nombre introducido es un nombre real formado únicamente por letras y espacios.
- \item \textbf{Validación de DNI: \\}
- En esta sección se comprobará que el usuario introduzca un DNI válido, formado por:
- \begin{enumerate}
-     \item 8 numeros.
-     \item Un guión.
-     \item Una letra.
- \end{enumerate}
-	Para ello se ha utilizado una función:  \code{validarDNI(dni)}. 
-  \item \textbf{Validación de email: \\}
- En esta sección se verifica que el email que ha introducido el usuario sea válido. Para ello se ha utilizado una función:  \code{validarEmail(email)}. Con esta función se consigue verificar que el email introducido está formado por las siguientes partes:
-  \begin{enumerate}
-     \item Cadena de caracteres, representando el nombre de usuario.
-     \item Una arroba\footnote{La arroba (@) es un símbolo utilizado principalmente para separar el nombre del usuario y el dominio en una dirección de correo electrónico.}.
-     \item Cadena de caracteres reflejando el dominio.
-     \item Un '\textbf{.}' .
-     \item Un TLD\footnote{Es la parte final de un nombre de dominio en Internet, que identifica la categoría, propósito o ubicación geográfica del dominio}(Top-Level Domain) de al menos dos letras.
- \end{enumerate}    
-    \item \textbf{Validación de teléfono: \\}
-    En esta sección se comprobará que el usuario introduzca un teléfono válido de exactamente 9 digitos.
-    \item \textbf{Validación de fecha de nacimiento: \\}
-    En esta sección se verificará que la fecha de nacimiento del usuario es válida, es decir, no puede ser posterior a la fecha actual.
-    \item \textbf{Validación de contraseña: \\}
-En esta sección se verificará que la contraseña introducida por el usuario cumple unos requisitos mínimos de seguridad, utilizando la siguiente función: \\ \code{validarContraseña(contraseña)}. Los requisitos mínimos impuestos son los siguientes: 
-    \begin{enumerate}
-    \item Mínimo de 8 caracteres.
-    \item Al menos una letra mayúscula.
-    \item Al menos un número.
- \end{enumerate}
-\end{itemize}
-
+Para mitigar las vulnerabilidades de ???la no validación de datos???, se han implementado las siguientes soluciones:\\
+%\begin{itemize}
+ %\item \textbf{Validación de campos: \\}
+ %En esta sección se comprueba que el usuario haya rellenado todos los campos obligatorios del formulario\footnote{Una interfaz interactiva que permite a los usuarios ingresar y enviar información estructurada, la cual se procesa y almacena en la base de datos correspondiente.}. Para ello se ha  utilizado una función: \code{!formulario.checkValidity()}. Para comprobar que todos los campos han sido rellenados correctamente.
+ %\item \textbf{Validación de nombre: \\}
+ %En esta sección se comprueba que el usuario haya introducido un nombre: Para ello se ha utilizado una función: \code{validarNombre(nombre)}. Con esta función se comprueba que el nombre introducido es un nombre real formado únicamente por letras y espacios.
+ %\item \textbf{Validación de DNI: \\}
+ %En esta sección se comprobará que el usuario introduzca un DNI válido, formado por:
+ %\begin{enumerate}
+  %   \item 8 numeros.
+   %  \item Un guión.
+    % \item Una letra.
+% \end{enumerate}
+%	Para ello se ha utilizado una función:  \code{validarDNI(dni)}. 
+ % \item \textbf{Validación de email: \\}
+ %En esta sección se verifica que el email que ha introducido el usuario sea válido. Para ello se ha utilizado una función:  \code{validarEmail(email)}. Con esta función se consigue verificar que el email introducido está formado por las siguientes partes:
+ % \begin{enumerate}
+  %   \item Cadena de caracteres, representando el nombre de usuario.
+ %    \item Una arroba\footnote{La arroba (@) es un símbolo utilizado principalmente para separar el nombre del usuario y el dominio en una dirección de correo electrónico.}.
+ %    \item Cadena de caracteres reflejando el dominio.
+  %   \item Un '\textbf{.}' .
+   %  \item Un TLD\footnote{Es la parte final de un nombre de dominio en Internet, que identifica la categoría, propósito o ubicación geográfica del dominio}(Top-Level Domain) de al menos dos letras.
+ %\end{enumerate}    
+  %  \item \textbf{Validación de teléfono: \\}
+   % En esta sección se comprobará que el usuario introduzca un teléfono válido de exactamente 9 digitos.
+    %\item \textbf{Validación de fecha de nacimiento: \\}
+    %En esta sección se verificará que la fecha de nacimiento del usuario es válida, es decir, no puede ser posterior a la fecha actual.
+    %\item \textbf{Validación de contraseña: \\}
+%En esta sección se verificará que la contraseña introducida por el usuario cumple unos requisitos mínimos de seguridad, utilizando la siguiente función: \\ \code{validarContraseña(contraseña)}. Los requisitos mínimos impuestos son los siguientes: 
+ %   \begin{enumerate}
+  %  \item Mínimo de 8 caracteres.
+   % \item Al menos una letra mayúscula.
+    %\item Al menos un número.
+ %\end{enumerate}
+%\end{itemize}
 \textbf{Desplazamiento del botón para ver/añadir/modificar juegos:\\}
-Se ha desplazado el botón de la pantalla principal que aparece nada más acceder a la web a una pantalla posterior después de haber iniciado sesión, esto se puede apreciar en la Figura \ref{fig:boton}. Con esto se consigue evitar que usuarios sin registrar puedan llegar a saturar la \textbf{BBDD}\footnote{Sistema estructurado para almacenar y gestionar datos, permitiendo su acceso y modificación de manera eficiente y segura.}(Base de datos) y que esta deje de responder.
+Se ha desplazado el botón de la página inicial a una página posterior después de haber iniciado sesión, como se puede apreciar en la Figura \ref{fig:boton}. Con esto se consigue evitar que usuarios sin haberse registrado e iniciado sesión puedan llegar a saturar la base de datos y que esta deje de responder.
 
 \begin{figure}[H]
 	\centering
@@ -266,53 +254,47 @@ Se ha desplazado el botón de la pantalla principal que aparece nada más accede
 \subsubsection{Soluciones implementadas}
 
 
-
+\vspace{1em}
 \subsection{Fallos de identificación y autenticación}
-
+\vspace{1em}
 \textbf{¿Qué es un fallo de identificación y autenticación?\\}
-
-Un fallo de identificación ocurre cuando el sistema no reconoce quién dices ser. Esto puede deberse a varias razones, como ingresar datos incorrectos o inexistentes, que el sistema no busque correctamente el usuario en la base de datos, o incluso por el uso de mensajes de error ambiguos o confusos que no ayudan al usuario a identificar el problema. Además, la ausencia de mensajes claros también puede contribuir a que el sistema no reconozca correctamente al usuario.
-
-Un fallo de autenticación ocurre cuando el sistema no puede verificar que eres quién dices ser. Esto puede suceder porque el usuario ha registrado una contraseña insegura o fácil de adivinar, utiliza mecanismos simples para recuperar contraseñas, o bien porque no se ha implementado un sistema de autenticación más robusto como la autenticación multifactor\footnote{Método de autenticación que requiere que el usuario proporcione dos o más factores de verificación diferentes para acceder a un sistema}.
+Un fallo de identificación ocurre cuando el sistema no reconoce quién dices ser. Esto puede deberse a varias razones, como ingresar datos incorrectos o inexistentes, que el sistema no busque correctamente el usuario en la base de datos, o incluso por el uso de mensajes de error ambiguos o confusos que no ayudan al usuario a identificar el problema. Además, la ausencia de mensajes claros también puede contribuir a que el sistema no reconozca correctamente al usuario.\\
+Esto puede suceder porque el usuario ha registrado una contraseña insegura o fácil de adivinar, utiliza mecanismos simples para recuperar contraseñas, o bien porque no se ha implementado un sistema de autenticación más robusto como la autenticación multifactor\footnote{Autenticación multifactor se refiere a un método de autenticación que requiere que el usuario proporcione dos o más factores de verificación diferentes para acceder a un sistema}.
 \\
-
 \textbf{¿Cómo ocurre un ataque por fallos de identificación o autenticación?\\}
-
-Esta vulnerabilidad se da cuando un atacante obtiene una lista de usuarios y contraseñas que pueden ser válidas en el sistema, y luego intenta acceder a las cuentas mediante un proceso automatizado. Un ejemplo común es el ataque de \textit{credential stuffing}\footnote{Ataque cibernético en el que los atacantes usan combinaciones de nombres de usuario y contraseñas robadas de otras plataformas para intentar acceder a cuentas en diferentes sitios web o servicios.} En este ataque, el atacante utiliza credenciales filtradas de otros servicios donde los usuarios han utilizado las mismas contraseñas, y las prueba en el sistema objetivo para obtener acceso a sus cuentas. Si el sistema no implementa medidas adicionales de seguridad, como la autenticación multifactor o límites de intentos de acceso fallidos, el atacante puede obtener acceso a las cuentas de usuario con relativa facilidad.
-
+Esta vulnerabilidad se da cuando un atacante obtiene una lista de usuarios y contraseñas que pueden ser válidas en el sistema, y luego intenta acceder a las cuentas mediante un proceso automatizado. Un ejemplo común es el ataque de Credential stuffing\footnote{Credential stuffing: Ataque cibernético en el que los atacantes usan combinaciones de nombres de usuario y contraseñas robadas de otras plataformas para intentar acceder a cuentas en diferentes sitios web o servicios.}. En este ataque, el atacante utiliza credenciales filtradas de otros servicios donde los usuarios han utilizado las mismas contraseñas, y las prueba en el sistema objetivo para obtener acceso a sus cuentas. Si el sistema no implementa medidas adicionales de seguridad, como la autenticación multifactor o límites de intentos de acceso fallidos, el atacante puede obtener acceso a las cuentas de usuario con relativa facilidad.
+\vspace{1em}
 \subsubsection{Soluciones implementadas}
 
 Para reducir los riesgos de los errores en la identificación y autenticación se ha implementado la siguientes soluciones:
 
 \begin{itemize}
 	\item \textbf{Registro de todos los intentos de sesiones:\\}
-	Se ha utilizado un archivo .log\footnote{archivo de texto que se utiliza para registrar eventos, actividades o mensajes de un sistema, programa o aplicación} para poder gestionar y observar el por qué de los errores de dichos intentos de sesiones. En el archivo .log se resgitra lo siguiente:
+	Se ha utilizado un archivo .log\footnote{Un .log es  un archivo de texto que se utiliza para registrar eventos, actividades o mensajes de un sistema, programa o aplicación} para poder gestionar y observar el por qué de los errores de dichos intentos de sesiones. En el archivo .log se resgitra lo siguiente:
     \begin{enumerate}
     \item Fecha y hora en formato yyyy-mm-dd hh:mm:ss.
     \item SUCCESS o FAILED.
     \item Email registrado o no en la base de datos.
-    \item Ip\footnote{Identificador único que se asigna a cada dispositivo conectado a una red}.
+    \item IP\footnote{IP: Identificador único que se asigna a cada dispositivo conectado a una red}.
     
- \end{enumerate}
-\item \textbf{Bloqueo temporal de usuarios por logins\footnote{Proceso mediante el cual un usuario se identifica y autentica en un sistema, servicio o aplicación.} fallidos: \\}
-Con ayuda del archivo .log se consigue registrar aquellos usuarios que han fallado 5 veces en los últimos 10 minutos. Dicha cuenta se bloquea por 10 minutos y si el usuario intenta hacer nuevamente un login, se le mostrará el tiempo que le falta para que pueda volver a realizar otros 5 intentos de login. Esto se logra gestionar en el archivo.log con la función: \code{function checkFailedAttempts(email, log\_file, max\_attempts = 5, lock\_time = 600)} 
+ \end{enumerate} 
 \end{itemize}
 
-
-
-
-
+\vspace{1em}
 \subsection{Fallos en la integridad de datos y software}
+\vspace{1em}
 \subsubsection{Soluciones implementadas}
 
 
-
+\vspace{1em}
 \subsection{Fallos en la monitorización de la seguridad}
+\vspace{1em}
 \subsubsection{Soluciones implementadas}
+\textbf{Bloqueo temporal de usuarios por Logins\footnote{Proceso mediante el cual un usuario se identifica y autentica en un sistema, servicio o aplicación.} fallidos: \\}
+Con ayuda del archivo .log se consigue registrar aquellos usuarios que han fallado 5 veces el inicio de sesión en los últimos 10 minutos. Dicha cuenta se bloquea por 10 minutos y si el usuario intenta hacer nuevamente un Login, se le mostrará el tiempo que le falta para que pueda volver a realizar otros 5 intentos. Esto se logra gestionar en el archivo.log con la función: \code{function checkFailedAttempts(email, log\_file, max\_attempts = 5, lock\_time = 600)}
 
 
-
-\section{Conclusiones}
+\section{Conclusiones finales}
 
 
 
