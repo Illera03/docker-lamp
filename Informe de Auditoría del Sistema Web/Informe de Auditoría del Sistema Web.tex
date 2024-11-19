@@ -78,24 +78,20 @@ La auditoría se realizó mediante un análisis de ZAP, ejecutando...
 Una rotura del control de acceso ocurre cuando un sistema permite a usuarios acceder a datos, funciones o recursos para los que no tienen autorización, debido a fallos en la implementación de los permisos. Esto puede resultar en accesos no autorizados, modificaciones indebidas de datos o acciones privilegiadas que deberían estar restringidas.
 
 \subsubsection{Soluciones implementadas}
-Para minimizar la utilización de \textbf{CORS}\footnote{Mecanismo que permite que los recursos de un servidor sean accesibles desde diferentes dominios de manera controlada.}, se ha integrado el uso de tokens \textbf{CSRF}\footnote{Códigos únicos generados para verificar que una solicitud proviene de una fuente legítima y no de un atacante.} con el fin de implementar mecanismos de acceso únicos.
-
-\begin{itemize}
-Una rotura del control de acceso ocurre cuando un sistema permite a usuarios acceder a datos, funciones o recursos para los que no tienen autorización, debido a fallos en la implementación de los permisos. Esto puede resultar en accesos no autorizados, modificaciones indebidas de datos o acciones privilegiadas que deberían estar restringidas.
-
-\subsubsection{Soluciones implementadas}
+Para minimizar la utilización de \textbf{CORS}\footnote{Mecanismo que permite que los recursos de un servidor sean accesibles desde diferentes dominios de manera controlada.}, se ha integrado el uso de tokens \textbf{CSRF}\footnote{Códigos únicos generados para verificar que una solicitud proviene de una fuente legítima y no de un atacante.} con el fin de implementar mecanismos de acceso únicos.\\
+Una rotura del control de acceso ocurre cuando un sistema permite a usuarios acceder a datos, funciones o recursos para los que no tienen autorización, debido a fallos en la implementación de los permisos. Esto puede resultar en accesos no autorizados, modificaciones indebidas de datos o acciones privilegiadas que deberían estar restringidas.\\
 Para minimizar la utilización de \textbf{CORS}\footnote{Mecanismo que permite que los recursos de un servidor sean accesibles desde diferentes dominios de manera controlada.}, se ha integrado el uso de tokens\footnote{Valor único y aleatorio generado por un servidor y asociado a la sesión de un usuario, que se envía junto con los formularios o solicitudes sensibles.} anti \textbf{CSRF}\footnote{Códigos únicos generados para verificar que una solicitud proviene de una fuente legítima y no de un atacante.} con el fin de implementar mecanismos de acceso únicos.
 
 \begin{itemize}
-	\item \textbf{Integración de tokens CSRF:\\} Se ha implementado la creación de los tokens en archivos donde se manejan formularios o se ingresan los identificadores y contraseñas de los usuarios. Esto incluye archivos como \code{login.php}, \code{register.php}, \code{add\_item.php} y \code{modify\_user.php}.
-	\begin{enumerate}
-		\item \textbf{Generación del token CSRF:\\} Si no existe ya un token CSRF en la sesión \code{\$\_SESSION['csrf\_token']}, se genera uno nuevo usando \code{bin2hex(random\_bytes(32))}. Con esto se asegura que cada sesión tiene un token único y difícil de adivinar.
-		\item \textbf{Uso del token en el formulario:\\} En el formulario HTML\footnote{Lenguaje de marcado utilizado para estructurar y organizar el contenido en las páginas web.} (HyperText Markup Language)(\code{login.html}), este token se debe enviar como un campo oculto. Esto permite que el servidor valide que el formulario fue enviado desde la misma aplicación.
-		\item \textbf{Validación del token en el servidor:\\} Cuando el formulario se envía, el código verifica si el token recibido \\ (\code{\$\_POST['csrf\_token']}) coincide con el que está almacenado en la sesión. Si no coinciden o el token no existe, la solicitud se considera no válida y se bloquea (\code{die("Error de validación CSRF");}).
-		\item \textbf{Eliminación del token:\\}Una vez que el usuario inicia sesión correctamente, el token se elimina usando el comando \code{unset}(\code{\$\_SESSION['csrf\_token']}). Esto asegura que no pueda ser reutilizado.
+\item \textbf{Integración de tokens CSRF:\\} Se ha implementado la creación de los tokens en archivos donde se manejan formularios o se ingresan los identificadores y contraseñas de los usuarios. Esto incluye archivos como \code{login.php}, \code{register.php}, \code{add\_item.php} y \code{modify\_user.php}.
+\begin{enumerate}
+\item \textbf{Generación del token CSRF:\\} Si no existe ya un token CSRF en la sesión \code{\$\_SESSION['csrf\_token']}, se genera uno nuevo usando \code{bin2hex(random\_bytes(32))}. Con esto se asegura que cada sesión tiene un token único y difícil de adivinar.
+\item \textbf{Uso del token en el formulario:\\} En el formulario HTML\footnote{Lenguaje de marcado utilizado para estructurar y organizar el contenido en las páginas web.} (HyperText Markup Language)(\code{login.html}), este token se debe enviar como un campo oculto. Esto permite que el servidor valide que el formulario fue enviado desde la misma aplicación.
+\item \textbf{Validación del token en el servidor:\\} Cuando el formulario se envía, el código verifica si el token recibido \\ (\code{\$\_POST['csrf\_token']}) coincide con el que está almacenado en la sesión. Si no coinciden o el token no existe, la solicitud se considera no válida y se bloquea (\code{die("Error de validación CSRF");}).
+\item \textbf{Eliminación del token:\\}Una vez que el usuario inicia sesión correctamente, el token se elimina usando el comando \code{unset}(\code{\$\_SESSION['csrf\_token']}). Esto asegura que no pueda ser reutilizado.
 		
 		
-	\end{enumerate}
+\end{enumerate}
 \end{itemize}
 
 \vspace{1em}
@@ -251,13 +247,13 @@ En esta sección se verificará que la contraseña introducida por el usuario cu
 \end{itemize}
 
 \textbf{Desplazamiento del botón para ver/añadir/modificar juegos:\\}
-Se ha desplazado el botón de la pantalla principal que aparece nada más acceder a la web a una pantalla posterior después de haber iniciado sesión, esto se puede apreciar en la Figura \ref{fig:xss_error}. Con esto se consigue evitar que usuarios sin registrar puedan llegar a saturar la \textbf{BBDD}\footnote{Sistema estructurado para almacenar y gestionar datos, permitiendo su acceso y modificación de manera eficiente y segura.}(Base de datos) y que esta deje de responder.
+Se ha desplazado el botón de la pantalla principal que aparece nada más acceder a la web a una pantalla posterior después de haber iniciado sesión, esto se puede apreciar en la Figura \ref{fig:boton}. Con esto se consigue evitar que usuarios sin registrar puedan llegar a saturar la \textbf{BBDD}\footnote{Sistema estructurado para almacenar y gestionar datos, permitiendo su acceso y modificación de manera eficiente y segura.}(Base de datos) y que esta deje de responder.
 
 \begin{figure}[H]
 	\centering
 	\fbox{\includegraphics[width=0.7\textwidth]{figures/DesplazamientoBoton.png}} % Imagen con borde negro
 	\caption{Desplazamiento del botón \textbf{Juegos}.}
-	\label{fig:xss_error}
+	\label{fig:boton}
 \end{figure}
 \vspace{1em}
 
