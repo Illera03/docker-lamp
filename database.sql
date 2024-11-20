@@ -51,24 +51,12 @@ CREATE TABLE juegos (
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`id`, `nombre`) VALUES
-(1, 'mikel'),
-(2, 'aitor');
+
 
 --
 -- Volcado de datos para la tabla `juego`
 --
-INSERT INTO `juegos` (`nombre`, `fecha_lanzamiento`, `genero`, `nota`, `precio`) VALUES
-('The Legend of Zelda: Breath of the Wild', '2017-03-03', 'Aventura', 4.9, 59.99),
-('Super Mario Odyssey', '2017-10-27', 'Plataformas', 4.8, 59.99),
-('Red Dead Redemption 2', '2018-10-26', 'Acción/Aventura', 4.7, 69.99),
-('God of War', '2018-04-20', 'Acción/Aventura', 4.9, 59.99),
-('The Witcher 3: Wild Hunt', '2015-05-19', 'RPG', 4.9, 49.99),
-('Minecraft', '2011-11-18', 'Sandbox', 4.6, 26.95),
-('Fortnite', '2017-07-25', 'Battle Royale', 4.5, 0.00),
-('Overwatch', '2016-05-24', 'Shooter', 4.4, 39.99),
-('Dark Souls III', '2016-03-24', 'RPG', 4.7, 39.99),
-('Animal Crossing: New Horizons', '2020-03-20', 'Simulación', 4.8, 59.99);
+
 
 --
 -- Índices para tablas volcadas
