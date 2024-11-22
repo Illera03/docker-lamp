@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.11.11)  22 NOV 2024 15:28
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.11.11)  22 NOV 2024 16:12
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -476,7 +476,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 111--113
 
  []
 
-<figures/injection-error.png, id=202, 1327.96124pt x 744.7825pt>
+<figures/injection-error.png, id=207, 1327.96124pt x 744.7825pt>
 File: figures/injection-error.png Graphic file (type png)
 <use figures/injection-error.png>
 Package pdftex.def Info: figures/injection-error.png  used on input line 118.
@@ -494,17 +494,12 @@ l.126
 [6]
 
 [7]
-<figures/DesplazamientoBoton.png, id=234, 1218.5525pt x 509.905pt>
+<figures/DesplazamientoBoton.png, id=239, 1218.5525pt x 509.905pt>
 File: figures/DesplazamientoBoton.png Graphic file (type png)
 <use figures/DesplazamientoBoton.png>
 Package pdftex.def Info: figures/DesplazamientoBoton.png  used on input line 24
 5.
 (pdftex.def)             Requested size: 338.58632pt x 141.68315pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 263--270
-
- []
-
 
 
 [8
@@ -512,50 +507,61 @@ pdfTeX warning (ext4): destination with the same identifier (name{figure.2}) ha
 s been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.270 \subsubsection
-                    {Soluciones implementadas} <./figures/DesplazamientoBoton.p
+l.257 \subsubsection
+                    {Credenciales por defecto} <./figures/DesplazamientoBoton.p
 ng>]
+Underfull \hbox (badness 10000) in paragraph at lines 284--291
+
+ []
+
+
 
 [9]
-Underfull \hbox (badness 10000) in paragraph at lines 318--319
+
+[10]
+Underfull \hbox (badness 10000) in paragraph at lines 339--340
 []$\OT1/pcr/m/n/12 https : / / docs . python . org / es / 3 / library / secrets
  . html$[] \OT1/cmr/m/n/12 (ac-ce-dido
  []
 
 
+Underfull \hbox (badness 10000) in paragraph at lines 342--344
 
-[10]
-Underfull \hbox (badness 10000) in paragraph at lines 321--323
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 341--342
-[]$\OT1/pcr/m/n/12 https : / / kinsta . com / es / base-[]de-[]conocimiento / v
-ariables-[]de-[]entorno/$[]
- []
-
-
-Underfull \hbox (badness 3128) in paragraph at lines 346--347
-[]$\OT1/pcr/m/n/12 https : / / owasp . org / Top10 / es / A02 _ 2021-[]Cryptogr
-aphic _ Failures/$[] \OT1/cmr/m/n/12 (ac-ce-
- []
-
-
-Overfull \hbox (69.8805pt too wide) in paragraph at lines 352--353
-[]$\OT1/pcr/m/n/12 https : / / mariadb-[]com . translate . goog / kb / en / dat
-a-[]at-[]rest-[]encryption-[]overview /
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 352--353
-\OT1/pcr/m/n/12 ? _ x _ tr _ sl = en & _x _ tr _ tl = es & _x _ tr _ hl = es & 
-_x _ tr _ pto = rq$[] \OT1/cmr/m/n/12 (ac-ce-dido
  []
 
 
 
 [11]
+Underfull \hbox (badness 10000) in paragraph at lines 362--363
+[]$\OT1/pcr/m/n/12 https : / / kinsta . com / es / base-[]de-[]conocimiento / v
+ariables-[]de-[]entorno/$[]
+ []
+
+
+Underfull \hbox (badness 3128) in paragraph at lines 367--368
+[]$\OT1/pcr/m/n/12 https : / / owasp . org / Top10 / es / A02 _ 2021-[]Cryptogr
+aphic _ Failures/$[] \OT1/cmr/m/n/12 (ac-ce-
+ []
+
+
+Overfull \hbox (69.8805pt too wide) in paragraph at lines 373--374
+[]$\OT1/pcr/m/n/12 https : / / mariadb-[]com . translate . goog / kb / en / dat
+a-[]at-[]rest-[]encryption-[]overview /
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 373--374
+\OT1/pcr/m/n/12 ? _ x _ tr _ sl = en & _x _ tr _ tl = es & _x _ tr _ hl = es & 
+_x _ tr _ pto = rq$[] \OT1/cmr/m/n/12 (ac-ce-dido
+ []
+
+
+Underfull \hbox (badness 3128) in paragraph at lines 374--375
+[]$\OT1/pcr/m/n/12 https : / / owasp . org / Top10 / A05 _ 2021-[]Security _ Mi
+sconfiguration/$[] \OT1/cmr/m/n/12 (ac-ce-
+ []
+
+
 
 [12] (Informe de Auditoría del Sistema Web.aux)
  ***********
@@ -564,26 +570,26 @@ L3 programming layer <2024-11-02>
  ***********
 Package rerunfilecheck Info: File `"Informe de Auditoría del Sistema Web".out'
  has not changed.
-(rerunfilecheck)             Checksum: F166831D931C0F3DF3E001B65D36365A;4728.
+(rerunfilecheck)             Checksum: D21556B4FE424C5A219A51E7EC89E447;4922.
  ) 
 Here is how much of TeX's memory you used:
- 11698 strings out of 473681
- 176040 string characters out of 5735276
- 628421 words of memory out of 5000000
- 34542 multiletter control sequences out of 15000+600000
- 566249 words of font info for 65 fonts, out of 8000000 for 9000
+ 11703 strings out of 473681
+ 176118 string characters out of 5735276
+ 609451 words of memory out of 5000000
+ 34545 multiletter control sequences out of 15000+600000
+ 566549 words of font info for 66 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,8n,79p,1119b,1190s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,8n,79p,1119b,2072s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\jille\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm
 1200.pk><D:/MikText/fonts/type1/public/amsfonts/cm/cmbx12.pfb><D:/MikText/fonts
 /type1/public/amsfonts/cm/cmr10.pfb><D:/MikText/fonts/type1/public/amsfonts/cm/
 cmr12.pfb><D:/MikText/fonts/type1/public/amsfonts/cm/cmr17.pfb><D:/MikText/font
 s/type1/public/amsfonts/cm/cmr7.pfb><D:/MikText/fonts/type1/public/amsfonts/cm/
 cmr8.pfb><D:/MikText/fonts/type1/urw/courier/ucrr8a.pfb>
-Output written on "Informe de Auditoría del Sistema Web.pdf" (12 pages, 247387
+Output written on "Informe de Auditoría del Sistema Web.pdf" (12 pages, 250093
  bytes).
 PDF statistics:
- 359 PDF objects out of 1000 (max. 8388607)
- 99 named destinations out of 1000 (max. 500000)
- 219 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 367 PDF objects out of 1000 (max. 8388607)
+ 101 named destinations out of 1000 (max. 500000)
+ 227 words of extra memory for PDF output out of 10000 (max. 10000000)
 

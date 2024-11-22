@@ -11,16 +11,17 @@
 \contentsline {subsubsection}{\numberline {3.3.3}Soluciones implementadas}{7}{subsubsection.3.3.3}%
 \contentsline {subsection}{\numberline {3.4}Diseño inseguro}{8}{subsection.3.4}%
 \contentsline {subsubsection}{\numberline {3.4.1}Soluciones implementadas}{8}{subsubsection.3.4.1}%
-\contentsline {subsection}{\numberline {3.5}Configuración de seguridad insuficiente}{9}{subsection.3.5}%
-\contentsline {subsubsection}{\numberline {3.5.1}Soluciones implementadas}{9}{subsubsection.3.5.1}%
+\contentsline {subsection}{\numberline {3.5}Configuración de seguridad insuficiente}{8}{subsection.3.5}%
+\contentsline {subsubsection}{\numberline {3.5.1}Credenciales por defecto}{9}{subsubsection.3.5.1}%
+\contentsline {subsubsection}{\numberline {3.5.2}Soluciones implementadas}{9}{subsubsection.3.5.2}%
 \contentsline {subsection}{\numberline {3.6}Componentes vulnerables y obsoletos}{9}{subsection.3.6}%
 \contentsline {subsubsection}{\numberline {3.6.1}Soluciones implementadas}{9}{subsubsection.3.6.1}%
 \contentsline {subsection}{\numberline {3.7}Fallos de identificación y autenticación}{9}{subsection.3.7}%
-\contentsline {subsubsection}{\numberline {3.7.1}Soluciones implementadas}{9}{subsubsection.3.7.1}%
+\contentsline {subsubsection}{\numberline {3.7.1}Soluciones implementadas}{10}{subsubsection.3.7.1}%
 \contentsline {subsection}{\numberline {3.8}Fallos en la integridad de datos y software}{10}{subsection.3.8}%
 \contentsline {subsubsection}{\numberline {3.8.1}Soluciones implementadas}{10}{subsubsection.3.8.1}%
 \contentsline {subsection}{\numberline {3.9}Fallos en la monitorización de la seguridad}{10}{subsection.3.9}%
 \contentsline {subsubsection}{\numberline {3.9.1}Soluciones implementadas}{10}{subsubsection.3.9.1}%
-\contentsline {section}{\numberline {4}Conclusiones finales}{10}{section.4}%
-\contentsline {section}{\numberline {5}Bibliografía}{10}{section.5}%
+\contentsline {section}{\numberline {4}Conclusiones finales}{11}{section.4}%
+\contentsline {section}{\numberline {5}Bibliografía}{11}{section.5}%
 \contentsline {section}{\numberline {6}Apéndices}{12}{section.6}%

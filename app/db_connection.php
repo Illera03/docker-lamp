@@ -1,7 +1,7 @@
 <?php
     $hostname = "db";
     $username = "admin__sgssi";
-    $password = "u31sg0909";
+    $password = "U31sg09_09";
     $db = "database";
 
     // Conexión a la base de datos

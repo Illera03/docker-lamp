@@ -249,7 +249,28 @@ Se ha desplazado el botón de la página inicial a una página posterior despué
 \vspace{1em}
 
 \subsection{Configuración de seguridad insuficiente}
+\vspace{1em}
+
+\textbf{¿Qué es la configuración de seguridad insuficiente?\\}
+La configuración de seguridad insuficiente ocurre cuando un sistema o aplicación utiliza configuraciones predeterminadas, credenciales simples o no establece medidas de protección adecuadas contra posibles amenazas. Esto puede incluir la falta de restricciones de acceso, configuraciones inadecuadas de servicios, y uso de contraseñas débiles o predeterminadas \cite{sec_mis}.
+En esta sección se ha detectado una vulnerabilidad principal, el uso de credenciales (usario y contraseña) por defecto o extremadamente simples.
+\subsubsection{Credenciales por defecto}
+Esta vulnerabilidad se veía reflejada en dos de nuestros servicios, MariaDB y phpMyAdmin.\\
+Credenciales de MariaDB:\\
+Usuario: admin\\
+Contraseña: test\\
+Al igual que en phpMyAdmin:\\
+Usuario: admin\\
+Contraseña: test\\
+Estas credenciales son extremadamente simples y no cumplen con las políticas básicas de seguridad para la autenticación. Y además, dejan expuestos servicios críticos, aumentando significativamente el riesgo de ataques como la inyección SQL, robo de datos y escalamiento de privilegios.
+\vspace{1em}
 \subsubsection{Soluciones implementadas}
+Para mitigar este problema, se han modificado tanto los usuarios como las contraseñas de ambos servicios por unos valores más seguros. Las nuevas contraseñas cuentan con más de 10 dígitos entre los que se incluyen combinaciones de mayúsculas, minúsculas, números y caracteres especiales.\\
+\vspace{1em}
+
+\textbf{Conclusiones}
+
+El uso de credenciales predeterminadas o débiles representaba un riesgo crítico para la seguridad del sistema, ya que las anteriores eran especialmente conocidas y fáciles de explotar por atacantes. Esto facilitaba y posivilitaba el acceso no autorizado a servicios clave como MariaDB y phpMyAdmin, comprometiendo la integridad y confidencialidad de los datos. 
 
 
 
@@ -349,7 +370,8 @@ Con ayuda del archivo .log se consigue registrar aquellos usuarios que han falla
 	
 	\bibitem{AES} msmk.university\\ ¿Qué es AES? ¿Es seguro?\\	\url{https://msmk.university/advanced-encryption-standard-aes/} (accedido 16/11/2024).
 	
-	\bibitem{MariaDB Cifrado} mariadb-com.\\ Limitaciones e información sobre el cifrado de MariaDB\\	\url{https://mariadb-com.translate.goog/kb/en/data-at-rest-encryption-overview/?_x_tr_sl=en&_x_tr_tl=es&_x_tr_hl=es&_x_tr_pto=rq} (accedido 21/11/2024).
+	\bibitem{MariaDB Cifrado} mariadb-com\\ Limitaciones e información sobre el cifrado de MariaDB\\	\url{https://mariadb-com.translate.goog/kb/en/data-at-rest-encryption-overview/?_x_tr_sl=en&_x_tr_tl=es&_x_tr_hl=es&_x_tr_pto=rq} (accedido 21/11/2024).
+	\bibitem{sec_mis} owasp.org\\ Configuración de seguridad insuficiente\\	\url{https://owasp.org/Top10/A05_2021-Security_Misconfiguration/} (accedido 22/11/2024).
 	 
 	 
 \end{thebibliography}

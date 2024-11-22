@@ -18,7 +18,7 @@ db:
   environment:
     MYSQL_ROOT_PASSWORD: root
     MYSQL_USER: admin__sgssi
-    MYSQL_PASSWORD: u31sg0909
+    MYSQL_PASSWORD: U31sg09_09
     MYSQL_DATABASE: database
   ports:
     - "8889:3306"
@@ -31,5 +31,5 @@ phpmyadmin:
     - 8890:80
   environment:
     MYSQL_USER: admin__abd
-    MYSQL_PASSWORD: 0102005
+    MYSQL_PASSWORD: 0102005U_3
     MYSQL_DATABASE: database
