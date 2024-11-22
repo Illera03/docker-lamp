@@ -126,14 +126,15 @@ La vulnerabilidad CWE-79 corresponde a Cross-Site Scripting (XSS) Reflejado, que
 
 \vspace{1em}
 
-\textbf{Causa de la vulnerabilidad\\}
+\textbf{Causa de la vulnerabilidad}
+
 La vulnerabilidad XSS detectada se originaba en el archivo \code{modify\_item.php}, más concretamente en el campo de la fecha de lanzamiento y en otros campos de entrada en el formulario de modificación de un juego. Esto se debía a que los valores de entrada eran reflejados en la respuesta sin la sanitización o validación adecuada, permitiendo a los atacantes inyectar y ejecutar código JavaScript en el navegador del usuario.
 
 \vspace{1em}
 
 \textbf{Pruebas y comportamiento observado}
 
-Sin la sanitización de entrada: OWASP ZAP detectó que ciertos campos permitían la inyección de código JavaScript en los valores de los formularios.\\ Por ejemplo, en el campo de la fecha, se podía ingresar un valor como \\\code{<script>alert(1);</script>}, lo cual provocaba la ejecución de un alert en el navegador.
+Sin la sanitización de entrada: OWASP ZAP detectó que ciertos campos permitían la inyección de código JavaScript en los valores de los formularios.\\ Por ejemplo, en el campo de la fecha, se podía ingresar un valor como \\\code{<script>alert(1);</script>}, lo cual provocaba la ejecución de una alerta en el navegador.
 
 \vspace{1em}
 
@@ -142,12 +143,14 @@ La vulnerabilidad CWE-89 corresponde a la inyección SQL, donde un atacante es c
 
 \vspace{1em}
 
-\textbf{Causa de la Vulnerabilidad\\} 
+\textbf{Causa de la Vulnerabilidad}
+ 
 La vulnerabilidad detectada se originaba en el archivo \code{show\_user.php} y fue causada por la construcción dinámica de consultas SQL sin la adecuada sanitización\footnote{Sanitización se refiere al proceso de limpiar o filtrar los datos de entrada para eliminar cualquier contenido malicioso que pudiera comprometer la seguridad del sistema.\cite{def_sanitization_escaping}} ni parametrización de los datos proporcionados por el usuario. En este caso, el valor del parámetro \texttt{id} se concatenó directamente a la consulta SQL sin protección, lo que permitió la ejecución de código SQL malicioso.
 
 \vspace{1em}
 
-\textbf{Pruebas y comportamiento observado\\}
+\textbf{Pruebas y comportamiento observado}
+
 En el error encontrado, la inyección fue posible al modificar el parámetro de la siguiente manera: \code{1750' AND '1'='1' --}\\
 Esto permitió a OWASP ZAP modificar la consulta SQL ejecutada en el servidor, manipulando los resultados devueltos y accediendo a información que no debía ser revelada. En particular, se manipuló la consulta para obtener datos utilizando una condición booleana que siempre era verdadera, \texttt{'1'='1'}, y luego se comentó el resto de la consulta utilizando \texttt{--}, lo que invalidaba el resto de la consulta SQL.
 
@@ -179,7 +182,8 @@ Todas estas soluciones también se han implementado en otros archivos que, aunqu
 
 \vspace{1em}
 
-\textbf{Resultados de la segunda auditoría\\}
+\textbf{Resultados de la segunda auditoría}
+
 Después de implementar las soluciones descritas, se realizó un segundo análisis con OWASP ZAP. Los resultados fueron positivos: no se detectaron vulnerabilidades de XSS ni otros problemas de inyección.
 
 \vspace{1em}
@@ -239,7 +243,7 @@ Se ha desplazado el botón de la página inicial a una página posterior despué
 \begin{figure}[H]
 	\centering
 	\fbox{\includegraphics[width=0.7\textwidth]{figures/DesplazamientoBoton.png}} % Imagen con borde negro
-	\caption{Desplazamiento del botón \textbf{Juegos}.}
+	\caption{Desplazamiento del botón Juegos.}
 	\label{fig:boton}
 \end{figure}
 \vspace{1em}
@@ -259,7 +263,7 @@ Se ha desplazado el botón de la página inicial a una página posterior despué
 \textbf{¿Qué es un fallo de identificación y autenticación?\\}
 Un fallo de identificación ocurre cuando el sistema no reconoce quién dices ser. Esto puede deberse a varias razones, como ingresar datos incorrectos o inexistentes, que el sistema no busque correctamente el usuario en la base de datos, o incluso por el uso de mensajes de error ambiguos o confusos que no ayudan al usuario a identificar el problema. Además, la ausencia de mensajes claros también puede contribuir a que el sistema no reconozca correctamente al usuario.\\
 Esto puede suceder porque el usuario ha registrado una contraseña insegura o fácil de adivinar, utiliza mecanismos simples para recuperar contraseñas, o bien porque no se ha implementado un sistema de autenticación más robusto como la autenticación multifactor\footnote{Autenticación multifactor se refiere a un método de autenticación que requiere que el usuario proporcione dos o más factores de verificación diferentes para acceder a un sistema}.
-\\
+\\ \\
 \textbf{¿Cómo ocurre un ataque por fallos de identificación o autenticación?\\}
 Esta vulnerabilidad se da cuando un atacante obtiene una lista de usuarios y contraseñas que pueden ser válidas en el sistema, y luego intenta acceder a las cuentas mediante un proceso automatizado. Un ejemplo común es el ataque de Credential stuffing\footnote{Credential stuffing: Ataque cibernético en el que los atacantes usan combinaciones de nombres de usuario y contraseñas robadas de otras plataformas para intentar acceder a cuentas en diferentes sitios web o servicios.}. En este ataque, el atacante utiliza credenciales filtradas de otros servicios donde los usuarios han utilizado las mismas contraseñas, y las prueba en el sistema objetivo para obtener acceso a sus cuentas. Si el sistema no implementa medidas adicionales de seguridad, como la autenticación multifactor o límites de intentos de acceso fallidos, el atacante puede obtener acceso a las cuentas de usuario con relativa facilidad.
 \vspace{1em}
