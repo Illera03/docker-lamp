@@ -64,7 +64,6 @@ if (isset($_GET['id'])) {
 
             // Mostrar los datos en una tabla
             echo '<table class="user_table">';
-            echo "<tr><th>ID</th><td>" . htmlspecialchars($row['id']) . "</td></tr>";
             echo "<tr><th>Nombre</th><td>" . htmlspecialchars($nombreDescifrado) . "</td></tr>";
             echo "<tr><th>DNI</th><td>" . htmlspecialchars($dniDescifrado) . "</td></tr>";
             echo "<tr><th>Teléfono</th><td>" . htmlspecialchars($telefonoDescifrado) . "</td></tr>";
