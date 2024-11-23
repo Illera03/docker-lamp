@@ -96,13 +96,9 @@ Se han identificado y solucionado dos fallos criptográficos. El primer fallo co
 \vspace{1em}
 \subsubsection{Soluciones implementadas}
 Para subsanar el primer error se ha decidido cifrar la información que se almacena en la base de datos. El algoritmo de cifrado simétrico\footnote{Método de cifrado que usa la misma clave para cifrar y descifrar.} que se ha usado es el AES (Advanced Encryption Standar) de 256 bits de longitud, puesto que este algoritmo es considerado seguro a día de hoy\cite{AES}.\\ \\
-El uso de este algoritmo requiere una clave segura para cifrar y descifrar los datos. Para ello se ha usado una función\cite{generador_claves_python} de 
-%TODO esto no sería una cita, sería un apéndice
-Python\footnote{Lenguaje de programación orientado a objetos usado principalmente para el desarrollo web y de aplicaciones informáticas.} que genera la clave usando la librería \code{secrets}, que es una librería que genera números aleatorios con la suficiente entropía para  que la clave generada pueda ser considerada criptográficamente fuerte\cite{secrets Python}. 
-%TODO Falta bibliografía de esto de la librería.
+El uso de este algoritmo requiere una clave segura para cifrar y descifrar los datos. Para ello se ha usado una función\cite{generador_claves_python} de Python\footnote{Lenguaje de programación orientado a objetos usado principalmente para el desarrollo web y de aplicaciones informáticas.} que genera la clave usando la librería \code{secrets}, que es una librería que genera números aleatorios con la suficiente entropía para  que la clave generada pueda ser considerada criptográficamente fuerte\cite{secrets Python}. 
 Una vez generada la clave de secreta se guarda como una variable de entorno\footnote{Las variables de entorno son variables disponibles para tu programa/aplicación de forma dinámica durante el tiempo de ejecución. El valor de estas variables puede proceder de diversas fuentes: archivos de texto, gestores secretos de terceros, scripts de llamada, etc.\cite{Variable de entorno}} en un archivo .env llamado \code{claveCifrado.env} para evitar comprometerla. Los datos cifrados de la tabla Juegos son el nombre, género, fecha de lanzamiento, valoración y precio. Mientras que los datos cifrados de la tabla Usuarios son el nombre, teléfono, DNI y fecha de nacimiento. Sin embargo, como al cifrar los datos su número de caracteres aumenta, se han tenido que cambiar los tipos de dato y la longitud de los campos de la base de datos para poder almacenarlos.\\ \\
-Para solventar el segundo error se ha decidido usar un algoritmo resumen para generar el resumen criptográfico o Hash\footnote{Criptograma que consiste en una sucesión de caracteres alfanuméricos que representan la totalidad del contenido original.} de la contraseña en vez de guardarla como texto plano. Para ello se ha usado la función \code{password\_hash} a la que se le pasa como parámetros la contraseña a resumir y una constante de PHP\footnote{PHP es un lenguaje de código abierto especialmente adecuado para el desarrollo web y que puede ser incrustado en HTML.\cite{def_php}} (Hypertext Preprocessor) \code{PASSWORD\_BCRYPT} que indica que queremos usar el algoritmo Bcryt\cite{Bcrypt}. Bcrypt usa sales \footnote{Caracteres aleatorios que se le añaden a la contraseña para que sea mas difícil precalcular los resúmenes criptográficos.} para mayor seguridad ya que hace que dos contraseñas iguales de usarios diferentes generen resúmenes criptográficos distintos, por lo que se hace mucho mas difícil precalcularlos. 
-%TODO En general, faltan bibliografías de las definiciones de las notas al pie.
+Para solventar el segundo error se ha decidido usar un algoritmo resumen para generar el resumen criptográfico o Hash\footnote{Criptograma que consiste en una sucesión de caracteres alfanuméricos que representan la totalidad del contenido original.} de la contraseña en vez de guardarla como texto plano. Para ello se ha usado la función \code{password\_hash} a la que se le pasa como parámetros la contraseña a resumir y una constante de PHP\footnote{PHP es un lenguaje de código abierto especialmente adecuado para el desarrollo web y que puede ser incrustado en HTML.\cite{def_php}} (Hypertext Preprocessor) \code{PASSWORD\_BCRYPT} que indica que queremos usar el algoritmo Bcryt\cite{Bcrypt}. Bcrypt usa sales \footnote{Caracteres aleatorios que se le añaden a la contraseña para que sea mas difícil precalcular los resúmenes criptográficos.} para mayor seguridad ya que hace que dos contraseñas iguales de usarios diferentes generen resúmenes criptográficos distintos, por lo que se hace mucho mas difícil precalcularlos.
 \vspace{1em}
 
 \subsection{Inyección}
@@ -197,12 +193,15 @@ Ambas vulnerabilidades fueron una amenaza crítica para la aplicación, ya que p
 \subsection{Diseño inseguro}
 \vspace{1em}
 \textbf{¿Que significa diseño inseguro?\\}
-Una página web tiene un diseño inseguro cuando su estructura, funcionalidades, o configuración comprometen la seguridad de los usuarios o de sus datos. Esto puede deberse a malas prácticas en el desarrollo, falta de medidas de seguridad adecuadas o errores en la implementación. 
-% ??? En esta sección se ha identificado una vulnerabilidad principal. La no validación de los datos introduciodos por los usuarios al registrarse. 
-Además, se ha desplazado la posibilidad de ver, modificar y añadir videojuegos a la plataforma, exclusivamente para usuarios registrados.
+Una página web tiene un diseño inseguro cuando su estructura, funcionalidades, o configuración comprometen la seguridad de los usuarios o de sus datos. Esto puede deberse a malas prácticas en el desarrollo, falta de medidas de seguridad adecuadas o errores en la implementación.\\
+
+En esta sección se ha identificado una vulnerabilidad principal, la ubicación de la funcionalidad relacionada con los juegos. Esta se situaba en la página incial, haciendo que cualquier usuario de la página, sin ni siquiera haberse registrado, pudiera ver, añadir, modificar o eliminar algún juego de la base de datos.
+.
 \vspace{1em}
 \subsubsection{Soluciones implementadas}
-Para mitigar las vulnerabilidades de ???la no validación de datos???, se han implementado las siguientes soluciones:\\
+Para mitigar la vulnerabilidad encontrada se ha implementado la siguiente solución:
+
+\vspace{1em}
 %\begin{itemize}
  %\item \textbf{Validación de campos: \\}
  %En esta sección se comprueba que el usuario haya rellenado todos los campos obligatorios del formulario\footnote{Una interfaz interactiva que permite a los usuarios ingresar y enviar información estructurada, la cual se procesa y almacena en la base de datos correspondiente.}. Para ello se ha  utilizado una función: \code{!formulario.checkValidity()}. Para comprobar que todos los campos han sido rellenados correctamente.
@@ -251,7 +250,7 @@ Se ha desplazado el botón de la página inicial a una página posterior despué
 
 \textbf{Conclusiones}
 
-Gracias a las soluciones implementadas, se ha mejorado significativamente la seguridad de la plataforma al restringir funcionalidades sensibles, como la visualización, modificación y adición de videojuegos, únicamente a usuarios registrados. Este diseño evita que usuarios no autenticados puedan saturar la base de datos mediante solicitudes maliciosas o excesivas, reduciendo el riesgo de ataques como el Denial of Service (DoS). Al desplazar estas opciones a páginas protegidas tras el inicio de sesión, la aplicación no solo protege los datos de los usuarios, sino que también refuerza su arquitectura contra malas prácticas de diseño inseguro, promoviendo un entorno más robusto y confiable.
+Gracias a las soluciones implementadas, se ha mejorado significativamente la seguridad de la plataforma al restringir funcionalidades sensibles, como la visualización, modificación y adición de juegos, únicamente a usuarios registrados. Este diseño evita que usuarios no autenticados puedan saturar la base de datos mediante solicitudes maliciosas o excesivas, reduciendo el riesgo de ataques como el Denial of Service (DoS). Además también refuerza su arquitectura contra malas prácticas de diseño inseguro, promoviendo un entorno más robusto y confiable.
 
 \vspace{1em}
 
@@ -289,7 +288,7 @@ Los componentes vulnerables y obsoletos son una de las principales causas de ata
 
 \textbf{Identificación de componentes}\vspace{1em}
 
-La aplicación LAMP depende de múltiples componentes:
+La aplicación en cuestión depende de múltiples componentes:
 \begin{itemize}
 	\item \textbf{Linux}: como sistema operativo base.
 	\item \textbf{Apache}: como servidor web.
@@ -300,8 +299,8 @@ La aplicación LAMP depende de múltiples componentes:
 \vspace{1em}
 \begin{itemize}
 	\item \textbf{Apache}:\begin{itemize} 
-		\item \textbf{Comandos para la detección de versión}:\\ \$\texttt{docker exec -it docker-lamp\_web\_1 bash} \\
-		\$\texttt{apache2 -v}
+		\item \textbf{Comandos para la detección de versión}:\\ \code{docker exec -it docker-lamp\_web\_1 bash} \\
+		\code{apache2 -v}
 		\item \textbf{Versión}: 2.4.25
 		\item \textbf{Debilidades conocidas}: \begin{itemize}
 			\item \textbf{CVE\footnote{El término CVE (Common Vulnerabilities and Exposures) es un sistema de identificación estándar utilizado para referirse a vulnerabilidades de seguridad conocidas en software y hardware.}-2017-15710}: Permite a un atacante remoto realizar un ataque DoS (Denial of Service) utilizando una solicitud HTTP especialmente manipulada.
@@ -311,7 +310,7 @@ La aplicación LAMP depende de múltiples componentes:
 	\end{itemize}
 	
 	\item \textbf{MariaDB}: \begin{itemize}
-		\item \textbf{Comandos para la detección de versión}:\\ \$\texttt{docker exec -it docker-lamp\_db\_1 mysql -V} 
+		\item \textbf{Comandos para la detección de versión}:\\ \code{docker exec -it docker-lamp\_db\_1 mysql -V} 
 		\item \textbf{Versión}: 10.8.2
 		\item \textbf{Debilidades conocidas}: \begin{itemize}
 			\item \textbf{CVE-2022-27480}: Explotación de binlogs para realizar escaladas de privilegios.
@@ -321,11 +320,11 @@ La aplicación LAMP depende de múltiples componentes:
 	\end{itemize}
 	
 	\item \textbf{PHP}: \begin{itemize}
-		\item \textbf{Comandos para la detección de versión}:\\ \$\texttt{docker exec -it docker-lamp\_web\_1 bash} \\ \$\texttt{php -v}
+		\item \textbf{Comandos para la detección de versión}:\\ \code{docker exec -it docker-lamp\_web\_1 bash} \\ \code{php -v}
 		\item \textbf{Versión}: 7.2.2
 		\item \textbf{Debilidades conocidas}: \begin{itemize}
-			\item \textbf{CVE-2019-11043}: RCE explotable en configuraciones de nginx+php-fpm (aplicable a sistemas similares).
-			\item \textbf{CCVE-2018-7584}: Ejecución de código arbitrario mediante unserialize().
+			\item \textbf{CVE-2019-11043}: RCE explotable en configuraciones de Nginx+PHP-fpm (aplicable a sistemas similares).
+			\item \textbf{CCVE-2018-7584}: Ejecución de código arbitrario mediante \code{unserialize()}.
 			\item \textbf{Obsolescencia}: PHP 7.2 alcanzó el fin de soporte en 2020 y no recibe actualizaciones.
 		\end{itemize}
 	\end{itemize}
@@ -339,7 +338,7 @@ La aplicación LAMP depende de múltiples componentes:
 \end{itemize}
 \subsubsection{Soluciones implementadas}
 \begin{itemize}
-	\item \textbf{Dockerfile}: version de PHP con apache actualizada (php:8.1-apache).
+	\item \textbf{Dockerfile}: Versión de PHP con Apache actualizada (php:8.1-apache).
 	\item \textbf{Docker-compose}: \begin{itemize}
 		\item Versión de MariaDB actualizada a la versión 10.9 (image: mariadb:10.9).
 		\item Versión de phpMyAdmin acualizada a la versión 5.1.1 (image: phpmyadmin/phpmyadmin:5.1.1).
