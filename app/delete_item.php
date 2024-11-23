@@ -1,9 +1,32 @@
 <?php
 require_once "db_connection.php"; // Conexión a la base de datos
+// Función para descifrar datos
+function decryptData($encryptedData, $key) {
+    $cipherMethod = 'AES-256-CBC';
+    $ivLength = openssl_cipher_iv_length($cipherMethod);
 
+    // Decodificar desde base64
+    $encryptedData = base64_decode($encryptedData);
+    if ($encryptedData === false) {
+        return false;
+    }
+
+    // Extraer el IV y los datos cifrados
+    $iv = substr($encryptedData, 0, $ivLength);
+    $cipherText = substr($encryptedData, $ivLength);
+
+    // Descifrar el texto cifrado
+    return openssl_decrypt($cipherText, $cipherMethod, $key, 0, $iv);
+}
+// Obtener la clave de cifrado
+$encryptionKey = getenv('ENCRYPTION_KEY');
+if (!$encryptionKey) {
+    die("Error: La clave de cifrado no está configurada.");
+}
 // Verificar si el parámetro "id" está en la URL
 if (isset($_GET['id'])) {
-    $id = intval($_GET['id']); // Convertir el id a un valor entero para mayor seguridad
+    $encryptedID = $_GET['id'];
+    $id = decryptData($encryptedID, $encryptionKey); // Descifrar el ID
 
     $query = "DELETE FROM juegos WHERE id = ?";
     $stmt = $conn->prepare($query);
