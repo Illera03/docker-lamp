@@ -275,7 +275,69 @@ El uso de credenciales predeterminadas o débiles representaba un riesgo crític
 
 
 \subsection{Componentes vulnerables y obsoletos}
+\vspace{1em}
+\textbf{¿En que afecta a la seguridad no tener los componentes actualizados?}
+Los componentes vulnerables y obsoletos son una de las principales causas de ataques en aplicaciones web, ya que los atacantes suelen explotar vulnerabilidades conocidas en versiones antiguas de software. Este apartado analiza los componentes del sistema para identificar y mitigar riesgos asociados con componentes desactualizados en el sistema web desplegado.
+\vspace{1em}
+
+\textbf{Identificación de componentes}\vspace{1em}
+
+La aplicación LAMP depende de múltiples componentes:
+\begin{itemize}
+	\item \textbf{Linux}: como sistema operativo base.
+	\item \textbf{Apache}: como servidor web.
+	\item \textbf{MariaDB}: como sistema de base de datos.
+	\item \textbf{PHP}: como lenguaje de backend.
+\end{itemize}
+\subsubsection{Análisis de componentes}
+\vspace{1em}
+\begin{itemize}
+	\item \textbf{Apache}:\begin{itemize} 
+		\item \textbf{Comandos para la detección de versión}:\\ \$\texttt{docker exec -it docker-lamp\_web\_1 bash} \\
+		\$\texttt{apache2 -v}
+		\item \textbf{Versión}: 2.4.25
+		\item \textbf{Debilidades conocidas}: \begin{itemize}
+			\item \textbf{CVE-2017-15710}: Permite a un atacante remoto realizar un ataque DoS (Denial of Service) utilizando una solicitud HTTP especialmente manipulada.
+			\item \textbf{CVE-2017-9798}: Permite la ejecución remota de código a través de una configuración incorrecta del servidor.
+			\item \textbf{CVE-2017-3169}: Desbordamiento de búfer en la función mod\_ssl que podría permitir a un atacante ejecutar código arbitrario.
+		\end{itemize}
+	\end{itemize}
+	
+	\item \textbf{MariaDB}: \begin{itemize}
+		\item \textbf{Comandos para la detección de versión}:\\ \$\texttt{docker exec -it docker-lamp\_db\_1 mysql -V} 
+		\item \textbf{Versión}: 10.8.2
+		\item \textbf{Debilidades conocidas}: \begin{itemize}
+			\item \textbf{CVE-2022-27480}: Explotación de binlogs para realizar escaladas de privilegios.
+			\item \textbf{CVE-2022-27376}: Vulnerabilidad en conexiones TLS que permite ataques de intermediario.
+			\item \textbf{Otras}: Vulnerabilidades generales en versiones inferiores a 10.9, relacionadas con denegaciones de servicio (DoS).
+		\end{itemize}
+	\end{itemize}
+	
+	\item \textbf{PHP}: \begin{itemize}
+		\item \textbf{Comandos para la detección de versión}:\\ \$\texttt{docker exec -it docker-lamp\_web\_1 bash} \\ \$\texttt{php -v}
+		\item \textbf{Versión}: 7.2.2
+		\item \textbf{Debilidades conocidas}: \begin{itemize}
+			\item \textbf{CVE-2019-11043}: RCE explotable en configuraciones de nginx+php-fpm (aplicable a sistemas similares).
+			\item \textbf{CCVE-2018-7584}: Ejecución de código arbitrario mediante unserialize().
+			\item \textbf{Obsolescencia}: PHP 7.2 alcanzó el fin de soporte en 2020 y no recibe actualizaciones.
+		\end{itemize}
+	\end{itemize}
+	
+	\item \textbf{phpMyAdmin}: \begin{itemize}
+		\item \textbf{Versión}: latest
+		\item \textbf{Debilidades conocidas}: \begin{itemize}
+			\item \textbf{latest}: El uso de latest para especificar la versión de un contenedor Docker, como en el caso de phpMyAdmin (especificando phpmyadmin/phpmyadmin:latest), hace referencia a la última versión disponible de una imagen Docker. Las actualizaciones automáticas pueden traer vulnerabilidades o no estar lo suficientemente testeadas, lo que pone en riesgo el sistema. Además se podría perder control sobre qué versiones tienen parches de seguridad importantes.
+		\end{itemize}
+	\end{itemize}
+\end{itemize}
 \subsubsection{Soluciones implementadas}
+\begin{itemize}
+	\item \textbf{Dockerfile}: version de PHP con apache actualizada (php:8.1-apache).
+	\item \textbf{Docker-compose}: \begin{itemize}
+		\item Versión de MariaDB actualizada a la versión 10.9 (image: mariadb:10.9).
+		\item Versión de phpMyAdmin acualizada a la versión 5.1.1 (image: phpmyadmin/phpmyadmin:5.1.1).
+	\end{itemize}
+\end{itemize}
 
 
 \vspace{1em}
