@@ -246,6 +246,13 @@ Se ha desplazado el botón de la página inicial a una página posterior despué
 	\caption{Desplazamiento del botón Juegos.}
 	\label{fig:boton}
 \end{figure}
+
+\vspace{1em}
+
+\textbf{Conclusiones}
+
+Gracias a las soluciones implementadas, se ha mejorado significativamente la seguridad de la plataforma al restringir funcionalidades sensibles, como la visualización, modificación y adición de videojuegos, únicamente a usuarios registrados. Este diseño evita que usuarios no autenticados puedan saturar la base de datos mediante solicitudes maliciosas o excesivas, reduciendo el riesgo de ataques como el Denial of Service (DoS). Al desplazar estas opciones a páginas protegidas tras el inicio de sesión, la aplicación no solo protege los datos de los usuarios, sino que también refuerza su arquitectura contra malas prácticas de diseño inseguro, promoviendo un entorno más robusto y confiable.
+
 \vspace{1em}
 
 \subsection{Configuración de seguridad insuficiente}
@@ -352,7 +359,7 @@ Esta vulnerabilidad se da cuando un atacante obtiene una lista de usuarios y con
 \vspace{1em}
 \subsubsection{Soluciones implementadas}
 
-Para reducir los riesgos de los errores en la identificación y autenticación se ha implementado la siguientes soluciones:
+Para reducir los riesgos de los errores en la identificación y autenticación se ha implementado la siguiente solución:
 
 \begin{itemize}
 	\item \textbf{Registro de todos los intentos de sesiones:\\}
@@ -365,6 +372,15 @@ Para reducir los riesgos de los errores en la identificación y autenticación s
     
  \end{enumerate} 
 \end{itemize}
+
+
+\vspace{1em}
+
+\textbf{Conclusiones}
+
+Al registrar información clave como la fecha, hora, estado del intento (SUCCESS o FAILED), y direcciones IP involucradas, se facilita el análisis forense en caso de incidentes de seguridad. Esto también sienta las bases para implementar medidas de seguridad adicionales, como el bloqueo automático de IPs sospechosas o la aplicación de políticas más estrictas para la gestión de contraseñas.
+
+Con estas medidas, la aplicación cumple con estándares más altos de seguridad. Sin embargo, es importante considerar la implementación de mecanismos como autenticación multifactor y sistemas de alerta para accesos sospechosos.
 
 \vspace{1em}
 \subsection{Fallos en la integridad de datos y software}
@@ -392,7 +408,7 @@ Con ayuda del archivo .log se consigue registrar aquellos usuarios que han falla
 	\url{https://owasp.org/www-community/Injection} (accedido 11/07/2024).
 	
 	\bibitem{owasp_xss} owasp.org\\
-	 Cross-Site Scripting (XSS)\\ \url{https://owasp.org/www-community/attacks/xss/} (accedido 11/07/2024).
+	Cross-Site Scripting (XSS)\\ \url{https://owasp.org/www-community/attacks/xss/} (accedido 11/07/2024).
 	 
 	\bibitem{def_sanitization_escaping} cwe.mitre.org\\
 	Sanitización y escapeo\\ \url{https://owasp.org/www-community/attacks/xss/} (accedido 11/07/2024). 
@@ -422,7 +438,23 @@ Con ayuda del archivo .log se consigue registrar aquellos usuarios que han falla
 	}
 \end{lstlisting}
 	\bibitem{Variable de entorno} kinsta.com\\ ¿Que es una variable de entorno?\\	\url{https://kinsta.com/es/base-de-conocimiento/variables-de-entorno/} (accedido 15/11/2024).
-	
+
+    \bibitem{OWASP Authentication Failures} OWASP Foundation\\
+    ¿Qué son los fallos de identificación y autenticación?\\
+    \url{https://owasp.org/Top10/A07_2021-Identification_and_Authentication_Failures/} (accedido 23/11/2024).
+
+    \bibitem{SANS Multi-factor Authentication} SANS Institute Blog\\
+    ¿Qué es la autenticación multifactor?\\
+    \url{https://www.sans.org/blog/deploying-multi-factor-authentication-the-what-how-and-why/} (accedido 23/11/2024).
+
+    \bibitem{OWASP Credential Stuffing} OWASP Foundation\\
+    ¿Qué es el Credential Stuffing?\\
+    \url{https://owasp.org/www-community/attacks/Credential_stuffing} (accedido 23/11/2024).
+
+    \bibitem{RFC 791} Postel, J. (Editor)\\
+    ¿Qué es la IP?\\
+    \url{https://www.rfc-editor.org/rfc/rfc791.html} (accedido 23/11/2024).
+
 	\bibitem{Bcrypt} skysnag.com\\ ¿Que es Bcrypt?\\
 	\url{https://www.skysnag.com/es/blog/what-is-bcrypt/}  (accedido 15/11/2024).
 	
@@ -434,8 +466,7 @@ Con ayuda del archivo .log se consigue registrar aquellos usuarios que han falla
 	
 	\bibitem{MariaDB Cifrado} mariadb-com\\ Limitaciones e información sobre el cifrado de MariaDB\\	\url{https://mariadb-com.translate.goog/kb/en/data-at-rest-encryption-overview/?_x_tr_sl=en&_x_tr_tl=es&_x_tr_hl=es&_x_tr_pto=rq} (accedido 21/11/2024).
 	\bibitem{sec_mis} owasp.org\\ Configuración de seguridad insuficiente\\	\url{https://owasp.org/Top10/A05_2021-Security_Misconfiguration/} (accedido 22/11/2024).
-	 
-	 
+
 \end{thebibliography}
 
 
