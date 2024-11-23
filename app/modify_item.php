@@ -127,7 +127,7 @@ mysqli_close($conn);
 ?>
 
 <!-- Formulario para modificar los datos del juego -->
-<form method="post" action="modify_item.php">
+<form id="item_modify_form" method="post" action="modify_item.php">
     <input type="hidden" name="id" value="<?php echo htmlspecialchars($encryptedID); ?>">
     
     <label for="nombre">Nombre del juego:</label>
@@ -145,5 +145,5 @@ mysqli_close($conn);
     <label for="precio">Precio:</label>
     <input type="number" id="precio" name="precio" step="0.01" min="0" value="<?php echo htmlspecialchars($precio); ?>" required><br>
 
-    <button type="submit">Guardar Cambios</button>
+    <button class="modify_game_button" type="submit" id="modify_item_submit">Guardar Cambios</button>
 </form>
