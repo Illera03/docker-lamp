@@ -75,7 +75,21 @@ La auditoría se realizó mediante un análisis de ZAP, ejecutando...
 \vspace{1em}
 \subsection{Rotura de control de acceso}
 Una rotura del control de acceso ocurre cuando un sistema permite a usuarios acceder a datos, funciones o recursos para los que no tienen autorización, debido a fallos en la implementación de los permisos. Esto puede resultar en accesos no autorizados, modificaciones indebidas de datos o acciones privilegiadas que deberían estar restringidas.
+
 \vspace{1em}
+
+\textbf{Causa de la Vulnerabilidad}
+ 
+La vulnerabilidad detectada se originaba en los archivos \code{login.php}, \code{register.php}, \code{add\_item.php} y \code{modify\_user.php} y fue causada por la falta de la generación del token CSRF en pestañas sensibles en las que hay que rellenar un formulario.
+
+\vspace{1em}
+
+\textbf{Pruebas y comportamiento observado}
+
+El error identificado fue detectado por OWASP ZAP al capturar la solicitud original enviada por el navegador al interactuar con el formulario. Posteriormente, ZAP envió una solicitud idéntica sin incluir campos adicionales (como un token\footnote{Pequeño fragmento de datos generado y utilizado en sistemas informáticos para representar de manera segura una identidad, un estado, o una sesión de comunicación entre partes.} anti-CSRF), y esta fue aceptada por el servidor como si se tratara de una solicitud legítima.
+
+\vspace{1em}
+
 \subsubsection{Soluciones implementadas}
 Para minimizar la utilización de CORS\footnote{CORS: Mecanismo que permite que los recursos de un servidor sean accesibles desde diferentes dominios de manera controlada.}, se ha integrado el uso de tokens CSRF\footnote{CSRF: Códigos únicos generados para verificar que una solicitud proviene de una fuente legítima y no de un atacante.} con el fin de implementar mecanismos de acceso únicos.\\
 \begin{itemize}
@@ -87,7 +101,22 @@ Para minimizar la utilización de CORS\footnote{CORS: Mecanismo que permite que 
 \item \textbf{Eliminación del token\\}Una vez que el usuario inicia sesión correctamente, el token se elimina usando el comando \code{unset}(\code{\$\_SESSION['csrf\_token']}). Esto asegura que no pueda ser reutilizado.
 \end{enumerate}
 \end{itemize}
+
 \vspace{1em}
+
+
+\textbf{Resultados de la segunda auditoría}
+
+Después de implementar las soluciones descritas, se realizó un segundo análisis con OWASP ZAP. Los resultados fueron positivos: no se detectaron vulnerabilidades por falta de token CSRF.
+
+\vspace{1em}
+
+\textbf{Conclusiones}
+
+La integración de tokens CSRF resolvió las vulnerabilidades detectadas en el control de acceso, garantizando que las solicitudes al servidor sean legítimas y protegidas contra ataques. Esta implementación fortaleció la seguridad en archivos clave como \code{login.php} y \code{register.php}, eliminando las fallas detectadas en la primera auditoría. La segunda evaluación con OWASP ZAP confirmó la efectividad de estas medidas, mejorando significativamente la protección del sistema.
+
+\vspace{1em}
+
 \subsection{Fallos criptográficos}
 En esta sección se comentarán los fallos de seguridad web relacionados con la criptografía\footnote{Práctica que consiste en proteger información mediante el uso de algoritmos codificados, Hashes y firmas.} (o la falta de esta) que causan la exposición de datos sensibles\cite{Fallos Criptograficos}.\\ \\
 Se han identificado y solucionado dos fallos criptográficos. El primer fallo consiste en almacenar la información de la base de datos sin cifrar, utilizando únicamente el cifrado de datos en reposo incorporado por nuestra base de datos, el cual se descifra directamente al realizar una consulta\cite{MariaDB Cifrado}. El segundo fallo detectado es almacenar las contraseñas en texto plano.
