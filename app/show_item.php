@@ -25,8 +25,10 @@ function decryptData($encryptedData, $key) {
 $encryptionKey = getenv('ENCRYPTION_KEY');
 
 // Verificar si el parámetro "id" está en la URL
+
 if (isset($_GET['id'])) {
-    $id = intval($_GET['id']); // Convertir el id a un valor entero para mayor seguridad
+    $id = intval(decryptData($_GET['id'], $encryptionKey)); // Convertir el id a un valor entero para mayor seguridad
+    
     if ($id > 0) {
         // Consulta para obtener los datos del juego con el ID proporcionado
         $query = "SELECT nombre, fecha_lanzamiento, genero, nota, precio FROM juegos WHERE id = ?";
@@ -69,6 +71,7 @@ if (isset($_GET['id'])) {
         $stmt->close(); // Cerrar la declaración preparada
     } else {
         echo 'ID no válido.';
+        echo 'Hola';
     }
 } else {
     echo 'No se proporcionó ningún ID de juego.';
