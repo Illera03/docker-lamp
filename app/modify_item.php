@@ -1,9 +1,8 @@
 <?php
 require_once "db_connection.php"; // Conexión a la base de datos
-include("modify_item.html"); // Incluir el html
+include("modify_item.html"); // Incluir el HTML del formulario
 
-
-// Función para descifrar los datos
+// Función para descifrar datos
 function decryptData($encryptedData, $key) {
     $cipherMethod = 'AES-256-CBC';
     $ivLength = openssl_cipher_iv_length($cipherMethod);
@@ -22,7 +21,7 @@ function decryptData($encryptedData, $key) {
     return openssl_decrypt($cipherText, $cipherMethod, $key, 0, $iv);
 }
 
-// Función para cifrar los datos
+// Función para cifrar datos
 function encryptData($data, $key) {
     $cipherMethod = 'AES-256-CBC';
     $ivLength = openssl_cipher_iv_length($cipherMethod);
@@ -37,96 +36,98 @@ function encryptData($data, $key) {
     return base64_encode($iv . $encryptedData);
 }
 
-// Verificar si se ha proporcionado un ID en la URL
+// Obtener la clave de cifrado
+$encryptionKey = getenv('ENCRYPTION_KEY');
+if (!$encryptionKey) {
+    die("Error: La clave de cifrado no está configurada.");
+}
+
+// Verificar si se ha proporcionado un ID cifrado en la URL
 if (isset($_GET['id'])) {
-    $id = intval($_GET['id']); // Convertir el ID a un valor entero para mayor seguridad
+    $encryptedID = $_GET['id'];
+    $id = decryptData($encryptedID, $encryptionKey); // Descifrar el ID
 
-    // Obtener los datos actuales del juego
-    $query = "SELECT * FROM juegos WHERE id = ?";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("i", $id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $game = $result->fetch_assoc();
+    if ($id && is_numeric($id)) {
+        $id = intval($id); // Convertir el ID descifrado a entero
 
-    // Guardar los valores actuales del juego y escapar para evitar XSS
-    $encryptionKey = getenv('ENCRYPTION_KEY'); // clave de cifrado
-    $oldName = decryptData(htmlspecialchars($game['nombre'], ENT_QUOTES, 'UTF-8'),$encryptionKey);
-    $oldReleaseDate = decryptData(htmlspecialchars($game['fecha_lanzamiento'], ENT_QUOTES, 'UTF-8'),$encryptionKey);
-    $oldGenre = decryptData(htmlspecialchars($game['genero'], ENT_QUOTES, 'UTF-8'),$encryptionKey);
-    $oldRating = decryptData(htmlspecialchars($game['nota'], ENT_QUOTES, 'UTF-8'),$encryptionKey);
-    $oldPrice = decryptData(htmlspecialchars($game['precio'], ENT_QUOTES, 'UTF-8'),$encryptionKey);
-
-    // Verificar si el formulario fue enviado
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    // Obtener los datos enviados desde el formulario
-    $name = htmlspecialchars(trim($_POST['name']), ENT_QUOTES, 'UTF-8');
-    $releaseDate = trim($_POST['release_date']);
-    $genre = htmlspecialchars(trim($_POST['genre']), ENT_QUOTES, 'UTF-8');
-    $rating = floatval($_POST['rating']);
-    $price = floatval($_POST['price']);
-    // Validar formato de fecha
-    if (!preg_match("/^\d{4}-\d{2}-\d{2}$/", $releaseDate)) {
-        echo "Error: Formato de fecha no válido.";
-    } else {
-        // Verificar que los campos no estén vacíos
-        if (empty($name) || empty($genre) || empty($releaseDate)) {
-            echo "Por favor, completa todos los campos obligatorios.";
-        } 
-        // Validar que rating y price sean mayores que 0 si no son vacíos
-        elseif ($rating < 0 || $rating > 5) {
-            echo "La nota debe ser positiva y menor o igual a 5.";
-        } elseif ($price < 0) {
-            echo "El precio debe ser positivo.";
-        } else {
-            // cifrar los datos una vez validados
-            $name = encryptData(htmlspecialchars(trim($_POST['name']), ENT_QUOTES, 'UTF-8'),$encryptionKey);
-            $releaseDate = encryptData(trim($_POST['release_date']),$encryptionKey);
-            $genre = encryptData(htmlspecialchars(trim($_POST['genre']), ENT_QUOTES, 'UTF-8'),$encryptionKey);
-            $rating = encryptData(floatval($_POST['rating']),$encryptionKey);
-            $price = encryptData(floatval($_POST['price']),$encryptionKey);
-            // Preparar la consulta para actualizar los datos del juego
-            $query = "UPDATE juegos SET nombre = ?, fecha_lanzamiento = ?, genero = ?, nota = ?, precio = ? WHERE id = ?";
-            $stmt = $conn->prepare($query);
-            $stmt->bind_param("sssssi", $name, $releaseDate, $genre, $rating, $price, $id);
-
-            // Ejecutar la consulta
-            if ($stmt->execute()) {
-                if ($stmt->affected_rows > 0) {
-                    echo "Datos del juego actualizados correctamente.";
-                } else {
-                    echo "No se realizaron cambios en los datos del juego.";
-                }
-            } else {
-                echo "Error al actualizar los datos del juego: " . $stmt->error;
-            }
+        // Consulta para obtener los datos del juego
+        $query = "SELECT nombre, fecha_lanzamiento, genero, nota, precio FROM juegos WHERE id = ?";
+        $stmt = $conn->prepare($query);
+        if ($stmt === false) {
+            die("Error al preparar la consulta: " . $conn->error);
         }
+
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($row = $result->fetch_assoc()) {
+            // Descifrar los datos del juego
+            $nombre = decryptData($row['nombre'], $encryptionKey);
+            $fechaLanzamiento = decryptData($row['fecha_lanzamiento'], $encryptionKey);
+            $genero = decryptData($row['genero'], $encryptionKey);
+            $nota = decryptData($row['nota'], $encryptionKey);
+            $precio = decryptData($row['precio'], $encryptionKey);
+        } else {
+            // Inicializar variables con valores vacíos si no se encuentra el juego
+            $nombre = $fechaLanzamiento = $genero = $nota = $precio = "";
+        }
+        $stmt->close();
+    } else {
+        die("ID no válido.");
     }
-}
 } else {
-    echo 'No se proporcionó ningún ID.';
+    die("No se proporcionó ningún ID.");
 }
 
-mysqli_close($conn); // Cerrar la conexión a la base de datos
+// Procesar la actualización si se envía el formulario
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    // Obtener datos enviados desde el formulario
+    $nuevoNombre = mysqli_real_escape_string($conn, $_POST['nombre']);
+    $nuevaFecha = mysqli_real_escape_string($conn, $_POST['fecha_lanzamiento']);
+    $nuevoGenero = mysqli_real_escape_string($conn, $_POST['genero']);
+    $nuevaNota = mysqli_real_escape_string($conn, $_POST['nota']);
+    $nuevoPrecio = mysqli_real_escape_string($conn, $_POST['precio']);
+
+    // Cifrar los nuevos datos antes de actualizarlos
+    $nombreCifrado = encryptData($nuevoNombre, $encryptionKey);
+    $fechaCifrada = encryptData($nuevaFecha, $encryptionKey);
+    $generoCifrado = encryptData($nuevoGenero, $encryptionKey);
+    $notaCifrada = encryptData($nuevaNota, $encryptionKey);
+    $precioCifrado = encryptData($nuevaPrecio, $encryptionKey);
+
+    // Actualizar los datos del juego
+    $query = "UPDATE juegos SET nombre = ?, fecha_lanzamiento = ?, genero = ?, nota = ?, precio = ? WHERE id = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("sssssi", $nombreCifrado, $fechaCifrada, $generoCifrado, $notaCifrada, $precioCifrado, $id);
+
+    if ($stmt->execute()) {
+        echo "Datos actualizados correctamente.";
+    } else {
+        echo "Error al actualizar los datos: " . $stmt->error;
+    }
+    $stmt->close();
+}
+
+mysqli_close($conn);
 ?>
 
 <!-- Formulario para modificar los datos del juego -->
-<!-- Se incluyen los datos actuales del juego en los campos del formulario -->
-<form id="item_modify_form" action="modify_item.php?id=<?php echo $id; ?>" method="POST">
-    <label for="name">Nombre del juego: </label>
-    <input type="text" id="name" name="name" required value="<?php echo $oldName; ?>"><br> 
+<form method="post" action="modify_item.php?id=<?php echo htmlspecialchars($encryptedID); ?>">
+    <label for="nombre">Nombre del juego:</label>
+    <input type="text" id="nombre" name="nombre" value="<?php echo htmlspecialchars($nombre); ?>" required><br>
 
-    <label for="release_date">Fecha de lanzamiento:</label>
-    <input type="date" id="release_date" name="release_date" required value="<?php echo $oldReleaseDate; ?>"><br> 
+    <label for="fecha_lanzamiento">Fecha de lanzamiento:</label>
+    <input type="date" id="fecha_lanzamiento" name="fecha_lanzamiento" value="<?php echo htmlspecialchars($fechaLanzamiento); ?>" required><br>
 
-    <label for="genre">Género:</label>
-    <input type="text" id="genre" name="genre" required value="<?php echo $oldGenre; ?>"><br> 
+    <label for="genero">Género:</label>
+    <input type="text" id="genero" name="genero" value="<?php echo htmlspecialchars($genero); ?>" required><br>
 
-    <label for="rating">Nota:</label>
-    <input type="number" step="0.01" id="rating" name="rating" required value="<?php echo $oldRating; ?>"><br> 
+    <label for="nota">Nota:</label>
+    <input type="number" id="nota" name="nota" step="0.1" min="0" max="10" value="<?php echo htmlspecialchars($nota); ?>" required><br>
 
-    <label for="price">Precio:</label>
-    <input type="number" step="0.01" id="price" name="price" required value="<?php echo $oldPrice; ?>"><br> 
+    <label for="precio">Precio:</label>
+    <input type="number" id="precio" name="precio" step="0.01" min="0" value="<?php echo htmlspecialchars($precio); ?>" required><br>
 
-    <button class="modify_game_button" type="submit" id="modify_item_submit">Modificar juego</button>
+    <button type="submit">Guardar Cambios</button>
 </form>

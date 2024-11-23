@@ -23,11 +23,18 @@ function decryptData($encryptedData, $key) {
 
 // Obtener la clave de cifrado desde una variable de entorno (asegúrate de que esté configurada)
 $encryptionKey = getenv('ENCRYPTION_KEY');
+if (!$encryptionKey) {
+    die("Error: La clave de cifrado no está configurada.");
+}
 
 // Verificar si el parámetro "id" está en la URL
 if (isset($_GET['id'])) {
-    $id = intval($_GET['id']); // Convertir el id a un valor entero para mayor seguridad
-    if ($id > 0) {
+    $encryptedID = $_GET['id']; // Recuperar el ID cifrado desde la URL
+    $id = decryptData($encryptedID, $encryptionKey); // Descifrar el ID
+
+    if ($id && is_numeric($id)) {
+        $id = intval($id); // Convertir el ID descifrado a entero para mayor seguridad
+
         // Consulta para obtener los datos del juego con el ID proporcionado
         $query = "SELECT nombre, fecha_lanzamiento, genero, nota, precio FROM juegos WHERE id = ?";
         $stmt = $conn->prepare($query);
@@ -58,9 +65,9 @@ if (isset($_GET['id'])) {
 
             // Mostrar botones para modificar y eliminar
             echo '<div class="action_buttons">';
-            echo '<a href="modify_item.php?id=' . $id . '" class="button" id="item_modify_submit">Modificar</a> ';
-            // En este botón se muestra un mensaje de confirmación antes de eliminar el juego
-            echo '<a href="delete_item.php?id=' . $id . '" class="button" id="item_delete_submit" onclick="return confirm(\'¿Estás seguro de que quieres eliminar este juego?\')">Eliminar</a>';
+            $encryptedID = urlencode($_GET['id']); // Mantener el ID cifrado en los enlaces
+            echo '<a href="modify_item.php?id=' . $encryptedID . '" class="button" id="item_modify_submit">Modificar</a> ';
+            echo '<a href="delete_item.php?id=' . $encryptedID . '" class="button" id="item_delete_submit" onclick="return confirm(\'¿Estás seguro de que quieres eliminar este juego?\')">Eliminar</a>';
             echo '</div>';
         } else {
             echo 'No se encontró ningún juego con ese ID.';
@@ -76,4 +83,3 @@ if (isset($_GET['id'])) {
 
 $conn->close(); // Cerrar la conexión a la base de datos
 ?>
-
