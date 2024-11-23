@@ -84,8 +84,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 // Contraseña correcta, iniciar sesión
                 unset($_SESSION['csrf_token']); // Eliminar el token CSRF solo al iniciar sesión correctamente
+
+                // Cifrar el ID antes de redirigir a show_user.php
                 $id = $user['id'];
-                header("Location: show_user.php?id=$id");            
+                $encryptionKey = getenv('ENCRYPTION_KEY'); // Obtener la clave de cifrado
+                $encryptedID = encryptData($id, $encryptionKey); // Cifrar el ID
+                header("Location: show_user.php?id=" . urlencode($encryptedID));
                 exit();
             } else {
                 echo "<h3>Contraseña incorrecta.</h3>";
@@ -109,4 +113,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 include('login.html'); // Incluir el formulario de login si no se ha enviado el formulario
+
+// Función para cifrar los datos
+function encryptData($data, $key) {
+    $cipherMethod = 'AES-256-CBC';
+    $ivLength = openssl_cipher_iv_length($cipherMethod);
+    $iv = openssl_random_pseudo_bytes($ivLength);
+
+    $encryptedData = openssl_encrypt($data, $cipherMethod, $key, 0, $iv);
+    if ($encryptedData === false) {
+        return false;
+    }
+
+    // Devuelve los datos encriptados junto con el IV en base64
+    return base64_encode($iv . $encryptedData);
+}
 ?>

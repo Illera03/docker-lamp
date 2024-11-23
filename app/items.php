@@ -21,6 +21,21 @@ function decryptData($encryptedData, $key) {
     return openssl_decrypt($cipherText, $cipherMethod, $key, 0, $iv);
 }
 
+// Función para cifrar los datos
+function encryptData($data, $key) {
+    $cipherMethod = 'AES-256-CBC';
+    $ivLength = openssl_cipher_iv_length($cipherMethod);
+    $iv = openssl_random_pseudo_bytes($ivLength);
+
+    $encryptedData = openssl_encrypt($data, $cipherMethod, $key, 0, $iv);
+    if ($encryptedData === false) {
+        return false;
+    }
+
+    // Devuelve los datos encriptados junto con el IV en base64
+    return base64_encode($iv . $encryptedData);
+}
+
 // Obtener la clave de cifrado desde una variable de entorno (asegúrate de que esté configurada)
 $encryptionKey = getenv('ENCRYPTION_KEY');
 
@@ -45,10 +60,13 @@ if ($result->num_rows > 0) {
         $nombreDescifrado = decryptData($row['nombre'], $encryptionKey);
         $notaDescifrada = decryptData($row['nota'], $encryptionKey);
 
+        // Cifrar el ID antes de pasarlo a la URL
+        $encryptedID = encryptData($row['id'], $encryptionKey);
+
         // Mostrar los datos en la tabla
         echo '<tr>';
-        // Hacemos que el nombre del juego sea un enlace hacia show_item.php con el id del juego
-        echo '<td><a href="show_item.php?id=' . $row['id'] . '">' . htmlspecialchars($nombreDescifrado) . '</a></td>';
+        // Hacemos que el nombre del juego sea un enlace hacia show_item.php con el id cifrado
+        echo '<td><a href="show_item.php?id=' . urlencode($encryptedID) . '">' . htmlspecialchars($nombreDescifrado) . '</a></td>';
         echo '<td>' . htmlspecialchars($notaDescifrada) . '</td>';
         echo '</tr>';
     }
@@ -61,4 +79,5 @@ if ($result->num_rows > 0) {
 
 $conn->close(); // Cerrar la conexión
 ?>
+
 

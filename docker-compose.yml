@@ -2,6 +2,7 @@ web:
    image: web
    environment:
      - ALLOW_OVERRIDE=true
+     - ENCRYPTION_KEY=tu-clave-secreta-aqui
    ports:
      - "81:80"
    links:
