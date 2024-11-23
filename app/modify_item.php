@@ -42,15 +42,59 @@ if (!$encryptionKey) {
     die("Error: La clave de cifrado no está configurada.");
 }
 
-// Verificar si se ha proporcionado un ID cifrado en la URL
-if (isset($_GET['id'])) {
+// Variables para los datos del juego
+$nombre = $fechaLanzamiento = $genero = $nota = $precio = "";
+
+// Verificar si el formulario fue enviado
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    // Recuperar el ID cifrado desde el formulario
+    if (!isset($_POST['id']) || empty($_POST['id'])) {
+        die("ID no válido.");
+    }
+
+    $encryptedID = $_POST['id'];
+    $id = decryptData($encryptedID, $encryptionKey); // Descifrar el ID
+
+    if ($id && is_numeric($id)) {
+        $id = intval($id); // Convertir el ID descifrado a entero
+
+        // Recuperar los datos enviados desde el formulario
+        $nombre = mysqli_real_escape_string($conn, $_POST['nombre']);
+        $fechaLanzamiento = mysqli_real_escape_string($conn, $_POST['fecha_lanzamiento']);
+        $genero = mysqli_real_escape_string($conn, $_POST['genero']);
+        $nota = mysqli_real_escape_string($conn, $_POST['nota']);
+        $precio = mysqli_real_escape_string($conn, $_POST['precio']);
+
+        // Cifrar los nuevos datos antes de actualizarlos
+        $nombreCifrado = encryptData($nombre, $encryptionKey);
+        $fechaCifrada = encryptData($fechaLanzamiento, $encryptionKey);
+        $generoCifrado = encryptData($genero, $encryptionKey);
+        $notaCifrada = encryptData($nota, $encryptionKey);
+        $precioCifrado = encryptData($precio, $encryptionKey);
+
+        // Actualizar los datos del juego
+        $query = "UPDATE juegos SET nombre = ?, fecha_lanzamiento = ?, genero = ?, nota = ?, precio = ? WHERE id = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("sssssi", $nombreCifrado, $fechaCifrada, $generoCifrado, $notaCifrada, $precioCifrado, $id);
+
+        if ($stmt->execute()) {
+            echo "Datos actualizados correctamente.";
+        } else {
+            echo "Error al actualizar los datos: " . $stmt->error;
+        }
+        $stmt->close();
+    } else {
+        die("ID no válido.");
+    }
+} else if (isset($_GET['id'])) {
+    // Recuperar el ID cifrado desde la URL para cargar los datos actuales del juego
     $encryptedID = $_GET['id'];
     $id = decryptData($encryptedID, $encryptionKey); // Descifrar el ID
 
     if ($id && is_numeric($id)) {
         $id = intval($id); // Convertir el ID descifrado a entero
 
-        // Consulta para obtener los datos del juego
+        // Consulta para obtener los datos actuales del juego
         $query = "SELECT nombre, fecha_lanzamiento, genero, nota, precio FROM juegos WHERE id = ?";
         $stmt = $conn->prepare($query);
         if ($stmt === false) {
@@ -62,15 +106,14 @@ if (isset($_GET['id'])) {
         $result = $stmt->get_result();
 
         if ($row = $result->fetch_assoc()) {
-            // Descifrar los datos del juego
+            // Descifrar los datos actuales del juego
             $nombre = decryptData($row['nombre'], $encryptionKey);
             $fechaLanzamiento = decryptData($row['fecha_lanzamiento'], $encryptionKey);
             $genero = decryptData($row['genero'], $encryptionKey);
             $nota = decryptData($row['nota'], $encryptionKey);
             $precio = decryptData($row['precio'], $encryptionKey);
         } else {
-            // Inicializar variables con valores vacíos si no se encuentra el juego
-            $nombre = $fechaLanzamiento = $genero = $nota = $precio = "";
+            die("Juego no encontrado.");
         }
         $stmt->close();
     } else {
@@ -80,40 +123,13 @@ if (isset($_GET['id'])) {
     die("No se proporcionó ningún ID.");
 }
 
-// Procesar la actualización si se envía el formulario
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    // Obtener datos enviados desde el formulario
-    $nuevoNombre = mysqli_real_escape_string($conn, $_POST['nombre']);
-    $nuevaFecha = mysqli_real_escape_string($conn, $_POST['fecha_lanzamiento']);
-    $nuevoGenero = mysqli_real_escape_string($conn, $_POST['genero']);
-    $nuevaNota = mysqli_real_escape_string($conn, $_POST['nota']);
-    $nuevoPrecio = mysqli_real_escape_string($conn, $_POST['precio']);
-
-    // Cifrar los nuevos datos antes de actualizarlos
-    $nombreCifrado = encryptData($nuevoNombre, $encryptionKey);
-    $fechaCifrada = encryptData($nuevaFecha, $encryptionKey);
-    $generoCifrado = encryptData($nuevoGenero, $encryptionKey);
-    $notaCifrada = encryptData($nuevaNota, $encryptionKey);
-    $precioCifrado = encryptData($nuevaPrecio, $encryptionKey);
-
-    // Actualizar los datos del juego
-    $query = "UPDATE juegos SET nombre = ?, fecha_lanzamiento = ?, genero = ?, nota = ?, precio = ? WHERE id = ?";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("sssssi", $nombreCifrado, $fechaCifrada, $generoCifrado, $notaCifrada, $precioCifrado, $id);
-
-    if ($stmt->execute()) {
-        echo "Datos actualizados correctamente.";
-    } else {
-        echo "Error al actualizar los datos: " . $stmt->error;
-    }
-    $stmt->close();
-}
-
 mysqli_close($conn);
 ?>
 
 <!-- Formulario para modificar los datos del juego -->
-<form method="post" action="modify_item.php?id=<?php echo htmlspecialchars($encryptedID); ?>">
+<form method="post" action="modify_item.php">
+    <input type="hidden" name="id" value="<?php echo htmlspecialchars($encryptedID); ?>">
+    
     <label for="nombre">Nombre del juego:</label>
     <input type="text" id="nombre" name="nombre" value="<?php echo htmlspecialchars($nombre); ?>" required><br>
 
