@@ -50,7 +50,7 @@ $ docker-compose down
 
 ACCIONES NECESARIAS PARA EL FUNCIONAMIENTO DE LOS LOGS:
 
-Crear la carpeta logs dentro de docker-lamp (si no está ya creada):
+Crear la carpeta logs dentro de docker-lamp:
 
 ```bash
 $ mkdir -p /home/$USER/docker-lamp/logs
