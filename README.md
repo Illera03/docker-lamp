@@ -35,22 +35,6 @@ Instalar docker compose:
 ```bash
 $ sudo apt install docker-compose
 ```
-Crear la carpeta logs dentro de docker-lamp:
-
-```bash
-$ mkdir -p /home/$USER/docker-lamp/logs
-```
-Crear el archivo login_attempts dentro de la carpeta logs:
-
-```bash
-$ touch /home/$USER/docker-lamp/logs/login_attempts.log
-```
-Asignar permisos y propietario a la carpeta logs:
-
-```bash
-$ sudo chown -R www-data:www-data /home/$USER/docker-lamp/logs
-$ sudo chmod -R 755 /home/$USER/docker-lamp/logs
-```
 
 Despliega los servicios mediante
 
@@ -62,6 +46,27 @@ Para parar los servicios, en otra terminal,
 
 ```bash
 $ docker-compose down
+```
+
+ACCIONES NECESARIAS PARA EL FUNCIONAMIENTO DE LOS LOGS:
+
+Crear la carpeta logs dentro de docker-lamp (si no está ya creada):
+
+```bash
+$ mkdir -p /home/$USER/docker-lamp/logs
+```
+
+Crear el archivo login_attempts.log dentro de la carpeta logs:
+
+```bash
+$ touch /home/$USER/docker-lamp/logs/login_attempts.log
+```
+
+Asignar permisos y propietario a la carpeta logs:
+
+```bash
+$ sudo chown -R www-data:www-data /home/$USER/docker-lamp/logs
+$ sudo chmod -R 755 /home/$USER/docker-lamp/logs
 ```
 
 ## INTEGRANTES DEL GRUPO:
