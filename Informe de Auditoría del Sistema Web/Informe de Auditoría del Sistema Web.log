@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.11.13)  24 NOV 2024 10:41
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.3.20)  24 NOV 2024 15:09
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -431,189 +431,265 @@ LaTeX Warning: No \author given.
 \tf@lof=\write5
 \openout5 = `"Informe de Auditoría del Sistema Web.lof"'.
 
-
-(./Informe de Auditoría del Sistema Web.lot)
-\tf@lot=\write6
-\openout6 = `"Informe de Auditoría del Sistema Web.lot"'.
-
  [2]
-LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 8
-3.
+Underfull \hbox (badness 10000) in paragraph at lines 77--79
+
+ []
+
+<figures/control_acceso_error.png, id=173, 1321.93875pt x 409.53pt>
+File: figures/control_acceso_error.png Graphic file (type png)
+<use figures/control_acceso_error.png>
+Package pdftex.def Info: figures/control_acceso_error.png  used on input line 8
+4.
+(pdftex.def)             Requested size: 338.58632pt x 104.8943pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 89--89
+
+ []
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\\' on input line 89.
+
+[3pdfTeX warning (ext4): destination with the same identifier (name{figure.1}) 
+has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.94 L
+      a vulnerabilidad se originaba en los archivos \code{login.php}, \code{...
+ <./figures/control_acceso_error.png>]
+LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 9
+4.
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
-Underfull \hbox (badness 10000) in paragraph at lines 94--95
+Overfull \hbox (10.39952pt too wide) in paragraph at lines 94--95
+[]\OT1/cmr/m/n/12 La vul-ner-a-bil-i-dad se orig-in-aba en los archivos \OT1/pc
+r/m/n/12 login.php\OT1/cmr/m/n/12 , \OT1/pcr/m/n/12 register.php\OT1/cmr/m/n/12
+ , \OT1/pcr/m/n/12 add[]item.php
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 104--104
 
  []
 
-[3]
-LaTeX Font Info:    Trying to load font information for TS1+pcr on input line 9
-8.
- (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1pcr.fd
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\\' on input line 104.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 120--121
+
+ []
+
+LaTeX Font Info:    Trying to load font information for TS1+pcr on input line 1
+24.
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1pcr.fd
 File: ts1pcr.fd 2001/06/04 font definitions for TS1/pcr.
-)
-Overfull \hbox (20.19316pt too wide) in paragraph at lines 116--117
+) [4]
+Overfull \hbox (11.54507pt too wide) in paragraph at lines 131--132
+\OT1/cmr/m/n/12 clave de de-scifrado cor-re-spon-di-ente. El c^^Sodigo se gen-e
+ra us-ando \OT1/pcr/m/n/12 openssl[]encrypt()
+ []
+
+[5]
+Overfull \hbox (20.19316pt too wide) in paragraph at lines 155--156
 \OT1/cmr/m/n/12 Esta im-ple-mentaci^^Son for-t-aleci^^So la se-guri-dad en arch
 ivos clave como \OT1/pcr/m/n/12 login.php \OT1/cmr/m/n/12 y \OT1/pcr/m/n/12 reg
 ister.php\OT1/cmr/m/n/12 ,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 121--123
-
- []
-
-[4]
-Underfull \hbox (badness 10000) in paragraph at lines 127--134
+Underfull \hbox (badness 10000) in paragraph at lines 162--163
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 127--134
+Underfull \hbox (badness 10000) in paragraph at lines 169--170
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 127--134
+Underfull \hbox (badness 10000) in paragraph at lines 171--173
+
+ []
+
+[6]
+Underfull \hbox (badness 10000) in paragraph at lines 174--177
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 127--134
+Underfull \hbox (badness 10000) in paragraph at lines 174--177
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 138--140
+Underfull \hbox (badness 10000) in paragraph at lines 174--177
 
  []
 
-[5]
-<figures/injection-error.png, id=227, 1327.96124pt x 744.7825pt>
+
+Underfull \hbox (badness 10000) in paragraph at lines 184--186
+
+ []
+
+<figures/injection-error.png, id=238, 1327.96124pt x 744.7825pt>
 File: figures/injection-error.png Graphic file (type png)
 <use figures/injection-error.png>
-Package pdftex.def Info: figures/injection-error.png  used on input line 145.
+Package pdftex.def Info: figures/injection-error.png  used on input line 191.
 (pdftex.def)             Requested size: 338.58632pt x 189.88861pt.
- [6pdfTeX warning (ext4): destination with the same identifier (name{figure.1})
- has been already used, duplicate ignored
+[7] [8pdfTeX warning (ext4): destination with the same identifier (name{figure.
+2}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.165 
-       <./figures/injection-error.png>] [7]
-Underfull \hbox (badness 10000) in paragraph at lines 226--228
+l.218 
+       <./figures/injection-error.png>] [9]
+Underfull \hbox (badness 10000) in paragraph at lines 272--274
 
  []
 
-[8]
-<figures/DesplazamientoBoton.png, id=254, 1218.5525pt x 509.905pt>
+<figures/DesplazamientoBoton.png, id=273, 1218.5525pt x 509.905pt>
 File: figures/DesplazamientoBoton.png Graphic file (type png)
 <use figures/DesplazamientoBoton.png>
-Package pdftex.def Info: figures/DesplazamientoBoton.png  used on input line 27
-5.
+Package pdftex.def Info: figures/DesplazamientoBoton.png  used on input line 32
+1.
 (pdftex.def)             Requested size: 338.58632pt x 141.68315pt.
- [9pdfTeX warning (ext4): destination with the same identifier (name{figure.2})
- has been already used, duplicate ignored
+[10] [11pdfTeX warning (ext4): destination with the same identifier (name{figur
+e.3}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.304 \subsubsection
-                    {Soluciones implementadas} <./figures/DesplazamientoBoton.p
-ng>] [10]
-Overfull \hbox (2.27248pt too wide) in paragraph at lines 358--359
+l.353 
+       <./figures/DesplazamientoBoton.png>] [12]
+Overfull \hbox (2.27248pt too wide) in paragraph at lines 405--406
 []\OT1/cmr/bx/n/12 CCVE-2018-7584\OT1/cmr/m/n/12 : Eje-cuci^^Son de c^^Sodigo a
 r-bi-trario me-di-ante \OT1/pcr/m/n/12 unserialize()\OT1/cmr/m/n/12 . 
  []
 
-[11]
-Overfull \hbox (14.07175pt too wide) in paragraph at lines 366--367
+
+Overfull \hbox (14.07175pt too wide) in paragraph at lines 413--414
 \OT1/cmr/m/n/12 como en el caso de ph-p-MyAd-min (es-peci-f-i-cando ph-p-myad-m
 in/ph-p-myad-min:latest),
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 383--390
+[13]
+Underfull \hbox (badness 10000) in paragraph at lines 433--440
 
  []
 
-[12] [13]
-Underfull \hbox (badness 10000) in paragraph at lines 447--448
+
+Underfull \hbox (badness 10000) in paragraph at lines 442--443
+
+ []
+
+[14]
+Underfull \hbox (badness 10000) in paragraph at lines 458--462
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 468--470
+
+ []
+
+[15]
+Underfull \hbox (badness 10000) in paragraph at lines 473--474
+
+ []
+
+[16]
+Underfull \hbox (badness 10000) in paragraph at lines 508--509
 []$\OT1/pcr/m/n/12 https : / / docs . python . org / es / 3 / library / secrets
  . html$[] \OT1/cmr/m/n/12 (ac-ce-dido
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 450--452
+Underfull \hbox (badness 10000) in paragraph at lines 511--513
 
  []
 
-[14]
-Underfull \hbox (badness 10000) in paragraph at lines 470--471
+
+Underfull \hbox (badness 10000) in paragraph at lines 531--532
 []$\OT1/pcr/m/n/12 https : / / kinsta . com / es / base-[]de-[]conocimiento / v
 ariables-[]de-[]entorno/$[]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 472--475
+Underfull \hbox (badness 10000) in paragraph at lines 533--536
 []$\OT1/pcr/m/n/12 https : / / owasp . org / Top10 / A07 _ 2021-[]Identificatio
 n _ and _
  []
 
 
-Overfull \hbox (150.58046pt too wide) in paragraph at lines 476--479
+Overfull \hbox (150.58046pt too wide) in paragraph at lines 537--540
 []$\OT1/pcr/m/n/12 https : / / www . sans . org / blog / deploying-[]multi-[]fa
 ctor-[]authentication-[]the-[]what-[]how-[]and-[]why/$[]
  []
 
 
-Underfull \hbox (badness 3128) in paragraph at lines 480--483
+Underfull \hbox (badness 3128) in paragraph at lines 541--544
 []$\OT1/pcr/m/n/12 https : / / owasp . org / www-[]community / attacks / Creden
 tial _ stuffing$[] \OT1/cmr/m/n/12 (ac-ce-
  []
 
-
-Underfull \hbox (badness 3128) in paragraph at lines 491--492
+[17]
+Underfull \hbox (badness 3128) in paragraph at lines 552--553
 []$\OT1/pcr/m/n/12 https : / / owasp . org / Top10 / es / A02 _ 2021-[]Cryptogr
 aphic _ Failures/$[] \OT1/cmr/m/n/12 (ac-ce-
  []
 
 
-Overfull \hbox (69.8805pt too wide) in paragraph at lines 497--498
+Overfull \hbox (69.8805pt too wide) in paragraph at lines 558--559
 []$\OT1/pcr/m/n/12 https : / / mariadb-[]com . translate . goog / kb / en / dat
 a-[]at-[]rest-[]encryption-[]overview /
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 497--498
+Underfull \hbox (badness 10000) in paragraph at lines 558--559
 \OT1/pcr/m/n/12 ? _ x _ tr _ sl = en & _x _ tr _ tl = es & _x _ tr _ hl = es & 
 _x _ tr _ pto = rq$[] \OT1/cmr/m/n/12 (ac-ce-dido
  []
 
-[15]
-Underfull \hbox (badness 3128) in paragraph at lines 498--499
+
+Underfull \hbox (badness 3128) in paragraph at lines 559--560
 []$\OT1/pcr/m/n/12 https : / / owasp . org / Top10 / A05 _ 2021-[]Security _ Mi
 sconfiguration/$[] \OT1/cmr/m/n/12 (ac-ce-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 499--500
+Underfull \hbox (badness 10000) in paragraph at lines 560--561
 []$\OT1/pcr/m/n/12 https : / / www . boe . es / buscar / act . php ? id = BOE-[
 ]A-[]2018-[]16673$[] \OT1/cmr/m/n/12 (ac-ce-dido
  []
 
-[16] (./Informe de Auditoría del Sistema Web.aux)
+
+Underfull \hbox (badness 10000) in paragraph at lines 561--562
+[]$\OT1/pcr/m/n/12 https : / / owasp . org / Top10 / A08 _ 2021-[]Software _ an
+d _ Data _ Integrity _
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 562--563
+[]$\OT1/pcr/m/n/12 https : / / owasp . org / Top10 / A09 _ 2021-[]Security _ Lo
+gging _ and _
+ []
+
+[18] [19] (./Informe de Auditoría del Sistema Web.aux)
 Package rerunfilecheck Info: File `"Informe de Auditoría del Sistema Web".out'
  has not changed.
-(rerunfilecheck)             Checksum: 5A86E5F39124D07EB2D42E3EF068D540;5114.
+(rerunfilecheck)             Checksum: 32682506C71DA1B11A07960A3572785C;5455.
  ) 
 Here is how much of TeX's memory you used:
- 11354 strings out of 480247
- 175325 string characters out of 5896150
- 498444 words of memory out of 5000000
- 29039 multiletter control sequences out of 15000+600000
- 477739 words of font info for 58 fonts, out of 8000000 for 9000
+ 11367 strings out of 480247
+ 175479 string characters out of 5896151
+ 514588 words of memory out of 5000000
+ 29045 multiletter control sequences out of 15000+600000
+ 477439 words of font info for 57 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 60i,8n,63p,1145b,1959s stack positions out of 5000i,500n,10000p,200000b,80000s
- </home/bruno/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1200.600
+ 60i,8n,63p,1119b,1191s stack positions out of 5000i,500n,10000p,200000b,80000s
+ </home/jorge/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1200.600
 pk>{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texli
 ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/tex
 mf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist
@@ -622,11 +698,11 @@ type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
 ublic/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/am
 sfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8
 a.pfb>
-Output written on "Informe de Auditoría del Sistema Web.pdf" (16 pages, 222864
+Output written on "Informe de Auditoría del Sistema Web.pdf" (19 pages, 256235
  bytes).
 PDF statistics:
- 414 PDF objects out of 1000 (max. 8388607)
- 372 compressed objects within 4 object streams
- 113 named destinations out of 1000 (max. 500000)
- 235 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 452 PDF objects out of 1000 (max. 8388607)
+ 404 compressed objects within 5 object streams
+ 122 named destinations out of 1000 (max. 500000)
+ 248 words of extra memory for PDF output out of 10000 (max. 10000000)
 
