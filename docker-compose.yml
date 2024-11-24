@@ -18,8 +18,8 @@ db:
     - ./mysql:/var/lib/mysql
   environment:
     MYSQL_ROOT_PASSWORD: root
-    MYSQL_USER: admin
-    MYSQL_PASSWORD: U31sg0909
+    MYSQL_USER: admin_SgSSi
+    MYSQL_PASSWORD: U31sg09_09
     MYSQL_DATABASE: database
   ports:
     - "8889:3306"
@@ -31,6 +31,6 @@ phpmyadmin:
   ports:
     - 8890:80
   environment:
-    MYSQL_USER: admin
-    MYSQL_PASSWORD: U31sg0909
+    MYSQL_USER: admin_SgSSi
+    MYSQL_PASSWORD: U31sg09_09
     MYSQL_DATABASE: database
