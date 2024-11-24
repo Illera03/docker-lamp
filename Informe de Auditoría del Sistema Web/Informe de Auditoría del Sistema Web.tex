@@ -63,11 +63,13 @@
 \newpage
 	
 \section{Introducción}
-Este informe detalla la auditoría de seguridad del sistema web utilizando OWASP ZAP, con el objetivo de identificar y mitigar vulnerabilidades.
+Este informe detalla la auditoría de seguridad de un sistema web utilizando OWASP ZAP\footnote{OWASP ZAP (Zed Attack Proxy) es una herramienta gratuita y de código abierto diseñada para realizar pruebas de penetración y análisis de seguridad en aplicaciones web, detectando vulnerabilidades de manera automática.\cite{zap}}, con el objetivo de identificar y mitigar vulnerabilidades.
 \vspace{1em}
 	
 \section{Metodología}
-La auditoría se realizó mediante un análisis de ZAP, que generó un informe indicando las diferentes vulnerabilidades en términos de seguridad web de nuestro sistema. Sin embargo, también se han tratado ciertas vulnerabilidades que no se detectaron en la auditoría, pero que se han considerado necesarias para garantizar la seguridad.
+La auditoría se realizó mediante un análisis de OWASP ZAP, que generó un informe indicando las diferentes vulnerabilidades en términos de seguridad web de nuestro sistema. Sin embargo, también se han tratado ciertas vulnerabilidades que no se detectaron en la auditoría, pero que se han considerado necesarias para garantizar la seguridad.\\
+
+Los informes generados por OWASP ZAP, tanto el inicial como el final, estarán adjuntos juntos con este documento para su revisión y comparación.
 \vspace{1em}
 
 \section{Vulnerabilidades}
@@ -77,58 +79,58 @@ La auditoría se realizó mediante un análisis de ZAP, que generó un informe i
 \textbf{¿Qué es una rotura de control de acceso?\\}
 Una rotura del control de acceso ocurre cuando un sistema permite a usuarios acceder a datos, funciones o recursos para los que no tienen autorización, debido a fallos en la implementación de los permisos. Esto puede resultar en accesos no autorizados, modificaciones indebidas de datos o acciones privilegiadas que deberían estar restringidas.\\
 
-En esta sección se han identificado dos amenazas. La primera, que ha sido detectado por ZAP, es la Ausencia de Tokens Anti-CSRF, como se puede observar en la Figura \ref{fig:control_acceso_error}. Y la segunda, es la posibilidad de modificar la URL y acceder a cuentas de usuario ajenas, permitiendo ver información confidencial y modificarla. 
+En esta sección se han identificado dos amenazas. La primera, que ha sido detectado por OWASP ZAP, es la Ausencia de Tokens Anti-CSRF, como se puede observar en la Figura \ref{fig:control_acceso_error}. Y la segunda, es la posibilidad de modificar la URL y acceder a cuentas de usuario ajenas, permitiendo ver información confidencial y modificarla. 
 
 \begin{figure}[H]
 	\centering
 	\fbox{\includegraphics[width=0.7\textwidth]{figures/control_acceso_error.png}} % Imagen con borde negro
-	\caption{Error de rotura de control de acceso detectado por ZAP.}
+	\caption{Error de rotura de control de acceso detectado por OWASP ZAP.}
 	\label{fig:control_acceso_error}
 \end{figure}
 \vspace{1em}
-\subsubsection{Ausencia de Tokens Anti-CSRF\\}
-.
+\subsubsection{Ausencia de Tokens Anti-CSRF}
+Esta vulnerablidad ocurre cuando no se implementan mecanismos como tokens anti-CSRF\footnote{CSRF: Códigos únicos generados para verificar que una solicitud proviene de una fuente legítima y no de un atacante.}  para protegerse contra ataques en los que un atacante engaña al usuario para ejecutar acciones no deseadas en una aplicación web autenticada. Estos tokens son valores únicos y aleatorios que se validan con cada solicitud para asegurar que provienen de fuentes confiables. Sin ellos, las aplicaciones son susceptibles a ataques de tipo CSRF, donde un atacante podría realizar acciones en nombre de un usuario sin su consentimiento.\\
 
 \textbf{Causa de la Vulnerabilidad}
 
-La vulnerabilidad se originaba en los archivos \code{login.php}, \code{register.php}, \code{add\_item.php} y \code{modify\_user.php} y fue causada por la falta de la generación del token CSRF en pestañas sensibles en las que hay que rellenar un formulario.
+La vulnerabilidad se originaba en los archivos \code{login.php}, \code{register.php}, \code{add\_item.php} y \code{modify\_user.php} y fue causada por la falta de la generación del token anti-CSRF en pestañas sensibles en las que hay que rellenar un formulario.
 
 \vspace{1em}
 
 \textbf{Pruebas y comportamiento observado}
 
-El error identificado fue detectado por OWASP ZAP al capturar la solicitud original enviada por el navegador al interactuar con el formulario. Posteriormente, ZAP envió una solicitud idéntica sin incluir campos adicionales (como un token\footnote{Pequeño fragmento de datos generado y utilizado en sistemas informáticos para representar de manera segura una identidad, un estado, o una sesión de comunicación entre partes.} anti-CSRF), y esta fue aceptada por el servidor como si se tratara de una solicitud legítima.
+El error identificado fue detectado por OWASP ZAP al capturar la solicitud original enviada por el navegador al interactuar con el formulario. Posteriormente, OWASP ZAP envió una solicitud idéntica sin incluir campos adicionales (como un token anti-CSRF), y esta fue aceptada por el servidor como si se tratara de una solicitud legítima.
 
 \vspace{1em}
 
-\subsubsection{Exposición y modificación de datos en la URL\\}
+\subsubsection{Exposición y modificación de datos en la URL}
 
-.
+En gran parte de las URLs del sistema se mostraba información que además podía ser modificada.\\
 
 \textbf{Causa de la Vulnerabilidad}
 
-Se detectó que los identificadores sensibles, como los IDs de usuarios y juegos, se transmitían en texto plano a través de las URLs en archivos como \code{items.php} y \code{show\_item.php}. Esto exponía información crítica que podía ser utilizada para acceder o manipular recursos restringidos.
+Se detectó que los identificadores sensibles, como los id de usuarios y juegos, se transmitían en texto plano a través de las URLs en archivos como \code{items.php} y \code{show\_item.php}. Esto exponía información crítica que podía ser utilizada para acceder o manipular recursos restringidos.
 \vspace{1em}
 
 \textbf{Pruebas y comportamiento observado}
 
-La vulnerabilidad fue identificada mediante un análisis manual del tráfico HTTP y de las URLs generadas por el sistema. Este análisis reveló que identificadores sensibles se transmitían en texto plano, exponiendo potencialmente datos críticos a ataques de enumeración de IDs o manipulación maliciosa.
+La vulnerabilidad fue identificada mediante un análisis manual del tráfico HTTP \footnote{HTTP es un protocolo de la capa de aplicación para la transmisión de documentos hipermedia, como HTML.}(Hypertext Transfer Protocol) y de las URLs generadas por el sistema. Este análisis reveló que identificadores sensibles se transmitían en texto plano, exponiendo potencialmente datos críticos a ataques de enumeración de IDs o manipulación maliciosa.
 
 \vspace{1em}
-
+\newpage
 \subsubsection{Soluciones implementadas}
-Para minimizar la utilización de CORS\footnote{CORS: Mecanismo que permite que los recursos de un servidor sean accesibles desde diferentes dominios de manera controlada.}, se ha integrado el uso de tokens CSRF\footnote{CSRF: Códigos únicos generados para verificar que una solicitud proviene de una fuente legítima y no de un atacante.} con el fin de implementar mecanismos de acceso únicos.\\
+Para minimizar la utilización de CORS\footnote{CORS: Mecanismo que permite que los recursos de un servidor sean accesibles desde diferentes dominios de manera controlada.}, se ha integrado el uso de tokens anti-CSRF con el fin de implementar mecanismos de acceso únicos.\\
 \begin{itemize}
-	\item \textbf{Integración de tokens CSRF\\} Se ha implementado la creación de los tokens en archivos donde se manejan formularios o se ingresan los identificadores y contraseñas de los usuarios. Esto incluye archivos como \code{login.php}, \code{register.php}, \code{add\_item.php} y \code{modify\_user.php}.
+	\item \textbf{Integración de tokens anti-CSRF\\} Se ha implementado la creación de los tokens en archivos donde se manejan formularios o se ingresan los identificadores y contraseñas de los usuarios. Esto incluye archivos como \code{login.php}, \code{register.php}, \code{add\_item.php} y \code{modify\_user.php}.
 	\begin{enumerate}
-		\item \textbf{Generación del token CSRF\\} Si no existe ya un token CSRF en la sesión \code{\$\_SESSION['csrf\_token']}, se genera uno nuevo usando \code{bin2hex(random\_bytes(32))}. Con esto se asegura que cada sesión tiene un token único y difícil de adivinar.
-		\item \textbf{Uso del token en el formulario\\} En el formulario HTML\footnote{Lenguaje de marcado utilizado para estructurar y organizar el contenido en las páginas web.} (HyperText Markup Language)(\code{login.html}), este token se debe enviar como un campo oculto. Esto permite que el servidor valide que el formulario fue enviado desde la misma aplicación.
+		\item \textbf{Generación del token anti-CSRF\\} Si no existe ya un token CSRF en la sesión \code{\$\_SESSION['csrf\_token']}, se genera uno nuevo usando \code{bin2hex(random\_bytes(32))}. Con esto se asegura que cada sesión tiene un token único y difícil de adivinar.
+		\item \textbf{Uso del token en el formulario\\} En el formulario HTML\footnote{HTML: Lenguaje de marcado utilizado para estructurar y organizar el contenido en las páginas web.} (HyperText Markup Language)(\code{login.html}), este token se debe enviar como un campo oculto. Esto permite que el servidor valide que el formulario fue enviado desde la misma aplicación.
 		\item \textbf{Validación del token en el servidor\\} Cuando el formulario se envía, el código verifica si el token recibido \\ (\code{\$\_POST['csrf\_token']}) coincide con el que está almacenado en la sesión. Si no coinciden o el token no existe, la solicitud se considera no válida y se bloquea (\code{die("Error de validación CSRF");}).
 		\item \textbf{Eliminación del token\\}Una vez que el usuario inicia sesión correctamente, el token se elimina usando el comando \code{unset}(\code{\$\_SESSION['csrf\_token']}). Esto asegura que no pueda ser reutilizado.
 	\end{enumerate}
-	\item \textbf{Cifrado de URL\\} Se ha implementado el cifrado de identificadores sensibles en las URL para garantizar que los datos críticos no se expongan en texto plano. Esto incluye ID de usuarios y otros identificadores que podrían ser utilizados por atacantes para realizar accesos no autorizados.
+	\item \textbf{Cifrado de URL\\} Se ha implementado el cifrado de identificadores sensibles en las URL para garantizar que los datos críticos no se expongan en texto plano. Esto incluye id de usuarios y otros identificadores que podrían ser utilizados por atacantes para realizar accesos no autorizados.
 	\begin{enumerate}
-		\item \textbf{Cifrado de identificadores\\} Los identificadores sensibles, como el ID de usuario, son cifrados utilizando el algoritmo \code{AES-256-CBC}. Este método asegura que los datos cifrados sean ilegibles sin la clave de descifrado correspondiente. El código se genera usando \code{openssl\_encrypt()} y se almacena en formato \code{base64}.
+		\item \textbf{Cifrado de identificadores\\} Los identificadores sensibles, como el id de usuario, son cifrados utilizando el algoritmo \code{AES-256-CBC}\cite{AES}. Este método asegura que los datos cifrados sean ilegibles sin la clave de descifrado correspondiente. El código se genera usando \code{openssl\_encrypt()} y se almacena en formato \code{base64}.
 		\item \textbf{Descifrado de URL en el servidor\\} Cuando el servidor recibe una URL que contiene un identificador cifrado, este es descifrado mediante el algoritmo \code{AES-256-CBC} y la misma clave utilizada para cifrarlo. Si el descifrado falla o el identificador no es válido, se bloquea el acceso al recurso solicitado.
 		\item \textbf{Uso del cifrado en enlaces\\} En archivos como \code{login.php}, \code{items.php} y \code{show\_user.php}, los identificadores que se incluyen en los enlaces son cifrados antes de enviarse al cliente. Esto asegura que el cliente nunca vea un identificador en texto plano en la URL.
 		\item \textbf{Validación de identificadores cifrados\\} Los identificadores descifrados son validados en el servidor para garantizar que sean valores enteros válidos (\code{intval(\$id)}). Si no lo son, la solicitud se rechaza de inmediato para prevenir posibles ataques.
@@ -140,9 +142,7 @@ Para minimizar la utilización de CORS\footnote{CORS: Mecanismo que permite que 
 
 \textbf{Resultados de la segunda auditoría}
 
-\vspace{1em}
-
-Después de implementar las soluciones descritas, se realizó un segundo análisis con OWASP ZAP. Los resultados fueron positivos: no se detectaron vulnerabilidades por falta de token CSRF.
+Después de implementar las soluciones descritas, se realizó un segundo análisis con OWASP ZAP. Los resultados fueron positivos: no se detectaron vulnerabilidades por falta de tokens anti-CSRF.
 
 Para el caso del cifrado de URLs, un análisis manual confirmó que los identificadores sensibles ya no se transmiten en texto plano. Las pruebas de uso del sistema mostraron que las URLs generadas contenían identificadores cifrados, que eran correctamente descifrados en el servidor antes de cualquier operación.
 
@@ -150,9 +150,7 @@ Para el caso del cifrado de URLs, un análisis manual confirmó que los identifi
 
 \textbf{Conclusiones}
 
-\vspace{1em}
-
-La integración de tokens CSRF resolvió las vulnerabilidades detectadas en el control de acceso, garantizando que las solicitudes al servidor sean legítimas y protegidas contra ataques. Esta implementación fortaleció la seguridad en archivos clave como \code{login.php} y \code{register.php}, eliminando las fallas detectadas en la primera auditoría. La segunda evaluación con OWASP ZAP confirmó la efectividad de estas medidas, mejorando significativamente la protección del sistema.
+La integración de tokens anti-CSRF resolvió las vulnerabilidades detectadas en el control de acceso, garantizando que las solicitudes al servidor sean legítimas y protegidas contra ataques. Esta implementación fortaleció la seguridad en archivos clave como \code{login.php} y \code{register.php}, eliminando las fallas detectadas en la primera auditoría. La segunda evaluación con OWASP ZAP confirmó la efectividad de estas medidas, mejorando significativamente la protección del sistema.
 
 Adicionalmente, el cifrado de URLs eliminó la exposición de identificadores sensibles en texto plano, mitigando posibles ataques relacionados con la enumeración o manipulación de IDs. Esto incrementó la seguridad de archivos como \code{items.php} y \code{show\_item.php}, contribuyendo a un acceso más seguro a los recursos del sistema.
 
@@ -172,7 +170,7 @@ El uso de este algoritmo requiere una clave segura para cifrar y descifrar los d
 Una vez generada la clave de secreta se guarda como una variable de entorno\footnote{Las variables de entorno son variables disponibles para un programa/aplicación de forma dinámica durante el tiempo de ejecución. El valor de estas variables puede proceder de diversas fuentes: archivos de texto, gestores secretos de terceros, scripts de llamada, etc.\cite{Variable de entorno}} en un archivo .env llamado \code{claveCifrado.env} para evitar comprometerla. Los datos cifrados de la tabla Juegos son el nombre, género, fecha de lanzamiento, valoración y precio. Mientras que los datos cifrados de la tabla Usuarios son el nombre, teléfono, DNI y fecha de nacimiento. Sin embargo, como al cifrar los datos su número de caracteres aumenta, se han tenido que cambiar los tipos de dato y la longitud de los campos de la base de datos para poder almacenarlos.\\ 
 
 Para solventar el segundo error se ha decidido usar un algoritmo resumen para generar el resumen criptográfico o Hash\footnote{Criptograma que consiste en una sucesión de caracteres alfanuméricos que representan la totalidad del contenido original.} de la contraseña en vez de guardarla como texto plano. Para ello se ha usado la función \code{password\_hash} a la que se le pasa como parámetros la contraseña a resumir y una constante de PHP\footnote{PHP es un lenguaje de código abierto especialmente adecuado para el desarrollo web y que puede ser incrustado en HTML.\cite{def_php}} (Hypertext Preprocessor) \code{PASSWORD\_BCRYPT} que indica que queremos usar el algoritmo Bcryt\cite{Bcrypt}. Bcrypt usa sales \footnote{Caracteres aleatorios que se le añaden a la contraseña para que sea mas difícil precalcular los resúmenes criptográficos.} para mayor seguridad ya que hace que dos contraseñas iguales de usarios diferentes generen resúmenes criptográficos distintos, por lo que se hace mucho mas difícil precalcularlos.\\ 
-\\\textbf{Conclusiones}\\ \\
+\\\textbf{Conclusiones}\\
 Subsanar los fallos criptográficos es una tarea fundamental para garantizar la confidencialidad y la confianza en sistemas web. Además, estas vulnerabilidades pueden llevar a la pérdida de confianza de los usuarios y a sanciones legales por no cumplir la Ley de Protección de Datos\cite{Ley proteccion de datos}.\\ 
 
 Finalmente, se ha conseguido abordar de manera efectiva ambos fallos criptográficos gracias a las medidas implementadas, mejorando significativamente la protección de datos y la fiabilidad del sistema web. 
@@ -189,7 +187,7 @@ En esta sección se han identificado dos amenazas de alto riesgo. Las vulnerabil
 \begin{figure}[H]
 	\centering
 	\fbox{\includegraphics[width=0.7\textwidth]{figures/injection-error.png}} % Imagen con borde negro
-	\caption{Errores de inyección detectados por ZAP.}
+	\caption{Errores de inyección detectados por OWASP ZAP.}
 	\label{fig:xss_error}
 \end{figure}
 \vspace{1em}
@@ -327,7 +325,7 @@ Se ha desplazado el botón de la página inicial a una página posterior despué
 
 \textbf{Conclusiones}
 
-Gracias a las soluciones implementadas, se ha mejorado significativamente la seguridad de la plataforma al restringir funcionalidades sensibles, como la visualización, modificación y adición de juegos, únicamente a usuarios registrados. Este diseño evita que usuarios no autenticados puedan saturar la base de datos mediante solicitudes maliciosas o excesivas, reduciendo el riesgo de ataques como el Denial of Service (DoS). Además también refuerza su arquitectura contra malas prácticas de diseño inseguro, promoviendo un entorno más robusto y confiable.
+Gracias a las soluciones implementadas, se ha mejorado significativamente la seguridad de la plataforma al restringir funcionalidades sensibles, como la visualización, modificación y adición de juegos, únicamente a usuarios registrados. Este diseño evita que usuarios no autenticados puedan saturar la base de datos mediante solicitudes maliciosas o excesivas, reduciendo el riesgo de ataques. Además también refuerza su arquitectura contra malas prácticas de diseño inseguro, promoviendo un entorno más robusto y confiable.
 
 \vspace{1em}
 
@@ -339,7 +337,7 @@ La configuración de seguridad insuficiente ocurre cuando un sistema o aplicaci�
 
 En esta sección se ha detectado una vulnerabilidad principal, el uso de credenciales (usario y contraseña) por defecto o extremadamente simples.
 \subsubsection{Credenciales por defecto}
-Esta vulnerabilidad se veía reflejada en dos de nuestros servicios, MariaDB y phpMyAdmin.\\
+Esta vulnerabilidad se veía reflejada en dos de nuestros servicios, MariaDB\footnote{MariaDB es un sistema de gestión de bases de datos relacionales (RDBMS) gratuito y de código abierto} y phpMyAdmin\footnote{PhpMyAdmin es una aplicación web que sirve para administrar bases de datos MySQL de forma sencilla y con una interfaz amistosa}.\\
 \begin{itemize}
 \item Credenciales de MariaDB:\\
 Usuario: admin\\
@@ -364,15 +362,16 @@ El uso de credenciales predeterminadas o débiles representaba un riesgo crític
 \textbf{¿En que afecta a la seguridad no tener los componentes actualizados?\\}
 Los componentes vulnerables y obsoletos son una de las principales causas de ataques en aplicaciones web, ya que los atacantes suelen explotar vulnerabilidades conocidas en versiones antiguas de software. Este apartado analiza los componentes del sistema para identificar y mitigar riesgos asociados con componentes desactualizados en el sistema web desplegado.
 \vspace{1em}
-
+\newpage
 \textbf{Identificación de componentes}\vspace{1em}
 
 El sistema web en cuestión depende de múltiples componentes:
 \begin{itemize}
 	\item \textbf{Linux}: como sistema operativo base.
-	\item \textbf{Apache}: como servidor web.
+	\item \textbf{Apache\footnote{Apache es un software de servidor web de código abierto desarrollado y mantenido por la Apache Software Foundation y está disponible de forma gratuita}}: como servidor web.
 	\item \textbf{MariaDB}: como sistema de base de datos.
 	\item \textbf{PHP}: como lenguaje de backend.
+	\item \textbf{phpMyAdmin}: como administrador de bases de datos MySQL/MariaDB en web.
 \end{itemize}
 \subsubsection{Análisis de componentes}
 \vspace{1em}
@@ -432,8 +431,7 @@ Mantener un enfoque proactivo en la actualización y monitoreo de los componente
 \subsection{Fallos de identificación y autenticación}
 \vspace{1em}
 \textbf{¿Qué es un fallo de identificación y autenticación?\\}
-Un fallo de identificación ocurre cuando el sistema no reconoce quién dices ser. Esto puede deberse a varias razones, como ingresar datos incorrectos o inexistentes, que el sistema no busque correctamente el usuario en la base de datos, o incluso por el uso de mensajes de error ambiguos o confusos que no ayudan al usuario a identificar el problema. \\
-
+Un fallo de identificación ocurre cuando el sistema no reconoce quién dices ser. Esto puede deberse a varias razones, como ingresar datos incorrectos o inexistentes, que el sistema no busque correctamente el usuario en la base de datos, o incluso por el uso de mensajes de error ambiguos o confusos que no ayudan al usuario a identificar el problema. \\ \\
 \textbf{¿Cómo ocurre un ataque por fallos de identificación o autenticación?\\}
 Esta vulnerabilidad se da cuando un atacante obtiene una lista de usuarios y contraseñas que pueden ser válidas en el sistema, y luego intenta acceder a las cuentas mediante un proceso automatizado. Un ejemplo común es el ataque de Credential stuffing. En este ataque, el atacante utiliza credenciales filtradas de otros servicios donde los usuarios han utilizado las mismas contraseñas, y las prueba en el sistema objetivo para obtener acceso a sus cuentas. Si el sistema no implementa medidas adicionales de seguridad, como la autenticación multifactor\footnote{Autenticación multifactor se refiere a un método de autenticación que requiere que el usuario proporcione dos o más factores de verificación diferentes para acceder a un sistema} o límites de intentos de acceso fallidos, el atacante puede obtener acceso a las cuentas de usuario con relativa facilidad.
 \vspace{1em}
@@ -441,7 +439,8 @@ Esta vulnerabilidad se da cuando un atacante obtiene una lista de usuarios y con
 
 Para reducir los riesgos de los errores en la identificación y autenticación se ha implementado la siguiente solución:\\
 
-\textbf{Bloqueo temporal de usuarios por Logins\footnote{Proceso mediante el cual un usuario se identifica y autentica en un sistema, servicio o aplicación.} fallidos:\\}
+\textbf{Bloqueo temporal de usuarios por Logins\footnote{Proceso mediante el cual un usuario se identifica y autentica en un sistema, servicio o aplicación.} fallidos:}
+
 Se ha implementado un sistema de bloqueo temporal con ayuda de un archivo .log\footnote{Un .log es  un archivo de texto que se utiliza para registrar eventos, actividades o mensajes de un sistema, programa o aplicación} (la creación de este archivo se menciona en el apartado 3.9). Este permite registrar aquellos usuarios que han fallado 5 veces el inicio de sesión en los últimos 10 minutos. Dicha cuenta se bloquea por 10 minutos y si el usuario intenta hacer nuevamente un Login, se le mostrará el tiempo que le falta para que pueda volver a realizar otros 5 intentos. Esto se logra gestionar en el archivo.log con la función: \code{function checkFailedAttempts(email, log\_file, max\_attempts = 5, lock\_time = 600)}.
 
 
@@ -449,15 +448,18 @@ Se ha implementado un sistema de bloqueo temporal con ayuda de un archivo .log\f
 
 \vspace{1em}
 
-\textbf{Conclusiones\\}
-Con estas medidas, el sistema web cumple con estándares más altos de seguridad, evitando ataques de fuerza bruta o de Credential Stuffing en cierta medida. Sin embargo, es importante considerar la implementación de mecanismos como autenticación multifactor y sistemas de alerta para accesos sospechosos.
+\textbf{Conclusiones}
+
+Con estas medidas, el sistema web cumple con estándares más altos de seguridad, evitando ataques de fuerza bruta o de Credential Stuffing en cierta medida. Sin embargo, es importante considerar como posible mejora la implementación de mecanismos como autenticación multifactor y sistemas de alerta para accesos sospechosos.
 
 \vspace{1em}
 \subsection{Fallos en la integridad de datos y software}
 \vspace{1em}
 \textbf{¿Qué son los fallos en la integridad de datos y software?\\}
-Se refieren a vulnerabilidades que surgen cuando un sistema, aplicación o infraestructura no cuenta con mecanismos adecuados para garantizar que el software y los datos se mantengan libres de manipulaciones no autorizadas. Estas fallas pueden manifestarse en diversas formas, como el uso de componentes no confiables, actualizaciones automáticas inseguras o ataques a la cadena de suministro. El problema radica en que la falta de controles para verificar la autenticidad y la integridad permite a actores maliciosos inyectar código o alterar datos, comprometiendo el sistema y su confiabilidad \cite{fallos_integ}.\\
-En esta sección no se ha encontrado ninguna vulnerabilidad principal, pero una causa común es el uso de bibliotecas o software no confiables. Esto es porque las dependencias sin verificar pueden contener vulnerabilidades o código malicioso.\\ \\
+Se refieren a vulnerabilidades que surgen cuando un sistema, aplicación o infraestructura no cuenta con mecanismos adecuados para garantizar que el software y los datos se mantengan libres de manipulaciones no autorizadas. Estas fallas pueden manifestarse en diversas formas, como el uso de componentes no confiables o actualizaciones automáticas inseguras. El problema radica en que la falta de controles para verificar la autenticidad y la integridad permite a actores maliciosos inyectar código o alterar datos, comprometiendo el sistema y su confiabilidad \cite{fallos_integ}.\\
+
+En esta sección no se ha encontrado ninguna vulnerabilidad principal, pero una causa común es el uso de bibliotecas o software no confiables. Esto es porque las dependencias sin verificar pueden contener vulnerabilidades o código malicioso.\\ 
+
 Por ello, cabe mencionar que en el desarrollo del sistema actual, se utiliza la librería \code{secrets} de Python para la generación de datos aleatorios seguros. Pero esta librería, al ser parte de la biblioteca estándar de Python, es confiable y no introduce riesgos de integridad ya que sigue prácticas sólidas de generación de números pseudoaleatorios seguros para criptografía \cite{secrets Python}.
 
 
@@ -466,11 +468,14 @@ Por ello, cabe mencionar que en el desarrollo del sistema actual, se utiliza la 
 \subsection{Fallos en la monitorización de la seguridad}
 \vspace{1em}
 \textbf{¿Qué son los fallos en la monitorización de la seguridad?\\}
-Se refieren a la ausencia o insuficiencia de registros (logs) y sistemas de monitorización necesarios para identificar, alertar y responder a incidentes de seguridad en un sistema. Estas fallas dificultan la detección temprana de actividades sospechosas, lo que puede prolongar el tiempo en el que un ataque permanece sin ser detectado. Además, la falta de registros adecuados complica la investigación posterior de incidentes y la comprensión de su alcance. \cite{fallos_monit}. \\
+Se refieren a la ausencia o insuficiencia de registros (logs) y sistemas de monitorización necesarios para identificar, alertar y responder a incidentes de seguridad en un sistema. Estas fallas dificultan la detección temprana de actividades sospechosas, lo que puede prolongar el tiempo en el que un ataque permanece sin ser detectado. Además, la falta de registros adecuados complica la investigación posterior de incidentes y la comprensión de su alcance \cite{fallos_monit}. \\
 
-En está sección, se contaba con una vulnerabilidad principal, se carecía de un registro de logs del sistema.
+En está sección, se contaba con una vulnerabilidad principal, ya que se carecía de un registro de logs del sistema.
 \subsubsection{Soluciones implementadas}
-\textbf{Registro de todos los intentos de sesiones (logs):\\}
+
+Para mitigar la vulnerabilidad comentada se ha implementado la siguiente solución.\\
+
+\textbf{Registro de todos los intentos de sesiones (logs):}
 
 Se ha utilizado un archivo .log para poder gestionar y observar los intentos de sesiones y el por qué de los errores. En el archivo .log se resgistra lo siguiente:
 \begin{enumerate}
@@ -480,22 +485,57 @@ Se ha utilizado un archivo .log para poder gestionar y observar los intentos de 
 	\item IP\footnote{IP: Identificador único que se asigna a cada dispositivo conectado a una red}.
 \end{enumerate} 
 
-\textbf{Conclusiones\\}
+\textbf{Conclusiones}
+
 Al registrar información clave como la fecha, hora, estado del intento (SUCCESS o FAILED), y direcciones IP involucradas, se facilita el análisis forense en caso de incidentes de seguridad. Esto también sienta las bases para implementar medidas de seguridad adicionales, como el bloqueo automático de IPs sospechosas o la aplicación de políticas más estrictas para la gestión de contraseñas.
 \section{Conclusiones finales}
 
--puntos importantes: 
-se han subsanado 2 vulnerabilidades de riesgo alto y 1 de riesgo medio
-la mayoria de cosas solucionadas no se reflejaban como un problema en ZAP
-han quedado dos vulnerabilidades de riesgo medio sin resolver pero implican la modificacion de la imagen web
+El análisis realizado al sistema web ha permitido identificar y corregir vulnerabilidades significativas, logrando mitigar dos de ellas de riesgo alto y una de riesgo medio. \\
 
+Sin embargo, es importante señalar que la gran mayoría de problemas solucionados no fueron detectados por una herramienta automática como OWASP ZAP, lo que resalta la relevancia del conocimiento y el análisis manual para identificar riesgos específicos que podrían pasar desapercibidos. Además estas vulnerabilidades no eran pequeñas amenazas del sistema, si no grandes fallas de seguridad.
+
+A pesar de los logros alcanzados, persisten dos vulnerabilidades clasificadas como de riesgo medio. Su resolución implica modificaciones en la imagen web del sistema, lo que requiere unas modificaciones extra. Aunque no representan una amenaza alta, su existencia es un problema y debería ser objeto de mejora en el futuro.
+
+En conclusión, la auditoría ha resultado en mejoras significativas en la seguridad del sistema web, pero también evidencia la necesidad de un enfoque continuo y equilibrado.Y por lo observado, es crucial combinar herramientas automáticas con revisiones manuales y un  estudio continuo de posibles vulnerabilidades.  
+
+\newpage
 
 
 
 \section{Bibliografía}
 \begin{thebibliography}{9}
+	\bibitem{zap} github.com/zaproxy\\ ¿Qué es OWASP ZAP?\\	\url{https://github.com/zaproxy/zaproxy} (accedido 15/11/2024).
+	\bibitem{AES} msmk.university\\ ¿Qué es AES? ¿Es seguro?\\	\url{https://msmk.university/advanced-encryption-standard-aes/} (accedido 16/11/2024).
+	\bibitem{Fallos Criptograficos} owasp.org\\ ¿Qué son los fallos criptográficos?\\	\url{https://owasp.org/Top10/es/A02_2021-Cryptographic_Failures/} (accedido 16/11/2024).
+	\bibitem{MariaDB Cifrado} mariadb-com\\ Limitaciones e información sobre el cifrado de MariaDB\\	\url{https://mariadb-com.translate.goog/kb/en/data-at-rest-encryption-overview/?_x_tr_sl=en&_x_tr_tl=es&_x_tr_hl=es&_x_tr_pto=rq} (accedido 21/11/2024).
+	\bibitem{Criptografia} aws.amazon.com\\ ¿Que es la criptografía?\\	\url{https://aws.amazon.com/es/what-is/cryptography/} (accedido 16/11/2024).
+	\bibitem{generador_claves_python} Python Code: Generación de Claves de Cifrado\\
+	Código en Python utilizado para generar claves criptográficamente seguras, usando la librería \code{secrets}
+	\begin{lstlisting}
+		
+import secrets
+		
+def generar_clave_encriptacion(longitud=32):
+		
+	clave = secrets.token_bytes(longitud)  # Devuelve una cadena de bytes aleatorios
+		
+	return clave.hex()
+		
+		
+clave_encriptacion = generar_clave_encriptacion()
+			
+print(f"Clave de encriptacion generada: {clave_encriptacion}")
+
+	\end{lstlisting}
+	\bibitem{secrets Python} python.org\\ ¿Qué es la libreria secrets?\\ \url{https://docs.python.org/es/3/library/secrets.html} (accedido 21/11/2024).
+	\bibitem{Bcrypt} skysnag.com\\ ¿Que es Bcrypt?\\
+	\url{https://www.skysnag.com/es/blog/what-is-bcrypt/}  (accedido 15/11/2024).
+	
+	
+	
+
 	\bibitem{owasp_injection} owasp.org\\
-	Injection\\ 
+	Inyección\\ 
 	\url{https://owasp.org/www-community/Injection} (accedido 11/07/2024).
 	
 	\bibitem{owasp_xss} owasp.org\\
@@ -503,34 +543,12 @@ han quedado dos vulnerabilidades de riesgo medio sin resolver pero implican la m
 	 
 	\bibitem{def_sanitization_escaping} cwe.mitre.org\\
 	Sanitización y escapeo\\ \url{https://owasp.org/www-community/attacks/xss/} (accedido 11/07/2024). 
+	\bibitem{sec_mis} owasp.org\\ Configuración de seguridad insuficiente\\	\url{https://owasp.org/Top10/A05_2021-Security_Misconfiguration/} (accedido 22/11/2024).
 	\bibitem{def_php} php.net\\
 	¿Qué es PHP?\\ \url{https://www.php.net/manual/es/intro-whatis.php} (accedido 11/07/2024).
-	\bibitem{secrets Python} python.org\\ ¿Qué es la libreria secrets?\\ \url{https://docs.python.org/es/3/library/secrets.html} (accedido 21/11/2024).
-	
-	
-	\bibitem{generador_claves_python} Python Code: Generación de Claves de Cifrado\\
-	Este código en Python se utiliza para generar claves criptográficamente seguras usando la librería \code{secrets}\\
-	\begin{lstlisting}
-	
-	import secrets
-	
-	def generar_clave_encriptacion(longitud=32):
-	
-	clave = secrets.token_bytes(longitud)  # Devuelve una cadena de bytes aleatorios
-	
+	\bibitem{Variable de entorno} kinsta.com\\ ¿Qué es una variable de entorno?\\	\url{https://kinsta.com/es/base-de-conocimiento/variables-de-entorno/} (accedido 15/11/2024).
 
-	return clave.hex()
-	
-
-	clave_encriptacion = generar_clave_encriptacion()
-	
-	
-	print(f"Clave de encriptacion generada: {clave_encriptacion}")
-	}
-\end{lstlisting}
-	\bibitem{Variable de entorno} kinsta.com\\ ¿Que es una variable de entorno?\\	\url{https://kinsta.com/es/base-de-conocimiento/variables-de-entorno/} (accedido 15/11/2024).
-
-    \bibitem{OWASP Authentication Failures} OWASP Foundation\\
+    \bibitem{OWASP Authentication Failures} owasp.org\\
     ¿Qué son los fallos de identificación y autenticación?\\
     \url{https://owasp.org/Top10/A07_2021-Identification_and_Authentication_Failures/} (accedido 23/11/2024).
 
@@ -538,7 +556,7 @@ han quedado dos vulnerabilidades de riesgo medio sin resolver pero implican la m
     ¿Qué es la autenticación multifactor?\\
     \url{https://www.sans.org/blog/deploying-multi-factor-authentication-the-what-how-and-why/} (accedido 23/11/2024).
 
-    \bibitem{OWASP Credential Stuffing} OWASP Foundation\\
+    \bibitem{OWASP Credential Stuffing} owasp.org\\
     ¿Qué es el Credential Stuffing?\\
     \url{https://owasp.org/www-community/attacks/Credential_stuffing} (accedido 23/11/2024).
 
@@ -546,27 +564,15 @@ han quedado dos vulnerabilidades de riesgo medio sin resolver pero implican la m
     ¿Qué es la IP?\\
     \url{https://www.rfc-editor.org/rfc/rfc791.html} (accedido 23/11/2024).
 
-	\bibitem{Bcrypt} skysnag.com\\ ¿Que es Bcrypt?\\
-	\url{https://www.skysnag.com/es/blog/what-is-bcrypt/}  (accedido 15/11/2024).
 	
-	\bibitem{Fallos Criptograficos} owasp.org\\ ¿Que son los fallos criptográficos?\\	\url{https://owasp.org/Top10/es/A02_2021-Cryptographic_Failures/} (accedido 16/11/2024).
 	
-	\bibitem{Criptografia} aws.amazon.com\\ ¿Que es la criptografía?\\	\url{https://aws.amazon.com/es/what-is/cryptography/} (accedido 16/11/2024).
 	
-	\bibitem{AES} msmk.university\\ ¿Qué es AES? ¿Es seguro?\\	\url{https://msmk.university/advanced-encryption-standard-aes/} (accedido 16/11/2024).
-	
-	\bibitem{MariaDB Cifrado} mariadb-com\\ Limitaciones e información sobre el cifrado de MariaDB\\	\url{https://mariadb-com.translate.goog/kb/en/data-at-rest-encryption-overview/?_x_tr_sl=en&_x_tr_tl=es&_x_tr_hl=es&_x_tr_pto=rq} (accedido 21/11/2024).
-	\bibitem{sec_mis} owasp.org\\ Configuración de seguridad insuficiente\\	\url{https://owasp.org/Top10/A05_2021-Security_Misconfiguration/} (accedido 22/11/2024).
+
 	\bibitem{Ley proteccion de datos} boe.es\\ Ley de protección de datos\\	\url{https://www.boe.es/buscar/act.php?id=BOE-A-2018-16673} (accedido 23/11/2024).
 	\bibitem{fallos_integ} owasp.org\\ Fallos en la integridad de datos y software\\	\url{https://owasp.org/Top10/A08_2021-Software_and_Data_Integrity_Failures/} (accedido 23/11/2024).
 	\bibitem{fallos_monit} owasp.org\\ Fallos en la monitorización de la seguridad.\\	\url{https://owasp.org/Top10/A09_2021-Security_Logging_and_Monitoring_Failures/} (accedido 23/11/2024).
 
 \end{thebibliography}
-
-
-
-
-\section{Apéndices}
 
 
 \end{document}
