@@ -335,32 +335,33 @@ Gracias a las soluciones implementadas, se ha mejorado significativamente la seg
 \vspace{1em}
 
 \textbf{¿Qué es la configuración de seguridad insuficiente?\\}
-La configuración de seguridad insuficiente ocurre cuando un sistema o aplicación utiliza configuraciones predeterminadas, credenciales simples o no establece medidas de protección adecuadas contra posibles amenazas. Esto puede incluir la falta de restricciones de acceso, configuraciones inadecuadas de servicios, y uso de contraseñas débiles o predeterminadas \cite{sec_mis}.
+La configuración de seguridad insuficiente ocurre cuando un sistema o aplicación utiliza configuraciones predeterminadas, credenciales simples o no establece medidas de protección adecuadas contra posibles amenazas. Esto puede incluir la falta de restricciones de acceso, configuraciones inadecuadas de servicios, y uso de contraseñas débiles o predeterminadas \cite{sec_mis}.\\
+
 En esta sección se ha detectado una vulnerabilidad principal, el uso de credenciales (usario y contraseña) por defecto o extremadamente simples.
 \subsubsection{Credenciales por defecto}
 Esta vulnerabilidad se veía reflejada en dos de nuestros servicios, MariaDB y phpMyAdmin.\\
-Credenciales de MariaDB:\\
+\begin{itemize}
+\item Credenciales de MariaDB:\\
 Usuario: admin\\
 Contraseña: test\\
-Al igual que en phpMyAdmin:\\
+\item Al igual que en phpMyAdmin:\\
 Usuario: admin\\
 Contraseña: test\\
+\end{itemize}
 Estas credenciales son extremadamente simples y no cumplen con las políticas básicas de seguridad para la autenticación. Y además, dejan expuestos servicios críticos, aumentando significativamente el riesgo de ataques como la inyección SQL, robo de datos y escalamiento de privilegios.
 \vspace{1em}
 \subsubsection{Soluciones implementadas}
 Para mitigar este problema, se han modificado tanto los usuarios como las contraseñas de ambos servicios por unos valores más seguros. Las nuevas contraseñas cuentan con más de 10 dígitos entre los que se incluyen combinaciones de mayúsculas, minúsculas, números y caracteres especiales.\\
-\vspace{1em}
 
 \textbf{Conclusiones}
 
-El uso de credenciales predeterminadas o débiles representaba un riesgo crítico para la seguridad del sistema, ya que las anteriores eran especialmente conocidas y fáciles de explotar por atacantes. Esto facilitaba y posivilitaba el acceso no autorizado a servicios clave como MariaDB y phpMyAdmin, comprometiendo la integridad y confidencialidad de los datos. 
+El uso de credenciales predeterminadas o débiles representaba un riesgo crítico para la seguridad del sistema, ya que las anteriores eran especialmente conocidas y fáciles de explotar por atacantes. Esto facilitaba y posibilitaba el acceso no autorizado a servicios clave como MariaDB y phpMyAdmin, comprometiendo la integridad y confidencialidad de los datos. 
 
 
 
 \subsection{Componentes vulnerables y obsoletos}
 \vspace{1em}
-\textbf{¿En que afecta a la seguridad no tener los componentes actualizados?}
-
+\textbf{¿En que afecta a la seguridad no tener los componentes actualizados?\\}
 Los componentes vulnerables y obsoletos son una de las principales causas de ataques en aplicaciones web, ya que los atacantes suelen explotar vulnerabilidades conocidas en versiones antiguas de software. Este apartado analiza los componentes del sistema para identificar y mitigar riesgos asociados con componentes desactualizados en el sistema web desplegado.
 \vspace{1em}
 
@@ -416,7 +417,7 @@ El sistema web en cuestión depende de múltiples componentes:
 \end{itemize}
 \subsubsection{Soluciones implementadas}
 \begin{itemize}
-	\item \textbf{Dockerfile}: Versión de PHP con Apache actualizada (php:8.1-apache).
+	\item \textbf{Dockerfile}: Versión de PHP con Apache actualizado (php:8.1-apache).
 	\item \textbf{Docker-compose}: \begin{itemize}
 		\item Versión de MariaDB actualizada a la versión 10.9 (image: mariadb:10.9).
 		\item Versión de phpMyAdmin acualizada a la versión 5.1.1 (image: phpmyadmin/phpmyadmin:5.1.1).
@@ -431,11 +432,10 @@ Mantener un enfoque proactivo en la actualización y monitoreo de los componente
 \subsection{Fallos de identificación y autenticación}
 \vspace{1em}
 \textbf{¿Qué es un fallo de identificación y autenticación?\\}
-Un fallo de identificación ocurre cuando el sistema no reconoce quién dices ser. Esto puede deberse a varias razones, como ingresar datos incorrectos o inexistentes, que el sistema no busque correctamente el usuario en la base de datos, o incluso por el uso de mensajes de error ambiguos o confusos que no ayudan al usuario a identificar el problema. Además, la ausencia de mensajes claros también puede contribuir a que el sistema no reconozca correctamente al usuario.\\
-Esto puede suceder porque el usuario ha registrado una contraseña insegura o fácil de adivinar, utiliza mecanismos simples para recuperar contraseñas, o bien porque no se ha implementado un sistema de autenticación más robusto como la autenticación multifactor\footnote{Autenticación multifactor se refiere a un método de autenticación que requiere que el usuario proporcione dos o más factores de verificación diferentes para acceder a un sistema}.
-\\ \\
+Un fallo de identificación ocurre cuando el sistema no reconoce quién dices ser. Esto puede deberse a varias razones, como ingresar datos incorrectos o inexistentes, que el sistema no busque correctamente el usuario en la base de datos, o incluso por el uso de mensajes de error ambiguos o confusos que no ayudan al usuario a identificar el problema. \\
+
 \textbf{¿Cómo ocurre un ataque por fallos de identificación o autenticación?\\}
-Esta vulnerabilidad se da cuando un atacante obtiene una lista de usuarios y contraseñas que pueden ser válidas en el sistema, y luego intenta acceder a las cuentas mediante un proceso automatizado. Un ejemplo común es el ataque de Credential stuffing. En este ataque, el atacante utiliza credenciales filtradas de otros servicios donde los usuarios han utilizado las mismas contraseñas, y las prueba en el sistema objetivo para obtener acceso a sus cuentas. Si el sistema no implementa medidas adicionales de seguridad, como la autenticación multifactor o límites de intentos de acceso fallidos, el atacante puede obtener acceso a las cuentas de usuario con relativa facilidad.
+Esta vulnerabilidad se da cuando un atacante obtiene una lista de usuarios y contraseñas que pueden ser válidas en el sistema, y luego intenta acceder a las cuentas mediante un proceso automatizado. Un ejemplo común es el ataque de Credential stuffing. En este ataque, el atacante utiliza credenciales filtradas de otros servicios donde los usuarios han utilizado las mismas contraseñas, y las prueba en el sistema objetivo para obtener acceso a sus cuentas. Si el sistema no implementa medidas adicionales de seguridad, como la autenticación multifactor\footnote{Autenticación multifactor se refiere a un método de autenticación que requiere que el usuario proporcione dos o más factores de verificación diferentes para acceder a un sistema} o límites de intentos de acceso fallidos, el atacante puede obtener acceso a las cuentas de usuario con relativa facilidad.
 \vspace{1em}
 \subsubsection{Soluciones implementadas}
 
